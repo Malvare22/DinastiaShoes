@@ -18,6 +18,7 @@ module.exports = {
       'customBlue' : '#3358DB',
       'white' : '#fffbeb',
       'red' : '#881337',
+      'redWine' : '#533737',
     },
   },
   plugins: [],
