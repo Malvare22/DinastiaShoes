@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Deportivo",
+        "id": "1"
+    },
+    {
+        "nombre": "Casual",
+        "id": "2"
+    },
+    {
+        "nombre": "Callejero",
+        "id": "3"
+    },
+    {
+        "nombre": "Zapatillas",
+        "id": "4"
+    },
+    {
+        "nombre": "Colección",
+        "id": "5"
+    }
+]
