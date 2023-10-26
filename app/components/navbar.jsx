@@ -9,7 +9,7 @@ export default function Navbar({type, mode}){
         <div className="bg-customBlue md:p-5 lg:flex content-center block align-middle lg:justify-between select-none">
             
             <Logo></Logo>
-            {mode == "Loggeda" && <><Categories></Categories><Unlogged></Unlogged></>}
+            {mode == "Unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
             {mode == "Logged" && type == "Client" && <><Categories></Categories><Logged></Logged></>}
             
         </div>

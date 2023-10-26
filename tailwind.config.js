@@ -19,6 +19,8 @@ module.exports = {
       'white' : '#fffbeb',
       'red' : '#881337',
       'redWine' : '#533737',
+      'black' : '#0a0a0a',
+      'card' : '#D2C0C0'
     },
   },
   plugins: [],
