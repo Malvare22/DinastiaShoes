@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -20,8 +22,9 @@ module.exports = {
       'red' : '#881337',
       'redWine' : '#533737',
       'black' : '#0a0a0a',
-      'card' : '#D2C0C0'
+      'card' : '#D2C0C0',
+      'carouselBlue' : '#3358DB'
     },
   },
   plugins: [],
-}
+};
