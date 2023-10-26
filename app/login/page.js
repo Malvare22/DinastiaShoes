@@ -1,39 +1,33 @@
 import { Button } from "../components/buttons";
 import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputText } from "../components/forms/inputs";
-import { LabelInput, TitleInput} from "../components/text";
+import { AText, LabelInput, TitleInput} from "../components/text";
 
 export default function Register() {
 
   return (
     <FormContainer>
       <TitleInput>
-          Registrar
+          Iniciar Sesión
       </TitleInput>
       <LabelInput>Correo electrónico</LabelInput>
       <InputEmail></InputEmail>
 
       <LabelInput>Contraseña</LabelInput>
       <InputPassword></InputPassword>
-      
-      <LabelInput>Confirmar contraseña</LabelInput>
-      <InputPassword></InputPassword>
 
-      <LabelInput>Nombres</LabelInput>
-      <InputText></InputText>
+      <div className="flex">
+        <h4>¿No tienes una cuenta?</h4>
+        <AText>Registro</AText>
+      </div>
 
-      <LabelInput>Apellidos</LabelInput>
-      <InputText></InputText>
-
-      <LabelInput>Fecha de nacimiento</LabelInput>
-      <InputDate></InputDate>
-
-      <LabelInput>Seleccione su sexo</LabelInput>
-      <InputGenre></InputGenre>
-
+      <div className="flex">
+        <h4>¿Olvidaste tu contraseña?</h4>
+        <AText>Recuperar contraseña</AText>
+      </div>
       
       <div className="flex justify-center">
-        <Button>Registrar</Button>
+        <Button>Ingresar</Button>
       </div>
     </FormContainer>
   )

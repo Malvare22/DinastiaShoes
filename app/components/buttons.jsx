@@ -6,6 +6,6 @@ export const AcceptButton = ({text}) => {
 
 export const Button = (props) => {
     return(
-        <button className="bg-redForButton text-white text-center min-w-[150px] p-2 rounded-lg font-semibold">{props.children}</button>
+        <button className="bg-redForButton text-white text-center min-w-[150px] mt-4 p-2 rounded-lg font-semibold">{props.children}</button>
     );
 }
