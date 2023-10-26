@@ -23,11 +23,13 @@ export const ImageCarousel = ({ images }) => {
   
     return (
       <div className="relative px-[200px]">
-        <img
-          src={images[currentImageIndex]}
-          alt={`Image ${currentImageIndex}`}
-          className="w-full h-[500px]"
-        />
+        <div className="flex justify-center my-4">
+            <img
+            src={images[currentImageIndex]}
+            alt={`Image ${currentImageIndex}`}
+            className="w-auto min-h-[100px] max-h-[400px]"
+            />
+        </div>
         <div className="mx-5 absolute top-1/2 transform -translate-y-1/2 left-0">
           <button
             onClick={prevImage}
