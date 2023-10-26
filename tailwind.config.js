@@ -23,7 +23,9 @@ module.exports = {
       'redWine' : '#533737',
       'black' : '#0a0a0a',
       'card' : '#D2C0C0',
-      'carouselBlue' : '#3358DB'
+      'carouselBlue' : '#3358DB',
+      'customGrey' : '#D9D9D9',
+      'redForButton' : '#FF0000',
     },
   },
   plugins: [],

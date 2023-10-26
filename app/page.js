@@ -10,17 +10,11 @@ export default function Home() {
 
   return (
       <>
-        <header>
-        <Navbar mode="Unlogged" type="Client"></Navbar>
-        </header>
-        <div className='bg-white h-full'>
+        
           <ImageCarousel images={images}></ImageCarousel>
           <h1 className='text-black text-center font-sans text-3xl my-7 font-semibold'>PRODUCTOS DESTACADOS</h1>
           <HomeCardsGroup></HomeCardsGroup>
-        </div>
-        <footer>
-          <Footer></Footer>
-        </footer>
+        
       </>
   )
 }

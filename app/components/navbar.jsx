@@ -107,7 +107,7 @@ const Categories = () => {
 const Option = (props) =>{
 
     return(
-        <div className="flex mx-6 font-medium items-center cursor-pointer" onClick={props.action}>
+        <div className="flex mx-6 font-medium items-center cursor-pointer text-lg" onClick={props.action}>
             {props.children}
         </div>
     )
