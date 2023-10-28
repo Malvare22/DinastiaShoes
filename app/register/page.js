@@ -5,7 +5,7 @@ import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
 import { sendRegister, validateInformation, verifyRegister } from "../lib/information";
-import Modal from "../components/modal";
+import Modal, { ModalCloseButton } from "../components/modal";
 
 const infoBase = {
   "correo" : "",
@@ -15,7 +15,7 @@ const infoBase = {
   "apellido" : "",
   "fecha" : "",
   "genero" : ""
-}
+};
 
 const validateBase = {
   "correo" : false,
@@ -24,34 +24,32 @@ const validateBase = {
   "apellido" : false,
   "fecha" : false,
   "genero" : false
-}
+};
 
-const ModalContent = () => {
-  return(
-    <div>
-      <h1>
-        ¿Está seguro de que desea registrar un usuario con la información ingresada?
-      </h1>
-    </div>
-  );
-}
+
 
 export default function Register() {
   
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   
   const handleButton = () =>{
-    if(verifyRegister(information)){
+    if(validateInformation(information)){
       setIsVisible(true);
     }
   }
 
+  const btn = {
+    text: "Registrar",
+    make: handleButton,
+    color: "bg-blue"
+  };
+
   
   return (
     <FormContainer>
-      <Modal isVisible={isVisible} setIsVisible={setIsVisible}><ModalContent></ModalContent></Modal>
+      <Modal isVisible={isVisible} setIsVisible={setIsVisible} text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>
       <TitleInput>
           Registrar
       </TitleInput>

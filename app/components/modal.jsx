@@ -3,7 +3,7 @@ import { Button, CancelModalButton } from "./buttons";
 
 const Modal = (props) => {
 
-    const {isVisible, setIsVisible, button, children} = props;
+    const {isVisible, setIsVisible, children, button, text} = props;
   
     const toggleModal = () => {
       setIsVisible(!isVisible);
@@ -15,14 +15,17 @@ const Modal = (props) => {
           <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex justify-center items-center w-full h-full">
               <div className="modal-container rounded-lg shadow-lg overflow-hidden p-4 w-6/12 bg-lightGrey">
-                <div className="modal-content py-4 px-6">
-                  {children}
-                </div>
-                <div className="modal-footer py-3 px-6">
-                    <div>{button}</div>
-                  <div
-                    className="modal-close btn-link text-gray-400 hover:bg-gray-700 hover:text-white">
-                    <Button color="bg-grey" handleButton={toggleModal}>A</Button>
+                <div className="modal-content px-6 my-10 space-y-10">
+                  <div className="text-center">
+                      {text}
+                  </div>
+                  <div className="flex justify-center">
+                    <div className="mx-10">
+                      <Button handleButton={button.make} color={button.color}>{button.text}</Button>
+                    </div>
+                    <div className="mx-10">
+                      <ModalCloseButton isVisible={isVisible} setIsVisible={setIsVisible}>Cancelar</ModalCloseButton>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -33,4 +36,17 @@ const Modal = (props) => {
     );
   };
   
+  export const ModalCloseButton = (props) =>{
+
+    const {isVisible, setIsVisible, children} = props;
+
+    const toggleModal = () => {
+      setIsVisible(!isVisible);
+    };
+
+    return(
+      <Button color="bg-grey" handleButton={toggleModal}>{children}</Button>
+    )
+  }  
+
   export default Modal;

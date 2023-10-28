@@ -18,3 +18,7 @@ export const sendRecoveryEmail = (information) => {
 export const sendLogin = (information) => {
     console.log(information);
 }
+
+export const sendChangePassword = (information) => {
+    console.log(information);
+}

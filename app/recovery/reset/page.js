@@ -1,21 +1,46 @@
-import { Button } from "../../components/buttons";
+'use client'
+import { useState } from "react";
+import { Button, FormButton } from "../../components/buttons";
 import { FormContainer } from "../../components/forms/container";
-import { InputDate, InputEmail, InputGenre, InputPassword, InputText } from "../../components/forms/inputs";
+import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText } from "../../components/forms/inputs";
 import { LabelInput, TitleInput} from "../../components/text";
+import { sendChangePassword, validateInformation } from "@/app/lib/information";
+import { useRouter } from "next/navigation";
+
+const infoBase = {
+  "contrasenia" : "",
+  "contrasenia_2" : "",
+
+}
+
+const validateBase = {
+  "contrasenia" : false,
+}
 
 export default function Register() {
+
+  const router = useRouter();
+
+  const handleButton = () =>{
+    if(validateInformation(information)){
+      sendChangePassword(information);
+      
+      router.push("/recovery/reset/confirm");
+
+    }
+  }
+  
+  const [information, setInformation] = useState(infoBase);
+  const [validate, setValidate] = useState(validateBase);
 
   return (
     <FormContainer>
       <TitleInput>
           Recuperar Contraseña
       </TitleInput>
-      <LabelInput>Escriba su nueva contraseña</LabelInput>
-      <InputEmail></InputEmail>
-      <LabelInput>Confirme su contraseña</LabelInput>
-      <InputEmail></InputEmail>
+      <InputRegisterPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>
       <div className="flex justify-center">
-        <Button color="bg-orange">Cambiar Contraseña</Button>
+      <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Cambiar contraseña</FormButton>
       </div>
     </FormContainer>
   )
