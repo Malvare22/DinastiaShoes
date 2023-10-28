@@ -15,7 +15,7 @@ export const LabelInput = (props) => {
 export const AText = (props) => {
     return(
         <Link href={props.link}>
-            <h3 className="text-carouselBlue underline ml-2">{props.children}</h3>
+            <h3 className="text-blueDark underline ml-2">{props.children}</h3>
         </Link>
     );
 }

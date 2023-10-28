@@ -52,7 +52,7 @@ export const ImageCarousel = ({ images }) => {
           <div
             key={index}
             className={`h-1 w-8 mx-2 ${
-              currentImageIndex === index ? 'bg-carouselBlue' : 'bg-black'
+              currentImageIndex === index ? 'bg-blueDark' : 'bg-black'
             }`}
           />
         ))}

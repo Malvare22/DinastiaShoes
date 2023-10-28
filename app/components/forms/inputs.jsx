@@ -36,9 +36,34 @@ export const InputDate = (props) => {
     );
 }
 
-export const InputText = () => {
+export const InputText = (props) => {
+
+    const {information, setInformation, nameInput, validate, setValidate} = props;
+
+    const handleInput = (e) => {
+        const info = e.target.value;
+        setInformation({...information, [nameInput] : info});
+        setValidate({...validate, [nameInput] : verify(info)});
+    }
+
+    function verify(info) {
+        // Verifica que el nombre no esté vacío
+        info = info.trim();
+
+        if (!info) {
+          return false;
+        }
+      
+        // Verifica que el nombre solo tenga letras
+        const regex = /^[a-zA-Z ]+$/;
+        return regex.test(info);
+    }
+
     return(
-        <input type="text" className="w-full rounded-lg"></input>
+        <div>
+            <input type="text" required className="w-full rounded-lg" onChange={handleInput}></input>
+            {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-redForButton text-sm">La información no corresponde a un campo valido</div>}
+        </div>
     );
 }
 
@@ -72,7 +97,7 @@ export const InputGenre = (props) => {
 
 export const InputEmail = () => {
     return(
-        <input type="email" className="w-full rounded-lg"></input>
+        <input type="email" required className="w-full rounded-lg"></input>
     );
 }
 
@@ -108,7 +133,7 @@ const verifyPassword = () => {
 
 export const InputPassword = () => {
     return(
-        <input type="password" className="w-full rounded-lg"></input>
+        <input type="password" required className="w-full rounded-lg"></input>
     );
 }
 

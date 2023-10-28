@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Navbar({type, mode}){
 
     return(
-        <div className="bg-customBlue md:p-5 lg:flex content-center block align-middle lg:justify-between select-none">
+        <div className="bg-blue md:p-5 lg:flex content-center block align-middle lg:justify-between select-none">
             
             <Logo></Logo>
             {mode == "Unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
@@ -74,7 +74,7 @@ const AccountButton = ({text}) =>{
             {press && 
                 <>
                     <div className="rounded-lg flex-col items-center absolute top-[100%] border-2 w-full">
-                        <div className="w-full p-3 bg-customBlue">Ver Perfil</div>
+                        <div className="w-full p-3 bg-blue">Ver Perfil</div>
                         <div className="w-full p-3 bg-red">Cerrar Sesión</div>
                     </div>
                     

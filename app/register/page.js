@@ -1,9 +1,11 @@
 'use client'
 import { useState } from "react";
-import { Button } from "../components/buttons";
+import { Button, FormButton } from "../components/buttons";
 import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
+import { sendRegister, validateRegister, verifyRegister } from "../lib/information";
+import Modal from "../components/modal";
 
 const infoBase = {
   "correo" : "",
@@ -24,13 +26,32 @@ const validateBase = {
   "genero" : false
 }
 
-export default function Register() {
+const ModalContent = () => {
+  return(
+    <div>
+      <h1>
+        ¿Está seguro de que desea registrar un usuario con la información ingresada?
+      </h1>
+    </div>
+  );
+}
 
+export default function Register() {
+  
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  const handleButton = () =>{
+    if(verifyRegister(information)){
+      setIsVisible(true);
+    }
+  }
 
+  
   return (
     <FormContainer>
+      <Modal isVisible={isVisible} setIsVisible={setIsVisible}><ModalContent></ModalContent></Modal>
       <TitleInput>
           Registrar
       </TitleInput>
@@ -40,10 +61,10 @@ export default function Register() {
       <InputRegisterPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>
 
       <LabelInput>Nombres</LabelInput>
-      <InputText></InputText>
+      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"nombre"}></InputText>
 
       <LabelInput>Apellidos</LabelInput>
-      <InputText></InputText>
+      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"apellido"}></InputText>
 
       <LabelInput>Fecha de nacimiento</LabelInput>
       <InputDate information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"fecha"}></InputDate>
@@ -53,7 +74,7 @@ export default function Register() {
 
       
       <div className="flex justify-center">
-        <Button>Registrar</Button>
+        <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateRegister(validate))} >Registrar</FormButton>
       </div>
     </FormContainer>
   )
