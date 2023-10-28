@@ -18,12 +18,12 @@ export default function Register() {
 
       <div className="flex">
         <h4>¿No tienes una cuenta?</h4>
-        <AText>Registro</AText>
+        <AText link="/register">Registro</AText>
       </div>
 
       <div className="flex">
         <h4>¿Olvidaste tu contraseña?</h4>
-        <AText>Recuperar contraseña</AText>
+        <AText link="/recovery">Recuperar contraseña</AText>
       </div>
       
       <div className="flex justify-center">

@@ -1,6 +1,8 @@
-export const AcceptButton = ({text}) => {
+import Link from "next/link";
+
+export const ToLink = (props) => {
     return(
-        <button className="bg-customGreen p-3 rounded-lg font-medium">{text}</button>
+        <Link href={props.link}><button className="bg-customGreen p-3 rounded-lg font-medium">{props.children}</button></Link>
     );
 }
 

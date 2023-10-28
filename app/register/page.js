@@ -1,9 +1,33 @@
+'use client'
+import { useState } from "react";
 import { Button } from "../components/buttons";
 import { FormContainer } from "../components/forms/container";
-import { InputDate, InputEmail, InputGenre, InputPassword, InputText } from "../components/forms/inputs";
+import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
 
+const infoBase = {
+  "correo" : "",
+  "contrasenia" : "",
+  "contrasenia_2" : "",
+  "nombre" : "",
+  "apellido" : "",
+  "fecha" : "",
+  "genero" : ""
+}
+
+const validateBase = {
+  "correo" : false,
+  "contrasenia" : false,
+  "nombre" : false,
+  "apellido" : false,
+  "fecha" : false,
+  "genero" : false
+}
+
 export default function Register() {
+
+  const [information, setInformation] = useState(infoBase);
+  const [validate, setValidate] = useState(validateBase);
 
   return (
     <FormContainer>
@@ -11,13 +35,9 @@ export default function Register() {
           Registrar
       </TitleInput>
       <LabelInput>Correo electrónico</LabelInput>
-      <InputEmail></InputEmail>
+      <InputRegisterEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputRegisterEmail>
 
-      <LabelInput>Contraseña</LabelInput>
-      <InputPassword></InputPassword>
-      
-      <LabelInput>Confirmar contraseña</LabelInput>
-      <InputPassword></InputPassword>
+      <InputRegisterPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>
 
       <LabelInput>Nombres</LabelInput>
       <InputText></InputText>
@@ -26,10 +46,10 @@ export default function Register() {
       <InputText></InputText>
 
       <LabelInput>Fecha de nacimiento</LabelInput>
-      <InputDate></InputDate>
+      <InputDate information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"fecha"}></InputDate>
 
       <LabelInput>Seleccione su sexo</LabelInput>
-      <InputGenre></InputGenre>
+      <InputGenre information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"genero"}></InputGenre>
 
       
       <div className="flex justify-center">

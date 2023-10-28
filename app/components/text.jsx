@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const TitleInput = (props) => {
     return(
         <div className="font-bold text-4xl mb-8">{props.children}</div>
@@ -12,6 +14,8 @@ export const LabelInput = (props) => {
 
 export const AText = (props) => {
     return(
-        <h3 className="text-carouselBlue underline ml-2">{props.children}</h3>
+        <Link href={props.link}>
+            <h3 className="text-carouselBlue underline ml-2">{props.children}</h3>
+        </Link>
     );
 }
