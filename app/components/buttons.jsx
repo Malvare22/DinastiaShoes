@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const ToLink = (props) => {
     return(
-        <Link href={props.link}><button className="bg-green p-3 rounded-lg font-medium">{props.children}</button></Link>
+        <Link href={props.link} className={"text-white text-center min-w-[150px] mt-4 p-2 rounded-lg font-semibold " + props.color}>{props.children}</Link>
     );
 }
 

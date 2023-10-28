@@ -11,7 +11,7 @@ export default function Register() {
         <LabelInput>¡Se ha realizado el cambio de contraseña de manera exitosa!</LabelInput>
       </div>
       <div className="flex justify-center">
-        <Button>Volver al login</Button>
+        <Button color="bg-orange">Volver al login</Button>
       </div>
     </FormContainer>
   )

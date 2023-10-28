@@ -4,7 +4,7 @@ import { Button, FormButton } from "../components/buttons";
 import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
-import { sendRegister, validateRegister, verifyRegister } from "../lib/information";
+import { sendRegister, validateInformation, verifyRegister } from "../lib/information";
 import Modal from "../components/modal";
 
 const infoBase = {
@@ -74,7 +74,7 @@ export default function Register() {
 
       
       <div className="flex justify-center">
-        <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateRegister(validate))} >Registrar</FormButton>
+        <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Registrar</FormButton>
       </div>
     </FormContainer>
   )

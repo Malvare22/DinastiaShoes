@@ -28,7 +28,9 @@ const Unlogged = () => {
                 <CarIcon></CarIcon>
             </Option>
             <Option>
-                <ToLink link={"/login"}>Iniciar Sesión</ToLink>
+                <div>
+                <ToLink link={"/login"} color="bg-green">Iniciar Sesión</ToLink>
+                </div>
             </Option>
             
         </div>

@@ -15,7 +15,7 @@ export default function Register() {
       <LabelInput>Confirme su contraseña</LabelInput>
       <InputEmail></InputEmail>
       <div className="flex justify-center">
-        <Button>Cambiar Contraseña</Button>
+        <Button color="bg-orange">Cambiar Contraseña</Button>
       </div>
     </FormContainer>
   )

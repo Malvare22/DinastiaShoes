@@ -1,4 +1,4 @@
-export const validateRegister = (information) => {
+export const validateInformation = (information) => {
 
     for(const key in information){
         if(!information[key]) return false;
@@ -8,5 +8,13 @@ export const validateRegister = (information) => {
 }
 
 export const sendRegister = (information) => {
+    console.log(information);
+}
+
+export const sendRecoveryEmail = (information) => {
+    console.log(information);
+}
+
+export const sendLogin = (information) => {
     console.log(information);
 }
