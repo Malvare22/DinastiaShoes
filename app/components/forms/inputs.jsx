@@ -235,9 +235,10 @@ export const InputChangePassword = (props) => {
     );
 };
 
-export const InputPassword = () => {
+export const InputPassword = (props) => {
 
-    const {information, setInformation, nameInput, validate, setValidate} = useContext(formContext);
+    const {nameInput} = props;
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
         const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;

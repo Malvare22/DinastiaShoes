@@ -5,6 +5,7 @@ import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputText } from "../components/forms/inputs";
 import { AText, LabelInput, TitleInput} from "../components/text";
 import { sendLogin, validateInformation } from "../lib/information";
+import { formContext } from "../components/context";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -37,7 +38,7 @@ export default function Register() {
    * Boton de ejecutar acción de logearse
    */
   const handleButton = () =>{
-    if(!validateInformation(information)){
+    if(!validateInformation(validate)){
       setShowFail(true);
     }
     else{
@@ -48,30 +49,32 @@ export default function Register() {
 
   return (
     <FormContainer>
-      <div className="space-y-6 my-6">
-        <TitleInput>Iniciar Sesión</TitleInput>
-        <LabelInput>Correo electrónico</LabelInput>
-        <InputEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputEmail>
-        <LabelInput>Contraseña</LabelInput>
-        <InputPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"contrasenia"}></InputPassword>
+      <formContext.Provider value={{information, setInformation, validate, setValidate}}>
+        <div className="space-y-6 my-6">
+          <TitleInput>Iniciar Sesión</TitleInput>
+          <LabelInput>Correo electrónico</LabelInput>
+          <InputEmail nameInput={"correo"}></InputEmail>
+          <LabelInput>Contraseña</LabelInput>
+          <InputPassword nameInput={"contrasenia"}></InputPassword>
 
-        {/* Mensaje de Error */}
-        {showFail && <FrameMessage></FrameMessage>}
+          {/* Mensaje de Error */}
+          {showFail && <FrameMessage></FrameMessage>}
 
-        <div className="flex">
-          <h4>¿No tienes una cuenta?</h4>
-          <AText link="/register">Registro</AText>
-        </div>
+          <div className="flex">
+            <h4>¿No tienes una cuenta?</h4>
+            <AText link="/register">Registro</AText>
+          </div>
 
-        <div className="flex">
-          <h4>¿Olvidaste tu contraseña?</h4>
-          <AText link="/recovery">Recuperar contraseña</AText>
+          <div className="flex">
+            <h4>¿Olvidaste tu contraseña?</h4>
+            <AText link="/recovery">Recuperar contraseña</AText>
+          </div>
+          
+          <div className="flex justify-center">
+            <Button handleButton={handleButton} color="bg-orange">Ingresar</Button>
+          </div>
         </div>
-        
-        <div className="flex justify-center">
-          <Button handleButton={handleButton} color="bg-orange">Ingresar</Button>
-        </div>
-      </div>
+      </formContext.Provider>
     </FormContainer>
   )
 }
