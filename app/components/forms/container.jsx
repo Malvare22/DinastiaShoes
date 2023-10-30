@@ -1,5 +1,8 @@
+'use client'
+import { createContext } from "react";
 import { LabelInput } from "../text";
 import { InputDate, InputGenre, InputRegisterEmail, InputRegisterPassword, InputText } from "./inputs";
+
 
 export const FormContainer = (props) => {
 
@@ -18,31 +21,32 @@ export const FormContainer = (props) => {
 
 export const FormStandar = (props) => {
 
-  const {information, setInformation, validate, setValidate, type} = props;
+  const {type} = props;
 
   return(
     <>
-      <div className="flex align-middle items-end">
-        <LabelInput>Correo electrónico</LabelInput>
-      </div>
-      <InputRegisterEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputRegisterEmail>
+        <div className="flex align-middle items-end">
+          <LabelInput>Correo electrónico</LabelInput>
+        </div>
+        <InputRegisterEmail nameInput={"correo"}></InputRegisterEmail>
 
-      {(type=="register") && <InputRegisterPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
+        {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
 
-      <LabelInput>Nombres</LabelInput>
-      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"nombre"}></InputText>
+        <LabelInput>Nombres</LabelInput>
+        <InputText nameInput={"nombre"}></InputText>
 
-      <LabelInput>Apellidos</LabelInput>
-      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"apellido"}></InputText>
+        <LabelInput>Apellidos</LabelInput>
+        <InputText nameInput={"apellido"}></InputText>
 
-      <LabelInput>Fecha de nacimiento</LabelInput>
-      <InputDate information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"fecha"}></InputDate>
+        <LabelInput>Fecha de nacimiento</LabelInput>
+        <InputDate nameInput={"fecha"}></InputDate>
 
-      <LabelInput>Sexo</LabelInput>
-      <InputGenre information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"genero"}></InputGenre>
+        <LabelInput>Sexo</LabelInput>
+        <InputGenre nameInput={"genero"}></InputGenre>
 
-      {information.rol && information.rol != "cliente" && <><LabelInput>Sexo</LabelInput>
-      <LabelInput>{information.rol}</LabelInput></>}
+        {/* {information.rol && information.rol != "cliente" && <><LabelInput>Sexo</LabelInput>
+        <LabelInput>{information.rol}</LabelInput></>} */}
+
     </>
   );
 }

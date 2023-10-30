@@ -6,6 +6,9 @@ import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, I
 import { AText, LabelInput, TitleInput} from "../components/text";
 import { sendLogin, validateInformation } from "../lib/information";
 
+/***
+ * Mensaje de error en el logeo por datos incorrectos
+ */
 const FrameMessage = () => {
   return(
     <div className="bg-darkRed rounded-md text-white text-font-semibold text-center text-base mx-14 p-2">
@@ -30,6 +33,9 @@ export default function Register() {
   const [validate, setValidate] = useState(validateBase);
   const [showFail, setShowFail] = useState(false);
 
+  /**
+   * Boton de ejecutar acción de logearse
+   */
   const handleButton = () =>{
     if(!validateInformation(information)){
       setShowFail(true);
@@ -43,15 +49,15 @@ export default function Register() {
   return (
     <FormContainer>
       <div className="space-y-6 my-6">
-        <TitleInput>
-            Iniciar Sesión
-        </TitleInput>
+        <TitleInput>Iniciar Sesión</TitleInput>
         <LabelInput>Correo electrónico</LabelInput>
         <InputEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputEmail>
-
         <LabelInput>Contraseña</LabelInput>
         <InputPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"contrasenia"}></InputPassword>
+
+        {/* Mensaje de Error */}
         {showFail && <FrameMessage></FrameMessage>}
+
         <div className="flex">
           <h4>¿No tienes una cuenta?</h4>
           <AText link="/register">Registro</AText>

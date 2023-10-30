@@ -1,15 +1,16 @@
 'use client'
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LabelInput } from "../text";
 import { FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
+import { formContext } from "./../context";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
 export const InputDate = (props) => {
-
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {nameInput} = props;
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
         const today = new Date();
@@ -39,8 +40,8 @@ export const InputDate = (props) => {
 }
 
 export const InputText = (props) => {
-
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {nameInput} = props;
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const handleInput = (e) => {
         const info = e.target.value;
@@ -70,8 +71,8 @@ export const InputText = (props) => {
 }
 
 export const InputGenre = (props) => {
-
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {nameInput} = props;
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -98,7 +99,9 @@ export const InputGenre = (props) => {
 }
 
 export const InputEmail = (props) => {
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {nameInput} = props;
+
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -123,7 +126,9 @@ export const InputEmail = (props) => {
 
 export const InputRegisterEmail = (props) => {
 
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {nameInput} = props;
+
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -153,7 +158,9 @@ const verifyPassword = () => {
 
 export const InputRegisterPassword = (props) => {
 
-    const {information, setInformation, nameInput1, nameInput2, validate, setValidate} = props;
+    const {nameInput1, nameInput2} = props;
+
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
         const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;
@@ -228,9 +235,9 @@ export const InputChangePassword = (props) => {
     );
 };
 
-export const InputPassword = (props) => {
+export const InputPassword = () => {
 
-    const {information, setInformation, nameInput, validate, setValidate} = props;
+    const {information, setInformation, nameInput, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
         const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, CancelModalButton } from "./buttons";
 import { InputChangePassword, InputRegisterPassword } from "./forms/inputs";
+import { formContext } from "./context";
 
 const Modal = (props) => {
 
-    const {isVisible, setIsVisible, button, text} = props;
-  
+    const {button, text} = props;
+    const {isVisible} = useContext(formContext);
+
     return (
       <div>
         {isVisible && (
@@ -21,7 +23,7 @@ const Modal = (props) => {
                       <Button handleButton={button.make} color={button.color}>{button.text}</Button>
                     </div>
                     <div className="mx-10">
-                      <ModalCloseButton isVisible={isVisible} setIsVisible={setIsVisible}>Cancelar</ModalCloseButton>
+                      <ModalCloseButton>Cancelar</ModalCloseButton>
                     </div>
                   </div>
                 </div>
@@ -52,8 +54,9 @@ const Modal = (props) => {
   };
 
   export const ModalCloseButton = (props) =>{
+    const {setIsVisible} = useContext(formContext);
 
-    const {setIsVisible, children} = props;
+    const {children} = props;
 
     const toggleModal = () => {
       setIsVisible(false);

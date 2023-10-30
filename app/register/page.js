@@ -6,15 +6,16 @@ import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, I
 import { LabelInput, TitleInput} from "../components/text";
 import { infoBase, sendRegister, validateBase, validateInformation, verifyRegister } from "../lib/information";
 import Modal, { ModalCloseButton } from "../components/modal";
+import { formContext } from "../components/context";
 
 export default function Register() {
   
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   
   const handleButton = () =>{
-    if(validateInformation(information)){
+    if(validateInformation(validate)){
       setIsVisible(true);
     }
   }
@@ -29,22 +30,21 @@ export default function Register() {
     color: "bg-blue"
   };
 
-  
   return (
-    <FormContainer>
-      <Modal isVisible={isVisible} setIsVisible={setIsVisible} text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>
-      <div className="space-y-6 my-6">
-        <TitleInput>
-            Registrar
-        </TitleInput>
-        <FormStandar information={information} setInformation={setInformation} type={"register"} validate={validate} setValidate={setValidate}></FormStandar>
-
-        
-        <div className="flex justify-center">
-          <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Registrar</FormButton>
+    <formContext.Provider value={{information, setInformation, validate, setValidate, isVisible, setIsVisible}}>
+      <FormContainer>
+        <Modal text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>
+        <div className="space-y-6 my-6">
+          <TitleInput>
+              Registrar
+          </TitleInput>
+          <FormStandar type={"register"}></FormStandar>
+          <div className="flex justify-center">
+            <Button handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Registrar</Button>
+          </div>
         </div>
-      </div>
-    </FormContainer>
+      </FormContainer>
+    </formContext.Provider>
   )
 }
  
