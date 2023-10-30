@@ -1,32 +1,11 @@
 'use client'
 import { useState } from "react";
 import { Button, FormButton } from "../components/buttons";
-import { FormContainer } from "../components/forms/container";
+import { FormContainer, FormStandar } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
-import { sendRegister, validateInformation, verifyRegister } from "../lib/information";
+import { infoBase, sendRegister, validateBase, validateInformation, verifyRegister } from "../lib/information";
 import Modal, { ModalCloseButton } from "../components/modal";
-
-const infoBase = {
-  "correo" : "",
-  "contrasenia" : "",
-  "contrasenia_2" : "",
-  "nombre" : "",
-  "apellido" : "",
-  "fecha" : "",
-  "genero" : ""
-};
-
-const validateBase = {
-  "correo" : false,
-  "contrasenia" : false,
-  "nombre" : false,
-  "apellido" : false,
-  "fecha" : false,
-  "genero" : false
-};
-
-
 
 export default function Register() {
   
@@ -40,9 +19,13 @@ export default function Register() {
     }
   }
 
+  const makeTheSend = () =>{
+    sendRegister(information);
+  }
+
   const btn = {
     text: "Registrar",
-    make: handleButton,
+    make: makeTheSend,
     color: "bg-blue"
   };
 
@@ -50,29 +33,16 @@ export default function Register() {
   return (
     <FormContainer>
       <Modal isVisible={isVisible} setIsVisible={setIsVisible} text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>
-      <TitleInput>
-          Registrar
-      </TitleInput>
-      <LabelInput>Correo electrónico</LabelInput>
-      <InputRegisterEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputRegisterEmail>
+      <div className="space-y-6 my-6">
+        <TitleInput>
+            Registrar
+        </TitleInput>
+        <FormStandar information={information} setInformation={setInformation} type={"register"} validate={validate} setValidate={setValidate}></FormStandar>
 
-      <InputRegisterPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>
-
-      <LabelInput>Nombres</LabelInput>
-      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"nombre"}></InputText>
-
-      <LabelInput>Apellidos</LabelInput>
-      <InputText information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"apellido"}></InputText>
-
-      <LabelInput>Fecha de nacimiento</LabelInput>
-      <InputDate information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"fecha"}></InputDate>
-
-      <LabelInput>Seleccione su sexo</LabelInput>
-      <InputGenre information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"genero"}></InputGenre>
-
-      
-      <div className="flex justify-center">
-        <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Registrar</FormButton>
+        
+        <div className="flex justify-center">
+          <FormButton handleButton={handleButton} color="bg-orange" disable={!(validateInformation(validate))} >Registrar</FormButton>
+        </div>
       </div>
     </FormContainer>
   )

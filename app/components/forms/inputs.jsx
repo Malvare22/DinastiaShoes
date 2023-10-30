@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { LabelInput } from "../text";
+import { FormButton } from "../buttons";
+import { ModalCloseButton } from "../modal";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
@@ -181,6 +183,50 @@ export const InputRegisterPassword = (props) => {
         </div>
     );
 }
+
+export const InputChangePassword = (props) => {
+
+    const {information, setInformation, setValidate, setIsVisible, handleButton} = props;
+    const [temporal, setTemporal] = useState({});
+    const [temporalVerify, setTemporalVerify] = useState(false);
+
+    const verify = (info) => {
+        const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;
+        return regex.test(info["contrasenia"]) && temporal["contrasenia"] && (info["contrasenia"] == info["contrasenia_2"]);
+    }
+
+    const handleInput = (e) => {
+        const {value, name} = e.target;
+        const info = {...temporal, [name]: value};
+        setTemporal(info);
+        setTemporalVerify(verify(info));
+    }
+
+    const makeChange = () => {
+        if(verify(temporal)){
+            setInformation({...information, temporal});
+        }
+    }
+
+    return(
+        <div className="space-y-5">
+            <div className="space-y-5">
+                <LabelInput>Contraseña</LabelInput>
+                <input required type="password" name={"contrasenia"} onChange={handleInput} className="w-full rounded-lg"></input>
+                {(temporal["contrasenia"] && !temporalVerify)&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            </div>
+            <div className="space-y-5">
+                <LabelInput>Confirmar Contraseña</LabelInput>
+                <input required type="password" name={"contrasenia_2"} onChange={handleInput} className="w-full rounded-lg"></input>
+                {temporal["contrasenia"] && !temporalVerify && <div className="text-orange text-sm">Ambas contraseñas deben ser iguales</div>}
+            </div>
+            <div className="flex space-x-10 justify-center">
+                <FormButton disable={!verify(temporal)} handleButton={makeChange} color={"bg-blue"}>Aceptar</FormButton>
+                <ModalCloseButton setIsVisible={setIsVisible}>Cancelar</ModalCloseButton>
+            </div>
+        </div>
+    );
+};
 
 export const InputPassword = (props) => {
 

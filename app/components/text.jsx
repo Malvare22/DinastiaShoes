@@ -19,3 +19,11 @@ export const AText = (props) => {
         </Link>
     );
 }
+
+export const PageTittle = (props) => {
+    return(
+        <div className="py-8 text-black font-bold text-3xl">
+            {props.children}
+        </div>
+    );
+}

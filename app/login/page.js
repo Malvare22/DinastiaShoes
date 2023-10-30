@@ -42,27 +42,29 @@ export default function Register() {
 
   return (
     <FormContainer>
-      <TitleInput>
-          Iniciar Sesión
-      </TitleInput>
-      <LabelInput>Correo electrónico</LabelInput>
-      <InputEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputEmail>
+      <div className="space-y-6 my-6">
+        <TitleInput>
+            Iniciar Sesión
+        </TitleInput>
+        <LabelInput>Correo electrónico</LabelInput>
+        <InputEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputEmail>
 
-      <LabelInput>Contraseña</LabelInput>
-      <InputPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"contrasenia"}></InputPassword>
-      {showFail && <FrameMessage></FrameMessage>}
-      <div className="flex">
-        <h4>¿No tienes una cuenta?</h4>
-        <AText link="/register">Registro</AText>
-      </div>
+        <LabelInput>Contraseña</LabelInput>
+        <InputPassword information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"contrasenia"}></InputPassword>
+        {showFail && <FrameMessage></FrameMessage>}
+        <div className="flex">
+          <h4>¿No tienes una cuenta?</h4>
+          <AText link="/register">Registro</AText>
+        </div>
 
-      <div className="flex">
-        <h4>¿Olvidaste tu contraseña?</h4>
-        <AText link="/recovery">Recuperar contraseña</AText>
-      </div>
-      
-      <div className="flex justify-center">
-        <Button handleButton={handleButton} color="bg-orange">Ingresar</Button>
+        <div className="flex">
+          <h4>¿Olvidaste tu contraseña?</h4>
+          <AText link="/recovery">Recuperar contraseña</AText>
+        </div>
+        
+        <div className="flex justify-center">
+          <Button handleButton={handleButton} color="bg-orange">Ingresar</Button>
+        </div>
       </div>
     </FormContainer>
   )

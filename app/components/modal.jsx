@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Button, CancelModalButton } from "./buttons";
+import { InputChangePassword, InputRegisterPassword } from "./forms/inputs";
 
 const Modal = (props) => {
 
-    const {isVisible, setIsVisible, children, button, text} = props;
-  
-    const toggleModal = () => {
-      setIsVisible(!isVisible);
-    };
+    const {isVisible, setIsVisible, button, text} = props;
   
     return (
       <div>
@@ -36,12 +33,30 @@ const Modal = (props) => {
     );
   };
   
+  export const ModalChangePassword = (props) =>{
+    const {setIsVisible, setInformation, setValidate} = props;
+  
+    return (
+      <div>
+          <div className="fixed z-10 inset-0 overflow-y-auto">
+            <div className="flex justify-center items-center w-full h-full">
+              <div className="modal-container rounded-lg shadow-lg overflow-hidden p-4 w-6/12 bg-lightGrey">
+                <div className="modal-content px-6 my-10 space-y-10">
+                    <InputChangePassword setInformation={setInformation} setValidate={setValidate} setIsVisible={setIsVisible}></InputChangePassword>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    );
+  };
+
   export const ModalCloseButton = (props) =>{
 
-    const {isVisible, setIsVisible, children} = props;
+    const {setIsVisible, children} = props;
 
     const toggleModal = () => {
-      setIsVisible(!isVisible);
+      setIsVisible(false);
     };
 
     return(

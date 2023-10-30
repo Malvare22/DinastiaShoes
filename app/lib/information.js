@@ -1,3 +1,32 @@
+export const infoBase = {
+    "correo" : "",
+    "contrasenia" : "",
+    "contrasenia_2" : "",
+    "nombre" : "",
+    "apellido" : "",
+    "fecha" : "",
+    "genero" : "",
+    "rol" : ""
+  };
+  
+export const validateBase = {
+    "correo" : false,
+    "contrasenia" : false,
+    "nombre" : false,
+    "apellido" : false,
+    "fecha" : false,
+    "genero" : false
+  };  
+
+  export const editingValidateBase = {
+    "correo" : true,
+    "contrasenia" : true,
+    "nombre" : true,
+    "apellido" : true,
+    "fecha" : true,
+    "genero" : true
+  };  
+
 export const validateInformation = (information) => {
 
     for(const key in information){
