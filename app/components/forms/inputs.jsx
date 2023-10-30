@@ -2,15 +2,17 @@
 
 import { useContext, useState } from "react";
 import { LabelInput } from "../text";
-import { FormButton } from "../buttons";
+import { Button, FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
 import { formContext } from "./../context";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
+const standardColorDisable = "bg-lightGrey"
+
 export const InputDate = (props) => {
     const {nameInput} = props;
-    const {information, setInformation, validate, setValidate} = useContext(formContext);
+    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
     const verify = (info) => {
         const today = new Date();
@@ -33,7 +35,7 @@ export const InputDate = (props) => {
 
     return(
         <div>
-            <input type="date" required className="w-full rounded-lg" onChange={handleInput}></input>
+            <input type="date" value={information[nameInput]} disabled={editing==false} required className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")} onChange={handleInput}></input>
             {(information[nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
     );
@@ -41,7 +43,7 @@ export const InputDate = (props) => {
 
 export const InputText = (props) => {
     const {nameInput} = props;
-    const {information, setInformation, validate, setValidate} = useContext(formContext);
+    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
     const handleInput = (e) => {
         const info = e.target.value;
@@ -64,7 +66,7 @@ export const InputText = (props) => {
 
     return(
         <div>
-            <input type="text" required className="w-full rounded-lg" onChange={handleInput}></input>
+            <input type="text" value={information [nameInput]} disabled={editing==false} required className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
     );
@@ -72,7 +74,7 @@ export const InputText = (props) => {
 
 export const InputGenre = (props) => {
     const {nameInput} = props;
-    const {information, setInformation, validate, setValidate} = useContext(formContext);
+    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -88,7 +90,7 @@ export const InputGenre = (props) => {
 
     return(
         <div>
-            <select className="w-full rounded-lg" onChange={handleInput}>
+            <select value={information [nameInput]}  className={"w-full rounded-lg "+ (editing==false ? standardColorDisable + " appearance-none" : "")} disabled={editing==false} onChange={handleInput}>
                 <option value="" disabled selected hidden>Selecciona...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
@@ -101,7 +103,7 @@ export const InputGenre = (props) => {
 export const InputEmail = (props) => {
     const {nameInput} = props;
 
-    const {information, setInformation, validate, setValidate} = useContext(formContext);
+    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -128,7 +130,7 @@ export const InputRegisterEmail = (props) => {
 
     const {nameInput} = props;
 
-    const {information, setInformation, validate, setValidate} = useContext(formContext);
+    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
 
     const verify = (info) => {
@@ -145,7 +147,7 @@ export const InputRegisterEmail = (props) => {
 
     return(
         <div>
-            <input type="email" required onChange={handleInput} className="w-full rounded-lg"></input>
+            <input type="email" value={information [nameInput]} required onChange={handleInput} className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")}></input>
             {("" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
         
@@ -191,9 +193,14 @@ export const InputRegisterPassword = (props) => {
     );
 }
 
+/**
+ * Componente usado en la edición de perfiles propios
+ */
 export const InputChangePassword = (props) => {
 
-    const {information, setInformation, setValidate, setIsVisible, handleButton} = props;
+    const {setInformation, information, editing} = useContext(formContext);
+    const {setIsVisible} = props;
+
     const [temporal, setTemporal] = useState({});
     const [temporalVerify, setTemporalVerify] = useState(false);
 
@@ -209,9 +216,13 @@ export const InputChangePassword = (props) => {
         setTemporalVerify(verify(info));
     }
 
-    const makeChange = () => {
+    /***
+     * Efectua el cambio en la información externa temporal
+     */
+    const handleInformation = () => {
         if(verify(temporal)){
-            setInformation({...information, temporal});
+            setInformation({...information, ["contrasenia"] : temporal.contrasenia});
+            setIsVisible(false);
         }
     }
 
@@ -228,8 +239,8 @@ export const InputChangePassword = (props) => {
                 {temporal["contrasenia"] && !temporalVerify && <div className="text-orange text-sm">Ambas contraseñas deben ser iguales</div>}
             </div>
             <div className="flex space-x-10 justify-center">
-                <FormButton disable={!verify(temporal)} handleButton={makeChange} color={"bg-blue"}>Aceptar</FormButton>
-                <ModalCloseButton setIsVisible={setIsVisible}>Cancelar</ModalCloseButton>
+                <Button disable={!verify(temporal)} handleButton={handleInformation} color={"bg-blue"}>Aceptar</Button>
+                <Button color="bg-grey" handleButton={() => setIsVisible(false)}>Cancelar</Button>
             </div>
         </div>
     );

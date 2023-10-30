@@ -20,6 +20,9 @@ export default function Register() {
     }
   }
 
+  /**
+   * Método que realiza el envío al EndPoint al oprimir el botón
+   */
   const makeTheSend = () =>{
     sendRegister(information);
   }
@@ -33,7 +36,7 @@ export default function Register() {
   return (
     <formContext.Provider value={{information, setInformation, validate, setValidate, isVisible, setIsVisible}}>
       <FormContainer>
-        <Modal text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>
+        {isVisible && <Modal setIsVisible={setIsVisible} text={"¿Está seguro de que desea crear un usuario con los datos ingresados?"} button={btn}></Modal>}
         <div className="space-y-6 my-6">
           <TitleInput>
               Registrar

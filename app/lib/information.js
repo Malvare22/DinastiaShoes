@@ -2,11 +2,11 @@ export const infoBase = {
     "correo" : "",
     "contrasenia" : "",
     "contrasenia_2" : "",
-    "nombre" : "",
+    "nombre" : "Rodrigo",
     "apellido" : "",
     "fecha" : "",
     "genero" : "",
-    "rol" : ""
+    "rol" : "Administrador"
   };
   
 export const validateBase = {
@@ -16,6 +16,15 @@ export const validateBase = {
     "apellido" : false,
     "fecha" : false,
     "genero" : false
+  };  
+
+export const validateChangeBase = {
+    "correo" : true,
+    "contrasenia" : true,
+    "nombre" : true,
+    "apellido" : true,
+    "fecha" : true,
+    "genero" : true,
   };  
 
   export const editingValidateBase = {

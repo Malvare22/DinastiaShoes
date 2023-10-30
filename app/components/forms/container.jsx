@@ -1,7 +1,8 @@
 'use client'
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { LabelInput } from "../text";
 import { InputDate, InputGenre, InputRegisterEmail, InputRegisterPassword, InputText } from "./inputs";
+import { formContext } from "../context";
 
 
 export const FormContainer = (props) => {
@@ -22,6 +23,9 @@ export const FormContainer = (props) => {
 export const FormStandar = (props) => {
 
   const {type} = props;
+  const {information} = useContext(formContext);
+
+  console.log(information)
 
   return(
     <>
@@ -44,8 +48,8 @@ export const FormStandar = (props) => {
         <LabelInput>Sexo</LabelInput>
         <InputGenre nameInput={"genero"}></InputGenre>
 
-        {/* {information.rol && information.rol != "cliente" && <><LabelInput>Sexo</LabelInput>
-        <LabelInput>{information.rol}</LabelInput></>} */}
+        {information.rol && type!="register" && information.rol != "cliente" && <><LabelInput>Rol</LabelInput>
+        <LabelInput>{information.rol}</LabelInput></>}
 
     </>
   );
