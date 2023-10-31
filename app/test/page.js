@@ -22,7 +22,7 @@ export default function FormUser(){
 
     
     const handleChangePassword = () =>{
-        setViewChangePassword(!viewChangePassword);
+        if(editing) setViewChangePassword(!viewChangePassword);
     }
 
     const handleViewConfirmation = () =>{
@@ -42,7 +42,6 @@ export default function FormUser(){
     const handleCancel = () =>{
         setInformation(infoBase);
         setEditing(false);
-        console.log("????")
     }
 
     const handleEdit = () =>{
@@ -54,7 +53,7 @@ export default function FormUser(){
             <div className="mx-12">
                 <PageTittle>Información de Usuario</PageTittle>
                 <div>
-                    <FormContainer w="w-full" my="1">
+                    <FormContainer type={"editingUser"}>
                         {viewConfirmation && <Modal button={btn} text={"Hola"} setIsVisible={setViewConfirmation}></Modal>}
 
                         {viewChangePassword && <ModalChangePassword setIsVisible={setViewChangePassword}></ModalChangePassword>}
@@ -63,9 +62,9 @@ export default function FormUser(){
                             <FormStandar information={information} setInformation={setInformation} validate={validate} setValidate={setValidate}></FormStandar>
                         </div>
 
-                        <div className="flex w-full justify-end mb-10">
+                        {editing && <div className="flex w-full justify-end">
                             <Button color="bg-yellow" handleButton={handleChangePassword}>Editar contraseña</Button>
-                        </div>
+                        </div>}
 
                     </FormContainer>
                 </div>

@@ -1,12 +1,12 @@
 export const infoBase = {
-    "correo" : "",
-    "contrasenia" : "",
-    "contrasenia_2" : "",
-    "nombre" : "Rodrigo",
-    "apellido" : "",
-    "fecha" : "",
-    "genero" : "",
-    "rol" : "Administrador"
+    "correo" : "josejulian@sdf.es",
+    "contrasenia" : "123!",
+    "contrasenia_2" : "123!",
+    "nombre" : "Julian",
+    "apellido" : "Quiroz",
+    "fecha" : "2002-04-23",
+    "genero" : "M",
+    "rol" : "cliente"
   };
   
 export const validateBase = {

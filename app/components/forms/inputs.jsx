@@ -8,8 +8,6 @@ import { formContext } from "./../context";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
-const standardColorDisable = "bg-lightGrey"
-
 export const InputDate = (props) => {
     const {nameInput} = props;
     const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
@@ -35,7 +33,7 @@ export const InputDate = (props) => {
 
     return(
         <div>
-            <input type="date" value={information[nameInput]} disabled={editing==false} required className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")} onChange={handleInput}></input>
+            <input type="date" value={information[nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
             {(information[nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
     );
@@ -66,7 +64,7 @@ export const InputText = (props) => {
 
     return(
         <div>
-            <input type="text" value={information [nameInput]} disabled={editing==false} required className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")} onChange={handleInput}></input>
+            <input type="text" value={information [nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
     );
@@ -90,12 +88,14 @@ export const InputGenre = (props) => {
 
     return(
         <div>
-            <select value={information [nameInput]}  className={"w-full rounded-lg "+ (editing==false ? standardColorDisable + " appearance-none" : "")} disabled={editing==false} onChange={handleInput}>
+            {editing==false? <input className="w-full rounded-lg" disabled="true" value={information[nameInput] == 'M' ? "Masculino":"Femenino" }>
+            </input>: 
+            <select value={information[nameInput]} className={"w-full rounded-lg"} disabled={editing==false} onChange={handleInput}>
                 <option value="" disabled selected hidden>Selecciona...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
-            </select>
-            {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            </select>}
+            {editing == true && (information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
     );
 }
@@ -147,7 +147,7 @@ export const InputRegisterEmail = (props) => {
 
     return(
         <div>
-            <input type="email" value={information [nameInput]} required onChange={handleInput} className={"w-full rounded-lg "+ (editing==false ? standardColorDisable : "")}></input>
+            <input type="email" value={information [nameInput]} disabled={!editing} required onChange={handleInput} className={"w-full rounded-lg"}></input>
             {("" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
         
@@ -194,6 +194,7 @@ export const InputRegisterPassword = (props) => {
 }
 
 /**
+ * Es el contenido de la ventana modal de cambiar contraseña
  * Componente usado en la edición de perfiles propios
  */
 export const InputChangePassword = (props) => {
@@ -266,6 +267,7 @@ export const InputPassword = (props) => {
     return(
         <div>
             <input required type="password" onChange={handleInput} className="w-full rounded-lg"></input>
+            {information[nameInput] && !validate[nameInput] && <div className="text-orange text-sm">Error</div>}
         </div>
     );
 }
