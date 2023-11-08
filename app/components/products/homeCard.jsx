@@ -6,13 +6,13 @@ const fetchProductsCards = async () =>{
     return (data)
 } 
 
-export const HomeCardsGroup = async () => {
+export const HomeCardsGroup = async ({number}) => {
 
     const products = await fetchProductsCards();    
-        
     return(
         <div className="grid grid-cols-4 md:grid-cols-6 mx-20 my-7">
             {products.map((product, i) =>{
+                if(number && i>5) return;
                 return <HomeCardProduct key={i} title={product.title} img={product.image} price={product.price}></HomeCardProduct>
             })}
         </div>
