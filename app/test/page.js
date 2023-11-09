@@ -41,6 +41,7 @@ export default function FormUser(){
 
     const handleCancel = () =>{
         setInformation(infoBase);
+        setValidate(validateChangeBase);
         setEditing(false);
     }
 

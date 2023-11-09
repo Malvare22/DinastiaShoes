@@ -32,7 +32,7 @@ export const InputDate = (props) => {
     }
 
     return(
-        <div>
+        <div className="space-y-5">
             <input type="date" value={information[nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
             {(information[nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
@@ -63,7 +63,7 @@ export const InputText = (props) => {
     }
 
     return(
-        <div>
+        <div className="space-y-5">
             <input type="text" value={information [nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
@@ -87,7 +87,7 @@ export const InputGenre = (props) => {
     }
 
     return(
-        <div>
+        <div className="space-y-5">
             {editing==false? <input className="w-full rounded-lg" disabled="true" value={information[nameInput] == 'M' ? "Masculino":"Femenino" }>
             </input>: 
             <select value={information[nameInput]} className={"w-full rounded-lg"} disabled={editing==false} onChange={handleInput}>
@@ -146,7 +146,7 @@ export const InputRegisterEmail = (props) => {
     }
 
     return(
-        <div>
+        <div className="space-y-5">
             <input type="email" value={information [nameInput]} disabled={!editing} required onChange={handleInput} className={"w-full rounded-lg"}></input>
             {("" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>

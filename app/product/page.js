@@ -5,6 +5,8 @@ import { HomeCardsGroup } from "../components/products/homeCard";
 
 const images = [ "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"];
 
+const products = [];
+
 export default function Page(){
     return(
         <div className="mt-20">
@@ -98,8 +100,9 @@ const PriceCard = () => {
 }
 
 
-const Option = ({children}) =>{
-    return <div className="bg-[#B4B2B2] text-black p-2 font-semibold rounded-lg">{children}</div>;
+const Option = ({children, selected, id, }) =>{
+
+    return <div className="bg-[#B4B2B2] text-black p-2 font-semibold rounded-lg cursor-pointer">{children}</div>;
 }
 
 const AddItem = (props) => {
