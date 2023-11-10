@@ -34,32 +34,33 @@ export const Table = () => {
     });
 
     return (
-        <div className="bg-blue text-black">
-            <table>
-                <thead>
+        <div className="text-black flex justify-center">
+            <table className="border-separate md:border-spacing-4 text-center">
+                <thead className="">
                     {
                         table.getHeaderGroups().map(
                             headerGroup => (
-                                <tr key={headerGroup.id}>
+                                <tr key={headerGroup.id} className="">
                                     {headerGroup.headers.map(
                                         header => (
-                                            <th key={header.id} onClick={header.column.getToggleSortingHandler()}>
+                                            <th key={header.id} onClick={header.column.getToggleSortingHandler()} className="bg-grisAzulado md:p-5 rounded-lg md:w-40">
                                                 {flexRender(header.column.columnDef.header, header.getContext())}
                                             </th>
                                         )
                                     )}
+                                    <th className="bg-grisAzulado md:p-5 rounded-lg md:w-40">Acciones</th>
                                 </tr>
                             )
                         )
                     }
                 </thead>
-                <tbody>
+                <tbody className="">
                     {
                         table.getRowModel().rows.map((row) => (
-                            <tr key={row.id}>
+                            <tr key={row.id} className="">
                                 {
                                     row.getVisibleCells().map((cell) => (
-                                        <td key={cell.id}>
+                                        <td key={cell.id} className="bg-lightGrey md:p-5 rounded-lg">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))

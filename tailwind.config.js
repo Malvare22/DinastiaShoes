@@ -32,7 +32,8 @@ module.exports = {
       'darkRed' : '#AC3939',
       'standardWhite': colors.white,
       'standardGrey': colors.grey,
-      'pink': "#D5BBBB"
+      'pink': "#D5BBBB",
+      'grisAzulado': '#73AAB6'
     },
   },
   plugins: [],
