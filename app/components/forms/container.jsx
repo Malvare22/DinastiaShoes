@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext } from "react";
 import { LabelInput } from "../text";
-import { InputDate, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "./inputs";
+import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText } from "./inputs";
 import { formContext } from "../context";
 
 /**
@@ -48,7 +48,7 @@ export const FormStandar = (props) => {
         <div className="flex align-middle items-end">
           <LabelInput>Correo electrónico</LabelInput>
         </div>
-        <InputRegisterEmail nameInput={"correo"}></InputRegisterEmail>
+        <InputEmail type={type} nameInput={"correo"}></InputEmail>
 
         {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
         {(type=="editByAdmin") && <InputPassword nameInput="contrasenia"></InputPassword>}

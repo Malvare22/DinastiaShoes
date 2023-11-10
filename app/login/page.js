@@ -55,7 +55,7 @@ export default function Register() {
           <LabelInput>Correo electrónico</LabelInput>
           <InputEmail nameInput={"correo"}></InputEmail>
           <LabelInput>Contraseña</LabelInput>
-          <InputPassword nameInput={"contrasenia"}></InputPassword>
+          <InputPassword nameInput={"contrasenia"} type={"login"}></InputPassword>
 
           {/* Mensaje de Error */}
           {showFail && <FrameMessage></FrameMessage>}

@@ -4,13 +4,13 @@ import { Button, FormButton } from "../components/buttons";
 import { FormContainer, FormStandar } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputRegisterPassword, InputText } from "../components/forms/inputs";
 import { LabelInput, TitleInput} from "../components/text";
-import { infoBase, sendRegister, validateBase, validateInformation, verifyRegister } from "../lib/information";
+import { infoBase, sendRegister, usuarioInformacionVacia, validateBase, validateInformation, verifyRegister } from "../lib/information";
 import Modal, { ModalCloseButton } from "../components/modal";
 import { formContext } from "../components/context";
 
 export default function Register() {
   
-  const [information, setInformation] = useState(infoBase);
+  const [information, setInformation] = useState(usuarioInformacionVacia);
   const [validate, setValidate] = useState(validateBase);
   const [isVisible, setIsVisible] = useState(false);
   

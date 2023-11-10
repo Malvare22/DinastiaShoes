@@ -8,6 +8,17 @@ export const infoBase = {
     "genero" : "M",
     "rol" : "cliente"
   };
+
+  export const usuarioInformacionVacia = {
+    "correo" : "",
+    "contrasenia" : "",
+    "contrasenia_2" : "",
+    "nombre" : "",
+    "apellido" : "",
+    "fecha" : "",
+    "genero" : "",
+    "rol" : ""
+  };
   
 export const validateBase = {
     "correo" : false,

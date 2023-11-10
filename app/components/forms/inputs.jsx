@@ -100,35 +100,10 @@ export const InputGenre = (props) => {
     );
 }
 
+
 export const InputEmail = (props) => {
-    const {nameInput} = props;
 
-    const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
-
-
-    const verify = (info) => {
-        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-        return regex.test(info);
-    }
-
-    const handleInput = (e) => {
-        const info = e.target.value;
-        setInformation({...information, [nameInput] : info});
-        setValidate({...validate, [nameInput] : verify(info)});
-    }
-
-    return(
-        <div>
-            <input type="email" required onChange={handleInput} className="w-full rounded-lg"></input>
-        </div>
-        
-    );
-}
-
-export const InputRegisterEmail = (props) => {
-
-    const {nameInput} = props;
+    const {nameInput, type} = props;
 
     const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
@@ -147,16 +122,14 @@ export const InputRegisterEmail = (props) => {
 
     return(
         <div className="space-y-5">
-            <input type="email" value={information [nameInput]} disabled={!editing} required onChange={handleInput} className={"w-full rounded-lg"}></input>
-            {("" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            <input type="email" value={information [nameInput]} disabled={editing==false} required onChange={handleInput} className={"w-full rounded-lg"}></input>
+            {(type == "register" && "" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
         </div>
         
     );
 }
 
-const verifyPassword = () => {
-
-} 
+const passwordRegex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/; 
 
 export const InputRegisterPassword = (props) => {
 
@@ -165,7 +138,7 @@ export const InputRegisterPassword = (props) => {
     const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
-        const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;
+        const regex = passwordRegex;
         return regex.test(info[nameInput1]) && (info[nameInput1] == info[nameInput2]);
     }
 
@@ -206,7 +179,7 @@ export const InputChangePassword = (props) => {
     const [temporalVerify, setTemporalVerify] = useState(false);
 
     const verify = (info) => {
-        const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;
+        const regex = passwordRegex;
         return regex.test(info["contrasenia"]) && temporal["contrasenia"] && (info["contrasenia"] == info["contrasenia_2"]);
     }
 
@@ -249,11 +222,11 @@ export const InputChangePassword = (props) => {
 
 export const InputPassword = (props) => {
 
-    const {nameInput} = props;
+    const {nameInput, type} = props;
     const {information, setInformation, validate, setValidate} = useContext(formContext);
 
     const verify = (info) => {
-        const regex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/;
+        const regex = passwordRegex;
         return regex.test(info[nameInput]);
     }
 
@@ -267,7 +240,7 @@ export const InputPassword = (props) => {
     return(
         <div>
             <input required type="password" onChange={handleInput} className="w-full rounded-lg"></input>
-            {information[nameInput] && !validate[nameInput] && <div className="text-orange text-sm">Error</div>}
+            {type!="login" && information[nameInput] && !validate[nameInput] && <div className="text-orange text-sm">Error</div>}
         </div>
     );
 }
