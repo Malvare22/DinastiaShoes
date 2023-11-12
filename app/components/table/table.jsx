@@ -1,30 +1,14 @@
 import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel } from "@tanstack/react-table"
-import { getEmpleados } from "../lib/empleados"
-import data from '../jsons/empleados.json'
 import { useEffect, useState } from "react";
+import { columnasEmpleados } from "./columns";
+import TableAction from "./table_actions";
 
-export const Table = () => {
+export const Table = (props) => {
+
+    const {columns, actions, data} = props;
 
     const [sorting, setSorting] = useState([]);
 
-    const columns = [
-        {
-            header: "Id",
-            accessorKey: "id"
-        },
-        {
-            header: "Nombre",
-            accessorKey: "nombre"
-        },
-        {
-            header: "Correo",
-            accessorKey: "correo"
-        },
-        {
-            header: "Telefono",
-            accessorKey: "telefono"
-        },
-    ];
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel(), 
         getSortedRowModel: getSortedRowModel(), 
         state: {
@@ -56,7 +40,7 @@ export const Table = () => {
                 </thead>
                 <tbody className="">
                     {
-                        table.getRowModel().rows.map((row) => (
+                        table.getRowModel().rows.map((row, index) => (
                             <tr key={row.id} className="">
                                 {
                                     row.getVisibleCells().map((cell) => (
@@ -65,6 +49,14 @@ export const Table = () => {
                                         </td>
                                     ))
                                 }
+                                <td className="bg-lightGrey md:p-5 rounded-lg space-x-5"> 
+                                    { 
+                                        actions.map((act)=>{
+                                            return <TableAction action={() => act.action(data[index])} icon={act.icon}></TableAction>
+                                        })
+                                    }
+                                </td>
+
                             </tr>
                         ))
                     }

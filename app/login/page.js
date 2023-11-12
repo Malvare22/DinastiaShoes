@@ -48,7 +48,7 @@ export default function Register() {
 
 
   return (
-    <FormContainer>
+    <FormContainer type={"login"}>
       <formContext.Provider value={{information, setInformation, validate, setValidate}}>
         <div className="space-y-6 my-6">
           <TitleInput>Iniciar Sesión</TitleInput>
