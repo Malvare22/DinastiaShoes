@@ -7,11 +7,9 @@ import { PageTittle } from "@/app/components/text";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
-export default function Page(){
-
-    
+export default function Page({params}){
 
     return(
-        <ManipulateCard type="register"></ManipulateCard>
+        <ManipulateCard type="edit" id={params.id}></ManipulateCard>
     );
 };

@@ -16,3 +16,10 @@ export const columnasEmpleados = [
         accessorKey: "telefono"
     },
 ];
+
+export const columnsMethods = [
+    {
+        header: "Nombre",
+        accessorKey: "nombre"
+    },
+];
