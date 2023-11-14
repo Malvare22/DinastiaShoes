@@ -51,7 +51,7 @@ export default function Page() {
         <Modal text={"Estás seguro de que deseas eliminar método de pago: " + method.id} button={btnRemove} setIsVisible={setViewRemove}></Modal>
       </div>}
       <div className="flex mb-5 justify-center">
-        <ToLink link="methods/add" color="bg-green">Agregar Empleado</ToLink>
+        <ToLink link="methods/add" color="bg-green">Agregar Medio de Pago</ToLink>
       </div>
         
       </PageContainer>

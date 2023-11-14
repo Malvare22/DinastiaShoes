@@ -257,7 +257,7 @@ export const SquareSelect = (props) => {
 
     const {information, setInformation} = useContext(formContext);
 
-    const [mark, setMark] = useState(false);
+    const [mark, setMark] = useState(select);
 
     const handleSelect = () => {
         setMark(!mark);
@@ -265,11 +265,29 @@ export const SquareSelect = (props) => {
     };
 
     return(
-        <div className="bg-black rounded-lg w-[60px] h-[60px] flex items-center justify-center" onClick={handleSelect}>
-            {mark && <Mark></Mark>}
+        <div>
+            <div className="bg-black rounded-lg w-[60px] h-[60px] flex items-center justify-center" onClick={handleSelect}><div className={`${mark ? "": "hidden"}`}><Mark></Mark></div></div>
+            
         </div>
     );
 };
 
 
 
+export const Input = (props) => {
+    const {nameInput, errorMessage, verification, type} = props;
+    const {information, setInformation, validate, setValidate} = useContext(formContext);
+
+    const handleInput = (e) => {
+        const info = e.target.value;
+        setInformation({...information, [nameInput] : info});
+        setValidate({...validate, [nameInput] : verification(info)});
+    }
+
+    return(
+        <div className="space-y-5">
+            <input type={type} value={information [nameInput]} required className={"w-full rounded-lg"} onChange={handleInput}></input>
+            {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{errorMessage}</div>}
+        </div>
+    );
+}

@@ -23,3 +23,15 @@ export const columnsMethods = [
         accessorKey: "nombre"
     },
 ];
+
+export const columnsCategories = [
+    {
+        header: "Nombre",
+        accessorKey: "nombre"
+    },
+    {
+        header: "Destacado",
+        accessorKey: "destacadoToShow"
+    },
+
+];
