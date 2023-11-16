@@ -35,3 +35,24 @@ export const columnsCategories = [
     },
 
 ];
+
+export const columnsOrders = [
+    {
+        header: "Codigo",
+        accessorKey: "id"
+    },
+    {
+        header: "Nombre",
+        accessorKey: "nombre"
+    },
+    {
+        header: "Dirrecion",
+        accessorKey: "direccion"
+    },
+    {
+        header: "Telefono",
+        accessorKey: "telefono"
+    },
+   
+
+]; 
