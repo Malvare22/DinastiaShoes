@@ -56,3 +56,28 @@ export const columnsOrders = [
    
 
 ]; 
+
+export const columnsInventories = [
+    {
+        header: "Codigo",
+        accessorKey: "id"
+    },
+    {
+        header: "Nombre",
+        accessorKey: "nombre"
+    },
+    {
+        header: "Color",
+        accessorKey: "color"
+    },
+    {
+        header: "Talla",
+        accessorKey: "talla"
+    },
+    {
+        header: "Cantidad",
+        accessorKey: "cantidad"
+    },
+   
+
+]; 

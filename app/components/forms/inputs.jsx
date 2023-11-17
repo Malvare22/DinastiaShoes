@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { LabelInput } from "../text";
 import { Button, FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
@@ -278,15 +278,16 @@ export const Input = (props) => {
     const {nameInput, errorMessage, verification, type} = props;
     const {information, setInformation, validate, setValidate} = useContext(formContext);
 
-    const handleInput = (e) => {
+    const handleInput = ((e) => {
         const info = e.target.value;
         setInformation({...information, [nameInput] : info});
         setValidate({...validate, [nameInput] : verification(info)});
-    }
+        
+    });
 
     return(
         <div className="space-y-5">
-            <input type={type} value={information [nameInput]} required className={"w-full rounded-lg"} onChange={handleInput}></input>
+            <input type={type} value={information [nameInput]} required className={"w-full rounded-lg border"} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{errorMessage}</div>}
         </div>
     );

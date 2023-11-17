@@ -58,3 +58,18 @@ export const FileButton = ({text, type, handleButton, name}) =>{
         {type == 1 ? <UploadIcon></UploadIcon> : <DownloadIcon></DownloadIcon>}
     </div>
 };
+
+
+export const ImageButton = ({text , handleButton}) =>{
+    const inputSelector = useRef(); 
+
+    const handleInput = () => {
+        inputSelector.current.click();
+    };
+
+   
+    return <div className="flex justify-center text-center space-x-4 items-center p-5 rounded-lg">
+        <input type="file" className={"invisible w-0"} onChange={handleButton} ref={inputSelector}></input>
+        <Button color={"bg-green"} handleButton={handleInput}>{text}</Button>
+    </div>
+};
