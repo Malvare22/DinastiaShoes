@@ -251,6 +251,12 @@ const Mark = () => {
   </svg>;
 }
 
+const MarkSmall = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="white" className="bi bi-check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </svg>;
+}
+
 export const SquareSelect = (props) => {
 
     const {select, nameInput} = props;
@@ -267,6 +273,27 @@ export const SquareSelect = (props) => {
     return(
         <div>
             <div className="bg-black rounded-lg w-[60px] h-[60px] flex items-center justify-center" onClick={handleSelect}><div className={`${mark ? "": "hidden"}`}><Mark></Mark></div></div>
+            
+        </div>
+    );
+};
+
+export const SquareSelectSmall = (props) => {
+
+    const {select, nameInput} = props;
+
+    const {information, setInformation} = useContext(formContext);
+
+    const [mark, setMark] = useState(select);
+
+    const handleSelect = () => {
+        setMark(!mark);
+        setInformation({...information, [nameInput]: !mark});
+    };
+
+    return(
+        <div>
+            <div className="bg-black rounded-lg w-[30px] h-[30px] flex items-center justify-center" onClick={handleSelect}><div className={`${mark ? "": "hidden"}`}><MarkSmall></MarkSmall></div></div>
             
         </div>
     );

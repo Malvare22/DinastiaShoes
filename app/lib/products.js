@@ -5,3 +5,11 @@ export const getShoesCardHome = async () => {
     const data = await res.json()
     return data;
 } 
+
+export const getProduct = (id) => {
+    return "";
+};
+
+export const editInventory = (inventory) => {
+    alert(inventory);
+};
