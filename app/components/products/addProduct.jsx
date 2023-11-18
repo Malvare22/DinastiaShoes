@@ -69,7 +69,7 @@ export const AddInventory = ({setVisible, type}) => {
                 <div className="w-6/12 md:grid md:grid-cols-6 space-y-8">
                 <formContext.Provider value={{information, setInformation, validate, setValidate}}>
                    
-                    {type!=3 && <><div className="mt-8"><LabelInput>Nombre:</LabelInput></div>
+                    {type==1 && <><div className="mt-8"><LabelInput>Nombre:</LabelInput></div>
                     <div className="ml-4 col-span-5"><Input nameInput={"nombre"} type={"text"} errorMessage={messageText} verification={checkText}></Input></div></>}
                     <div className="mt-8"><LabelInput>Precio:</LabelInput></div>
                     <div className="ml-4 col-span-5"><Input nameInput={"precio"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
@@ -79,8 +79,8 @@ export const AddInventory = ({setVisible, type}) => {
                     <div className="ml-4 col-span-5"><Input nameInput={"talla"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
                     <LabelInput>Cantidad:</LabelInput>
                     <div className="ml-4 col-span-5"><Input nameInput={"cantidad"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
-                    {type==3 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5 w-24"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
-                    {type!=3 && <><LabelInput>Descripción:</LabelInput>
+                    {type!=1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5 w-24"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
+                    {type==1 && <><LabelInput>Descripción:</LabelInput>
                     <div className="col-span-5 ml-4" onChange={handleTextArea}><textarea className="border w-full"></textarea></div></>}
                         
                     

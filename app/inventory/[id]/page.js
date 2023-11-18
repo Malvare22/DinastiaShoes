@@ -1,7 +1,9 @@
 'use client'
 
 import { Button } from "@/app/components/buttons";
+import { ModalInventories } from "@/app/components/modal";
 import PageContainer from "@/app/components/pageContainer";
+import { AddInventory } from "@/app/components/products/addProduct";
 import EditInventoryModal from "@/app/components/products/editInventory";
 import VariantCard from "@/app/components/products/variantCard";
 import { PageTittle } from "@/app/components/text";
@@ -10,9 +12,11 @@ import { useState } from "react";
 export default function Page(){
 
     const [viewEditInventory, setViewEditInventory] = useState(false);
+    const [viewAdd, setViewAdd] = useState(false);
 
     return(
     <PageContainer>
+        {viewAdd && <ModalInventories><AddInventory setVisible={setViewAdd} type={2}></AddInventory></ModalInventories>}
         {viewEditInventory && <div className="text-black"><EditInventoryModal setVisible={setViewEditInventory} nombre={"Test"} descripcion={"A"} destacado={true}></EditInventoryModal></div>}
         <div className="flex flex-col justify-center align-middle items-center">
             <PageTittle>Tacones</PageTittle>
@@ -22,6 +26,7 @@ export default function Page(){
             </div>
         </div>
         <VariantCard></VariantCard> 
+        <Button color={"bg-grisAzulado"} handleButton={()=> setViewAdd(true)}>Añadir</Button>
     </PageContainer>
     );
 };
