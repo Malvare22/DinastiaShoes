@@ -1,120 +1,96 @@
 'use client'
-import { Button } from "../components/buttons";
-import { ProductCarousel } from "../components/imageCarousel";
-import { HomeCardsGroup } from "../components/products/homeCard";
 
-const images = [ "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"];
+import { useEffect, useState } from "react";
+import { getAllProducts } from "../lib/products";
+import { CardProduct } from "../components/products/cardProduct";
+import { PageTittle } from "../components/text";
 
-const products = [];
+export default function Page() {
 
-export default function Page(){
-    return(
-        <div className="mt-20">
-            <div className="md:flex md:justify-center">
-                    <ProductCarousel images={images}></ProductCarousel>
-                    <PriceCard></PriceCard>
-            </div>
-            <div className="text-black px-[100px] my-10">
-                <div className="font-bold text-3xl">
-                    Detalles
-                </div>
-                <div className="font-sans text-xl mt-5">
-                    C++ es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. La intención de su creación fue extender al lenguaje de programación C y añadir mecanismos que permiten la manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un lenguaje híbrido.
+  const images = [ "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"];
 
-                    Posteriormente se añadieron facilidades de programación genérica, que se sumaron a los paradigmas de programación estructurada y programación orientada a objetos. Por esto se suele decir que el C++ es un lenguaje de programación multiparadigma.
-                </div>
-            </div>
-            <div className="text-black px-[100px]">
-                <div className="font-bold text-3xl">
-                    Otros productos
-                </div>
-            </div>
-            <div>
-                <HomeCardsGroup number="6"></HomeCardsGroup>
-            </div>
-        </div>
-    );
-} 
+  const [products, setProducts] = useState([]);
+  const [actualPage, setActualPage] = useState(1);
+  const [total, setTotal] = useState(10);
+  const [limit, setLimit] = useState(0);
 
-const PriceCard = () => {
-    return(
-        <div className="bg-pink p-8 flex items-center align-middle justify-center">
-            <div className="space-y-7">
-                <div className="text-black text-4xl font-bold text-center">
-                    Nombre del Producto
-                </div>
-                <div className="text-black w-full flex justify-center">
-                    <div>
-                        <div>
-                            <s>$178.000</s>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <div className="text-4xl">
-                                $158.000
-                            </div>
-                            <div className="bg-blue text-standardWhite font-bold p-2 rounded-lg">
-                                25% OFF
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="text-black space-y-2">
-                    <div className="font-bold text-2xl text-center">
-                        Color: Azul
-                    </div>
-                    <div className="flex space-x-4 justify-center">
-                        <Option>Azul</Option>
-                        <Option>Blanco</Option>
-                        <Option>Rojo</Option>
-                    </div>
-                </div>
-                <div className="text-black space-y-2">
-                    <div div className="font-bold text-2xl text-center">
-                        Talla: 3
-                    </div>
-                    <div className="flex space-x-4 justify-center">
-                        <Option>1</Option>
-                        <Option>2</Option>
-                        <Option>3</Option>
-                    </div>
-                </div>
-                <div className="flex justify-center space-x-2 align-middle items-center">
-                    <div className="font-bold text-black text-xl">
-                        Cantidad:
-                    </div>
-                    <div className="font-bold text-black text-xl">
-                        <select className="bg-pink">
-                            <option>1 Unidad</option>
-                        </select>
-                    </div>
-                    <div className="text-grey text-sm">
-                        (X unidades disponibles)
-                    </div>
-                </div>
-                <div className="flex justify-center">
-                    <AddItem></AddItem>
-                </div>
-            </div>
-        </div>
-    );
-}
+  useEffect(
+    () => {
+      const getData = async () => {
+        const data = await getAllProducts();
+        console.log(data);
+        setProducts(data);
+        setLimit(Math.ceil(data.length/total));
 
-
-const Option = ({children, selected, id, }) =>{
-
-    return <div className="bg-[#B4B2B2] text-black p-2 font-semibold rounded-lg cursor-pointer">{children}</div>;
-}
-
-const AddItem = (props) => {
-
-    const {disable} = props;
-
-    const handleButton = () => {
-
+      };
+      
+      getData();
+      
     }
-    
-    return(
-        <button onClick={handleButton} disabled={(disable)} className={"text-black bg-[#96B836] text-xl text-center min-w-[200px]  p-2 rounded-lg font-semibold "+ (disable? "opacity-25": "" )}>Agregar al Carrito</button>
-    );
+  ,[]);
+
+  const nextPage = () => {
+    if(actualPage<limit){
+      setActualPage(actualPage+1);
+    }
+  };
+
+  const backPage = () => {
+    if(actualPage!=1){
+      setActualPage(actualPage-1);
+    }
+  };
+
+
+  return (
+      <div>
+        <div className="flex justify-center">
+          <PageTittle>Catalogo</PageTittle>
+        </div>
+        <div className="flex mb-12">
+          <div className="w-3/12">
+            <div className="h-full bg-grisAzulado mx-3"></div>
+          </div>
+          <div className="w-full">
+            <div className="grid grid-cols-5">
+              {products.slice(((actualPage-1)*total),((actualPage)*total)).map(
+                (product) => {
+                  return <CardProduct key={product.id} img={product.image} price={product.price} title={product.title}></CardProduct>;
+                }
+              )}
+            </div>
+            <div className="flex justify-center space-x-4 my-6">
+              <PageButton handleButton={backPage}><BacktArrow></BacktArrow></PageButton>
+              <PageButton handleButton={nextPage}><NextArrow></NextArrow></PageButton>
+            </div>
+          </div>
+        </div>
+      </div>
+  )
 }
+
+const NextArrow = () => {
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+</svg>
+  );
+};
+
+const BacktArrow = () => {
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+  </svg>
+  );
+};
+
+const PageButton = ({children, handleButton}) => {
+  
+  return(
+    <button onClick={handleButton} className="p-2 text-xl bg-redWine w-20 flex justify-center items-center">{children}</button>
+  );
+};
+ 
+
 
