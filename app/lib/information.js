@@ -1,13 +1,13 @@
 import employees from '../jsons/employees.json'
 
 export const infoBase = {
-    "correo" : "josejulian@sdf.es",
-    "contrasenia" : "123!",
-    "contrasenia_2" : "123!",
-    "nombres" : "Julian",
-    "apellidos" : "Quiroz",
-    "fecha_nacimiento" : "2002-04-23",
-    "sexo" : "M",
+    "correo" : "",
+    "contrasenia" : "",
+    "contrasenia_2" : "",
+    "nombres" : "",
+    "apellidos" : "",
+    "fecha_nacimiento" : "",
+    "sexo" : "",
     "rol" : "cliente"
   };
 

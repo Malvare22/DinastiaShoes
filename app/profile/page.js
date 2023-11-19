@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { FormContainer, FormStandar } from "../components/forms/container";
 import { InputText } from "../components/forms/inputs";
 import { LabelInput, PageTittle } from "../components/text";
@@ -7,6 +7,7 @@ import Modal, { ModalChangePassword } from "../components/modal";
 import { infoBase, validateBase, validateChangeBase, validateInformation } from "../lib/information";
 import { Button } from "../components/buttons";
 import { formContext } from "../components/context";
+import DirectionForm from "../components/forms/direction";
 
 
 /**
@@ -50,7 +51,7 @@ export default function FormUser(){
     }
 
     return(
-        <formContext.Provider value={{information, setInformation, validate, setValidate, editing}}>
+        <><formContext.Provider value={{information, setInformation, validate, setValidate, editing}}>
             <div className="mx-12">
                 <PageTittle>Información de Usuario</PageTittle>
                 <div>
@@ -60,7 +61,7 @@ export default function FormUser(){
                         {viewChangePassword && <ModalChangePassword setIsVisible={setViewChangePassword}></ModalChangePassword>}
 
                         <div className="grid grid-cols-2 space-y-6 mt-[30px] mb-[20px]">
-                            <FormStandar information={information} setInformation={setInformation} validate={validate} setValidate={setValidate}></FormStandar>
+                            <FormStandar information={information} type={"editingUser"}></FormStandar>
                         </div>
 
                         {editing && <div className="flex w-full justify-end">
@@ -70,14 +71,16 @@ export default function FormUser(){
                     </FormContainer>
                 </div>
             </div>
-
-            <div className="flex items-center justify-center my-10">
+        </formContext.Provider>
+            <div className="flex items-center justify-center mb-4">
                 {
                     editing ? <><div className="mx-5"><Button color="bg-green" disable={!validateInformation(validate)} handleButton={handleViewConfirmation} >Guardar</Button></div>
                                 <div className="mx-5"><Button color="bg-grey" handleButton={handleCancel}>Cancelar</Button></div></>
                                 :<Button color="bg-yellow" handleButton={handleEdit}>Editar Datos</Button>
                 }
             </div>
-        </formContext.Provider>
+            <DirectionForm></DirectionForm>
+            
+        </>
     );
 }
