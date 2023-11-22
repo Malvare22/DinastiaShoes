@@ -44,7 +44,7 @@ const UploadIcon = () => {
  * type 2 = "download"
  * @returns 
  */
-export const FileButton = ({text, type, handleButton, name}) =>{
+export const FileButton = ({text, type, handleButton, name, extension}) =>{
     const inputSelector = useRef(); 
 
     const handleInput = () => {
@@ -53,7 +53,7 @@ export const FileButton = ({text, type, handleButton, name}) =>{
 
    
     return <div className="flex justify-center text-center space-x-4 items-center p-5 rounded-lg bg-lightGrey" onClick={handleInput}>
-        <input type="file" className={"invisible w-0"} name={name} onChange={handleButton} ref={inputSelector}></input>
+        <input type="file" accept={extension} className={"invisible w-0"} name={name} onChange={handleButton} ref={inputSelector}></input>
         {<h3>{text}</h3>}
         {type == 1 ? <UploadIcon></UploadIcon> : <DownloadIcon></DownloadIcon>}
     </div>
