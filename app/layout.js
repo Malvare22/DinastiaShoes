@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en"> 
       <body className={"inter.className bg-white"}>
         <header>
-          <Navbar mode="unlogged" type="client"></Navbar>
+          <Navbar mode="logged" type="client"></Navbar>
         </header>
           {children}
         <footer>

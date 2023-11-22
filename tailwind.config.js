@@ -19,7 +19,7 @@ module.exports = {
     colors: {
       'green' : '#57AC39',
       'blue' : '#3358DB',
-      'white' : '#fffbeb',
+      'white' : colors.white,
       'red' : '#881337',
       'redWine' : '#533737',
       'black' : '#0a0a0a',
@@ -30,6 +30,7 @@ module.exports = {
       'grey' : '#706B6B',
       'yellow' : '#D4B92E',
       'darkRed' : '#AC3939',
+      'lightRed' : '#AC3939',
       'standardWhite': colors.white,
       'standardGrey': colors.grey,
       'pink': "#D5BBBB",

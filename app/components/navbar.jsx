@@ -25,7 +25,7 @@ const Unlogged = () => {
                 <LetterIcon></LetterIcon>
             </Option>
             <Option>
-                <CarIcon></CarIcon>
+                <Link href={"/cart"}><CarIcon></CarIcon></Link>
             </Option>
             <Option>
                 <ToLink link={"/login"} color="bg-green">Iniciar Sesión</ToLink>
@@ -65,17 +65,15 @@ const AccountButton = ({text}) =>{
         <div className="flex border-2 rounded-lg items-center justify-center relative" >
             <div className="flex items-center p-3" onClick={HandleButton}>
                 <div className="mx-3"><UserIcon></UserIcon></div>
-                <h3>
-                    {text}
-                </h3>
-                <div className="mx-3">{press ? <ArrowUpIcon></ArrowUpIcon>: <ArrowDownIcon></ArrowDownIcon>}</div>
+                    <div className="text-sm">{text}</div>
+                <div className="mx-1">{press ? <ArrowUpIcon></ArrowUpIcon>: <ArrowDownIcon></ArrowDownIcon>}</div>
             </div>
 
             {press && 
                 <>
                     <div className="rounded-lg flex-col items-center absolute top-[100%] border-2 w-full">
-                        <div className="w-full p-3 bg-blue">Ver Perfil</div>
-                        <div className="w-full p-3 bg-red">Cerrar Sesión</div>
+                        <div className="w-full p-3 bg-blue"><Link href={"/profile"}>Ver Perfil</Link></div>
+                        <div className="w-full p-3 bg-red"><Link href={"/"}>Cerrar Sesión</Link></div>
                     </div>
                     
                 </>

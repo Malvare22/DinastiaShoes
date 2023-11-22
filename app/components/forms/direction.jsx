@@ -8,11 +8,11 @@ import { DirectionContext } from "../context";
 import { TemplateEmptyDirection, TemplateUnValidateDirection } from "@/app/lib/direction";
 import { validateInformation } from "@/app/lib/information";
 
-export default function DirectionForm(){
+export default function DirectionForm({type}){
     const [information, setInformation] = useState(TemplateEmptyDirection);
     const [validate, setValidate] = useState(TemplateUnValidateDirection);
     const [editing, setEditing] = useState(false);
-    const [direction, setDirection] = useState(true);
+    const [direction, setDirection] = useState(type==2 ? false: true);
 
     const handleButton = () => {
         alert("A")
@@ -20,15 +20,17 @@ export default function DirectionForm(){
 
     return(
         <DirectionContext.Provider value={{information, setInformation, validate, setValidate, editing, setEditing}}>
-        <div className={`bg-blue mx-12 p-4 text-2xl space-x-2 font-semibold flex align-middle items-center select-none mt-6 ${direction ? "mb-12": " mb-0"}`} onClick={()=>setDirection(!direction)}>
-            <div>
-                Dirección
-            </div>
-            <div>
-                {direction ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp>}
-            </div>
+        {   type != 2 && 
+            <div className={`bg-blue mx-12 p-4 text-2xl space-x-2 font-semibold flex align-middle items-center select-none mt-6 ${direction ? "mb-12": " mb-0"}`} onClick={()=>setDirection(!direction)}>
+                <div>
+                    Dirección
+                </div>
+                <div>
+                    {direction ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp>}
+                </div>
         
-        </div>
+            </div>
+        }
         {!direction && <form className="text-black bg-lightGrey text-xl mx-12 rounded-lg p-6 space-y-4 mb-6">
             <div className="space-y-2 w-3/12">
                 <LabelInput>Departamento</LabelInput>
