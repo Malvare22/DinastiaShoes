@@ -11,7 +11,7 @@ export default function Navbar({type, mode}){
             
             <Logo></Logo>
             {mode == "unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
-            {mode == "logged" && type == "client" && <><Categories></Categories><Logged></Logged></>}
+            {mode == "logged" && type == 'C' && <><Categories></Categories><Logged></Logged></>}
             
         </div>
     )

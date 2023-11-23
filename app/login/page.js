@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../components/buttons";
 import { FormContainer } from "../components/forms/container";
 import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, InputText } from "../components/forms/inputs";
@@ -8,6 +8,7 @@ import { sendLogin, validateInformation } from "../lib/information";
 import { formContext } from "../components/context";
 import { login } from "../lib/users";
 import { useRouter } from "next/navigation";
+import { SessionContext } from "../components/template";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -35,19 +36,27 @@ export default function Register() {
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
   const [showFail, setShowFail] = useState(false);
+  const {session, setSession} = useContext(SessionContext);
   const router = useRouter();
 
   /**
    * Boton de ejecutar acción de logearse
    */
-  const handleButton = () =>{
-    if(!validateInformation(validate)){
-      setShowFail(true);
-    }
-    else{
-        login(information);
-        router.push("/");
-    }
+  const handleButton = async () =>{
+    // if(!validateInformation(validate)){
+    //   setShowFail(true);
+    // }
+    // else{
+        const ans = await login(information);
+        if(!ans.error){
+          setSession({...session, ["token"]: ans.token, ["type"]: (ans.usuario).tipo, ["status"]: "logged"});
+          router.push("/");
+        }
+        else{
+          alert("FAIL")
+        }
+        console.log(session);
+    // }
   }
 
 
@@ -75,7 +84,7 @@ export default function Register() {
           </div>
           
           <div className="flex justify-center">
-            <Button handleButton={handleButton} disable={!validate["usuario"]} color="bg-orange">Ingresar</Button>
+            <Button handleButton={handleButton}  color="bg-orange">Ingresar</Button>
           </div>
         </div>
       </formContext.Provider>
