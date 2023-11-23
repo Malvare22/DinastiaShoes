@@ -129,7 +129,7 @@ export const InputEmail = (props) => {
     );
 }
 
-const passwordRegex = /^[a-zA-Z0-9!@#$%^*()_+-={}|~][a-zA-Z0-9!@#$%^*()_+-={}|~]{8,}$/; 
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+[\]{};:<>.,?~\\-]{8,}$/; 
 
 export const InputRegisterPassword = (props) => {
 

@@ -6,6 +6,8 @@ import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, I
 import { AText, LabelInput, TitleInput} from "../components/text";
 import { sendLogin, validateInformation } from "../lib/information";
 import { formContext } from "../components/context";
+import { login } from "../lib/users";
+import { useRouter } from "next/navigation";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -19,13 +21,13 @@ const FrameMessage = () => {
 }
 
 const infoBase = {
-  "correo" : "",
-  "contrasenia" : "",
+  "usuario" : "",
+  "password" : "",
 }
 
 const validateBase = {
-  "correo" : false,
-  "contrasenia" : false,
+  "usuario" : false,
+  "password" : false,
 }
 
 export default function Register() {
@@ -33,6 +35,7 @@ export default function Register() {
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
   const [showFail, setShowFail] = useState(false);
+  const router = useRouter();
 
   /**
    * Boton de ejecutar acción de logearse
@@ -42,7 +45,8 @@ export default function Register() {
       setShowFail(true);
     }
     else{
-        sendLogin(information);
+        login(information);
+        router.push("/");
     }
   }
 
@@ -53,9 +57,9 @@ export default function Register() {
         <div className="space-y-6 my-6">
           <TitleInput>Iniciar Sesión</TitleInput>
           <LabelInput>Correo electrónico</LabelInput>
-          <InputEmail nameInput={"correo"}></InputEmail>
+          <InputEmail nameInput={"usuario"}></InputEmail>
           <LabelInput>Contraseña</LabelInput>
-          <InputPassword nameInput={"contrasenia"} type={"login"}></InputPassword>
+          <InputPassword nameInput={"password"} type={"login"}></InputPassword>
 
           {/* Mensaje de Error */}
           {showFail && <FrameMessage></FrameMessage>}
@@ -71,7 +75,7 @@ export default function Register() {
           </div>
           
           <div className="flex justify-center">
-            <Button handleButton={handleButton} color="bg-orange">Ingresar</Button>
+            <Button handleButton={handleButton} disable={!validate["usuario"]} color="bg-orange">Ingresar</Button>
           </div>
         </div>
       </formContext.Provider>
