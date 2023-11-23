@@ -4,14 +4,15 @@ import { AcceptButton, ToLink } from "./buttons"
 import { useEffect, useState } from "react";
 import {getPrincipalCategories} from '../lib/categories'
 import Link from "next/link";
-export default function Navbar({type, mode}){
-
+export default function Navbar(){
+    const status = localStorage.getItem("status") ? localStorage.getItem("status") : 'unlogged';
+    const type = localStorage.getItem("type") ? localStorage.getItem("type") : '';
     return(
         <div className="bg-blue md:p-5 lg:flex content-center block align-middle lg:justify-between select-none">
             
             <Logo></Logo>
-            {mode == "unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
-            {mode == "logged" && type == 'C' && <><Categories></Categories><Logged></Logged></>}
+            {status == "unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
+            {status == "logged" && type == 'C' && <><Categories></Categories><Logged></Logged></>}
             
         </div>
     )

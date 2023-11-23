@@ -8,7 +8,6 @@ import { sendLogin, validateInformation } from "../lib/information";
 import { formContext } from "../components/context";
 import { login } from "../lib/users";
 import { useRouter } from "next/navigation";
-import { SessionContext } from "../components/template";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -36,7 +35,6 @@ export default function Register() {
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
   const [showFail, setShowFail] = useState(false);
-  const {session, setSession} = useContext(SessionContext);
   const router = useRouter();
 
   /**
@@ -49,13 +47,14 @@ export default function Register() {
     // else{
         const ans = await login(information);
         if(!ans.error){
-          setSession({...session, ["token"]: ans.token, ["type"]: (ans.usuario).tipo, ["status"]: "logged"});
+          localStorage.setItem("token", ans.token);
+          localStorage.setItem("status", "logged");
+          localStorage.setItem("type", (ans.usuario).tipo,);
           router.push("/");
         }
         else{
           alert("FAIL")
         }
-        console.log(session);
     // }
   }
 

@@ -11,10 +11,6 @@ export const columnasEmpleados = [
         header: "Correo",
         accessorKey: "correo"
     },
-    {
-        header: "Telefono",
-        accessorKey: "telefono"
-    },
 ];
 
 export const columnsMethods = [

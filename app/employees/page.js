@@ -5,25 +5,34 @@ import TableAction from "../components/table/table_actions";
 import { columnasEmpleados } from "../components/table/columns";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
-import { getEmployees } from "../lib/employees";
+import { getEmployees, removeEmployee } from "../lib/employees";
 
 export default function Page() {
 
   const[user, setUser] =  useState({});
+  const[data, setData] = useState([{}]);
   const[viewRemove, setViewRemove] = useState(false);
   const router = useRouter();
   
-  const data = getEmployees();
+  useEffect(
+    () => {
+      const get = async () => {
+       setData( await getEmployees());
+      };
+      get();
+    }, []
+  )
 
   /**
    * Llama al método de eliminar un empleado
   */
-  const makeRemove = (u) => {
-
+  const makeRemove = async () => {
+    await removeEmployee(user.cedula);
+    router.push("/employees");
   };
 
   const btnRemove = {
-    make: () => {makeRemove},
+    make: makeRemove,
     color: "bg-green",
     text: "Aceptar"
   };
