@@ -1,8 +1,9 @@
 'use client'
 import { createContext, useContext } from "react";
 import { LabelInput } from "../text";
-import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText, SquareSelect } from "./inputs";
+import { Input, InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText, SquareSelect } from "./inputs";
 import { formContext } from "../context";
+import { checkNumber, messageNumber } from "./verifications";
 
 /**
  * Type = editingUser
@@ -38,7 +39,7 @@ export const FormContainer = (props) => {
 
 /***
  * Corresponde al esquema estádar de edición de usuarios
- * types puede ser : "register", "editByUser", "editByAdmin", "editByAdmin"
+ * types puede ser : "register", "editByUser", "editByAdmin", "createByAdmin"
  */
 export const FormStandar = (props) => {
 
@@ -60,13 +61,16 @@ export const FormStandar = (props) => {
         <LabelInput>Apellidos</LabelInput>
         <InputText nameInput={"apellidos"}></InputText>
 
+        {(type=="createByAdmin" || type=="register") && <><LabelInput>Cédula de Ciudadania</LabelInput>
+        <Input nameInput={"cedula"} errorMessage={messageNumber} border={false} verification={checkNumber} type={"number"}></Input></>}
+
         <LabelInput>Fecha de nacimiento</LabelInput>
         <InputDate nameInput={"fecha_nacimiento"}></InputDate>
 
         <LabelInput>Género</LabelInput>
         <InputGenre nameInput={"sexo"}></InputGenre>
 
-        {type=="editingUser" && information.rol != "cliente" && <><LabelInput>Rol</LabelInput>
+        {type=="editingUser" && information.rol != "C" && <><LabelInput>Rol</LabelInput>
         <LabelInput>{information.rol}</LabelInput></>}
 
         {type=="editByAdmin" && <><LabelInput>Administrar Inventario</LabelInput>
@@ -76,7 +80,7 @@ export const FormStandar = (props) => {
 
         <LabelInput>Administrar Ventas</LabelInput>
         <div className="flex justify-center">
-          <SquareSelect nameInput="pedidos" select={false}></SquareSelect>
+          <SquareSelect nameInput="ventas" select={false}></SquareSelect>
         </div></>}
 
     </>

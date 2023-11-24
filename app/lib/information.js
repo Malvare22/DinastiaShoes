@@ -1,5 +1,15 @@
 import employees from '../jsons/employees.json'
 
+export function DateToLines(date){
+  const ndate = date.split("/");
+  return ndate[2] + "-" + ndate[1] + "-"  + ndate[0];
+} 
+
+export function DateToSlash(date){
+  const ndate = date.split("-");
+  return ndate[0] + "/" + ndate[1] + "/"  + ndate[2];
+} 
+
 export const infoBase = {
     "correo" : "",
     "contrasenia" : "",
@@ -112,8 +122,3 @@ export const sendChangePassword = (information) => {
     console.log(information);
 }
 
-export const getEmployeeByCedula = (cedula) => {
-  for(let i = 0; i<employees.length; i++){
-    if(employees[i].cedula == cedula) return employees[i];
-  }
-}

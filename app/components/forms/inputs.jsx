@@ -5,6 +5,7 @@ import { LabelInput } from "../text";
 import { Button, FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
 import { formContext, DirectionContext } from "./../context";
+import { messageText } from "./verifications";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
@@ -65,7 +66,7 @@ export const InputText = (props) => {
     return(
         <div className="space-y-5">
             <input type="text" value={information [nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
-            {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{messageText}</div>}
         </div>
     );
 }
@@ -267,7 +268,7 @@ export const SquareSelect = (props) => {
 
     const handleSelect = () => {
         setMark(!mark);
-        setInformation({...information, [nameInput]: !mark});
+        setInformation({...information, [nameInput]: (!mark? "T":"F")});
     };
 
     return(
@@ -302,7 +303,7 @@ export const SquareSelectSmall = (props) => {
 
 
 export const Input = (props) => {
-    const {nameInput, errorMessage, verification, type} = props;
+    const {nameInput, errorMessage, verification, type, border} = props;
     const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
     const handleInput = ((e) => {
@@ -314,7 +315,7 @@ export const Input = (props) => {
 
     return(
         <div className="space-y-5">
-            <input type={type} value={information [nameInput]} disabled={false} required className={"w-full rounded-lg border"} onChange={handleInput}></input>
+            <input type={type} value={information [nameInput]} disabled={false} required className={"w-full rounded-lg " + (border!=undefined && border==false ? "": "border")} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{errorMessage}</div>}
         </div>
     );

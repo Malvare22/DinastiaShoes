@@ -6,6 +6,8 @@ import { columnasEmpleados } from "../components/table/columns";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
 import { getEmployees, removeEmployee } from "../lib/employees";
+import { ToLink } from "../components/buttons";
+import PageContainer from "../components/pageContainer";
 
 export default function Page() {
 
@@ -14,11 +16,13 @@ export default function Page() {
   const[viewRemove, setViewRemove] = useState(false);
   const router = useRouter();
   
+  const get = async () => {
+    setData( await getEmployees());
+   };
+
   useEffect(
     () => {
-      const get = async () => {
-       setData( await getEmployees());
-      };
+      
       get();
     }, []
   )
@@ -26,13 +30,17 @@ export default function Page() {
   /**
    * Llama al método de eliminar un empleado
   */
-  const makeRemove = async () => {
-    await removeEmployee(user.cedula);
-    router.push("/employees");
+  const makeRemove = () => {
+    const post = async () => {
+      await removeEmployee(user.cedula);
+      get();
+      setViewRemove(false);
+    }
+    post();
   };
 
   const btnRemove = {
-    make: makeRemove,
+    make: ()=>makeRemove(),
     color: "bg-green",
     text: "Aceptar"
   };
@@ -50,14 +58,14 @@ export default function Page() {
   const actions = [{icon: "edit", action: handleEdit},{icon: "remove", action: handleRemove}];
 
   return (
-    <>
-        
+    <PageContainer>
       <Table columns={columnasEmpleados} data={data} actions={actions}></Table>
+      <div className="flex justify-center"><ToLink link="/employees/add" color="bg-green">Agregar</ToLink></div>
       {viewRemove && <div className="text-black">
         <Modal text={"Estás seguro de que deseas eliminar al empleado: " + user.cedula} button={btnRemove} setIsVisible={setViewRemove}></Modal>
       </div>}
         
-      </>
+      </PageContainer>
   )
 };
 

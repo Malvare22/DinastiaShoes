@@ -2,22 +2,50 @@
 
 import { useState } from "react";
 import { formContext } from "../../components/context";
-import { registerUser, registerUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
+import { DateInputFormat, registerUser, registerUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
 import { PageTittle } from "@/app/components/text";
 import { FormContainer, FormStandar } from "@/app/components/forms/container";
 import Modal from "@/app/components/modal";
 import { Button, ToLink } from "@/app/components/buttons";
 import { useRouter } from "next/navigation";
+import { addEmployee } from "@/app/lib/employees";
 
 export default function Page() {
 
-  const [information, setInformation] = useState(registerUserByAdmin);
-  const [validate, setValidate] = useState(validateRegisterUserByAdmin);
+  const [information, setInformation] = useState(
+    {
+        "cedula":"",
+        "nombres":"",
+        "apellidos":"",
+        "correo":"",
+        "contrasen":"P@ssw0rd",
+        "sexo":"",
+        "fecha_nacimiento":"",
+        "inventario":"F",
+        "ventas":"F"
+    }
+  );
+  const [validate, setValidate] = useState(
+    {
+        "cedula":false,
+        "nombres":false,
+        "apellidos":false,
+        "correo":false,
+        "sexo":false,
+        "fecha_nacimiento":false,
+    }
+);
   const [viewConfirmation, setViewConfirmation] = useState(false);
   const router = useRouter();
   const sendData = () => {
-    alert("Make!");
-    router.push("/employees");
+    const post = async () => {
+        const ans = await addEmployee(information);
+        if(ans.error){
+            alert(ans.error);
+        }
+        else router.push("/employees");
+    }
+    if(validateInformation(validate)) post();
   }
 
   const btn = {
@@ -35,10 +63,10 @@ export default function Page() {
                     {viewConfirmation && <Modal button={btn} text={"¿Estás seguro de crear al empleado?"} setIsVisible={setViewConfirmation}></Modal>}
 
                     <div className="grid grid-cols-2 space-y-6 mt-[30px] mb-[20px]">
-                        <FormStandar type={"editByAdmin"}></FormStandar>
+                        <FormStandar type={"createByAdmin"}></FormStandar>
                     </div>
                     <div className="flex space-x-5 justify-center">
-                        <Button handleButton={() => setViewConfirmation(true)} color={"bg-green"} disable={!(validateInformation(validate))}>Ey</Button>
+                        <Button handleButton={() => setViewConfirmation(true)} color={"bg-green"} disable={!validateInformation(validate)} >Aceptar</Button>
                         <ToLink link={"/employees"} color={"bg-grey"}>Cancelar</ToLink>
                     </div>
                 </FormContainer>
