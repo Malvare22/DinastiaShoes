@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 export const ToLink = (props) => {
     return(
-        <Link href={props.link} className={"text-white text-center min-w-[150px] mt-4 p-2 rounded-lg font-semibold " + props.color}>{props.children}</Link>
+        <Link href={props.link} className={"text-white text-center min-w-[150px] p-2 rounded-lg font-semibold " + props.color + " " + (props.type && props.type == "login"? "": "mt-4")}>{props.children}</Link>
     );
 }
 

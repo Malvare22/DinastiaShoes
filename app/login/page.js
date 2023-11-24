@@ -48,8 +48,8 @@ export default function Register() {
         const ans = await login(information);
         if(!ans.error){
           localStorage.setItem("token", ans.token);
-          localStorage.setItem("status", "logged");
-          localStorage.setItem("type", (ans.usuario).tipo,);
+          localStorage.setItem("type", (ans.usuario).tipo);
+          localStorage.setItem("names", ((ans.usuario).nombres.split(" "))[0] + " " + ((ans.usuario).apellidos.split(" "))[0]);
           router.push("/");
         }
         else{

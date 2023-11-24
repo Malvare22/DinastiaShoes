@@ -4,15 +4,21 @@ import { AcceptButton, ToLink } from "./buttons"
 import { useEffect, useState } from "react";
 import {getPrincipalCategories} from '../lib/categories'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function Navbar(){
-    const status = localStorage.getItem("status") ? localStorage.getItem("status") : 'unlogged';
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token);
+    }, [sessionFlag]);
     const type = localStorage.getItem("type") ? localStorage.getItem("type") : '';
     return(
-        <div className="bg-blue md:p-5 lg:flex content-center block align-middle lg:justify-between select-none">
+        <div className="bg-blue md:p-5 lg:flex content-center align-middle lg:justify-between select-none">
             
             <Logo></Logo>
-            {status == "unlogged" && <><Categories></Categories><Unlogged></Unlogged></>}
-            {status == "logged" && type == 'C' && <><Categories></Categories><Logged></Logged></>}
+            {!isLoggedIn && <><Categories></Categories><Unlogged></Unlogged></>}
+            {isLoggedIn && type == 'C' && <><Categories></Categories><Logged text={localStorage.getItem("names")}></Logged></>}
             
         </div>
     )
@@ -20,7 +26,7 @@ export default function Navbar(){
 
 const Unlogged = () => {
     return(
-        <div className="flex justify-center lg:justify-start">
+        <div className="flex justify-center lg:justify-start space-x-6">
             <Option>
                 <h3 className="mx-4 content-center">Contactanos</h3>
                 <LetterIcon></LetterIcon>
@@ -29,16 +35,16 @@ const Unlogged = () => {
                 <Link href={"/cart"}><CarIcon></CarIcon></Link>
             </Option>
             <Option>
-                <ToLink link={"/login"} color="bg-green">Iniciar Sesión</ToLink>
+                <ToLink link={"/login"} color="bg-green" type="login">Iniciar Sesión</ToLink>
             </Option>
             
         </div>
     );
 }
 
-const Logged = () => {
+const Logged = ({text}) => {
     return(
-        <div className="flex content-center items-center justify-center">
+        <div className="flex content-center items-center justify-center space-x-6">
             <Option>
                 <h3 className="mx-4 content-center">Contactanos</h3>
                 <LetterIcon></LetterIcon>
@@ -47,7 +53,7 @@ const Logged = () => {
                 <CarIcon></CarIcon>
             </Option>
             <Option>
-                <AccountButton text="Rodrigo Malaver"></AccountButton>
+                <AccountButton text={text}></AccountButton>
             </Option>
             
         </div>
@@ -57,10 +63,16 @@ const Logged = () => {
 const AccountButton = ({text}) =>{
 
     const [press, setPress] = useState(false);
+    const router = useRouter();
 
     function HandleButton(){
         setPress(!press);
     }
+
+    const closeSession = () => {
+        localStorage.clear();
+        router.push("/login");
+    };
 
     return(
         <div className="flex border-2 rounded-lg items-center justify-center relative" >
@@ -72,9 +84,9 @@ const AccountButton = ({text}) =>{
 
             {press && 
                 <>
-                    <div className="rounded-lg flex-col items-center absolute top-[100%] border-2 w-full">
-                        <div className="w-full p-3 bg-blue"><Link href={"/profile"}>Ver Perfil</Link></div>
-                        <div className="w-full p-3 bg-red"><Link href={"/"}>Cerrar Sesión</Link></div>
+                    <div className="rounded-lg flex-col items-center absolute top-[100%] z-10 border-2 w-full">
+                        <div className="w-full p-3 bg-blue cursor-pointer"><Link href={"/profile"}>Ver Perfil</Link></div>
+                        <div className="w-full p-3 bg-red cursor-pointer" onClick={closeSession}>Cerrar Sesión</div>
                     </div>
                     
                 </>
@@ -97,7 +109,7 @@ const Categories = () => {
     }, [])
 
     return(
-        <div className="flex content-center items-center justify-center mt-5 mb-5">
+        <div className="flex content-center items-center justify-center space-x-6 my-6">
                 {categories.map((type, i)=>{return <Option key={i}>{type.nombre}</Option>}
                 )}
         </div>
@@ -107,7 +119,7 @@ const Categories = () => {
 const Option = (props) =>{
 
     return(
-        <div className="flex mx-6 font-medium items-center cursor-pointer text-xl" onClick={props.action}>
+        <div className="flex font-medium items-center cursor-pointer text-xl" onClick={props.action}>
             {props.children}
         </div>
     )
