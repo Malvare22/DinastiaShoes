@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { Table } from "../components/table/table";
 import TableAction from "../components/table/table_actions";
-import { columnasEmpleados } from "../components/table/columns";
+import { columnsClients } from "../components/table/columns";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
 import { getEmployees, removeEmployee } from "../lib/employees";
 import { ToLink } from "../components/buttons";
 import PageContainer from "../components/pageContainer";
+import { getClients } from "../lib/clients";
 
 export default function Page() {
 
@@ -17,7 +18,7 @@ export default function Page() {
   const router = useRouter();
   
   const get = async () => {
-    setData( await getEmployees());
+    setData( await getClients());
    };
 
   useEffect(
@@ -32,8 +33,7 @@ export default function Page() {
   */
   const makeRemove = () => {
     const post = async () => {
-      const tmp = await removeEmployee(information.cedula);
-      if(tmp.error) alert(tmp.error);
+      await removeEmployee(user.cedula);
       get();
       setViewRemove(false);
     }
@@ -51,19 +51,13 @@ export default function Page() {
     setViewRemove(true);
   };
 
-  const handleEdit = (u) => {
-    
-    router.push("/employees/"+u.cedula);
-  };
-
-  const actions = [{icon: "edit", action: handleEdit},{icon: "remove", action: handleRemove}];
+  const actions = [{icon: "remove", action: handleRemove}];
 
   return (
     <PageContainer>
-      <Table columns={columnasEmpleados} data={data} actions={actions}></Table>
-      <div className="flex justify-center"><ToLink link="/employees/add" color="bg-green">Agregar</ToLink></div>
+      <Table columns={columnsClients} data={data} actions={actions}></Table>
       {viewRemove && <div className="text-black">
-        <Modal text={"¿Estás seguro de que deseas eliminar al empleado: " + user.cedula + "?"} button={btnRemove} setIsVisible={setViewRemove}></Modal>
+        <Modal text={"¿Estás seguro de que deseas eliminar al cliente: " + user.cedula + "?"} button={btnRemove} setIsVisible={setViewRemove}></Modal>
       </div>}
         
       </PageContainer>

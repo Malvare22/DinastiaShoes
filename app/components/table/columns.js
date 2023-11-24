@@ -13,6 +13,29 @@ export const columnasEmpleados = [
     },
 ];
 
+export const columnsClients = [
+    {
+        header: "Cedula",
+        accessorKey: "cedula"
+    },
+    {
+        header: "Nombre",
+        accessorKey: "nombres"
+    },
+    {
+        header: "Correo",
+        accessorKey: "correo"
+    },
+    {
+        header: "Télefono",
+        accessorKey: "telefono"
+    },
+    {
+        header: "Dirección",
+        accessorKey: "direccion"
+    },
+];
+
 export const columnsMethods = [
     {
         header: "Nombre",
@@ -27,7 +50,7 @@ export const columnsCategories = [
     },
     {
         header: "Destacado",
-        accessorKey: "destacadoToShow"
+        accessorKey: "destacado"
     },
 
 ];
