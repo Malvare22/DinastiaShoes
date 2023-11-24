@@ -8,6 +8,7 @@ import { sendLogin, validateInformation } from "../lib/information";
 import { formContext } from "../components/context";
 import { login } from "../lib/users";
 import { useRouter } from "next/navigation";
+import { SessionContext } from "../components/template";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -31,7 +32,7 @@ const validateBase = {
 }
 
 export default function Register() {
-
+  const {sessionFlag, setSessionFlag} = useContext(SessionContext);
   const [information, setInformation] = useState(infoBase);
   const [validate, setValidate] = useState(validateBase);
   const [showFail, setShowFail] = useState(false);
@@ -50,6 +51,7 @@ export default function Register() {
           localStorage.setItem("token", ans.token);
           localStorage.setItem("type", (ans.usuario).tipo);
           localStorage.setItem("names", ((ans.usuario).nombres.split(" "))[0] + " " + ((ans.usuario).apellidos.split(" "))[0]);
+          setSessionFlag(!sessionFlag);
           router.push("/");
         }
         else{

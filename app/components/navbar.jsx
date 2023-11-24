@@ -1,18 +1,24 @@
 'use client'
 import Image from "next/image";
 import { AcceptButton, ToLink } from "./buttons"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {getPrincipalCategories} from '../lib/categories'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { SessionContext } from "./template";
+
 export default function Navbar(){
 
+    const {sessionFlag} = useContext(SessionContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsLoggedIn(!!token);
     }, [sessionFlag]);
+
     const type = localStorage.getItem("type") ? localStorage.getItem("type") : '';
+
     return(
         <div className="bg-blue md:p-5 lg:flex content-center align-middle lg:justify-between select-none">
             
@@ -62,6 +68,7 @@ const Logged = ({text}) => {
 
 const AccountButton = ({text}) =>{
 
+    const {sessionFlag, setSessionFlag} = useContext(SessionContext);
     const [press, setPress] = useState(false);
     const router = useRouter();
 
@@ -71,6 +78,7 @@ const AccountButton = ({text}) =>{
 
     const closeSession = () => {
         localStorage.clear();
+        setSessionFlag(!sessionFlag);
         router.push("/login");
     };
 
@@ -84,7 +92,7 @@ const AccountButton = ({text}) =>{
 
             {press && 
                 <>
-                    <div className="rounded-lg flex-col items-center absolute top-[100%] z-10 border-2 w-full">
+                    <div className="rounded-lg flex-col text-sm items-center absolute top-[100%] z-10 border-2 w-full">
                         <div className="w-full p-3 bg-blue cursor-pointer"><Link href={"/profile"}>Ver Perfil</Link></div>
                         <div className="w-full p-3 bg-red cursor-pointer" onClick={closeSession}>Cerrar Sesión</div>
                     </div>
