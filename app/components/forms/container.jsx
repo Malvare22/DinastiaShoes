@@ -52,8 +52,10 @@ export const FormStandar = (props) => {
           <LabelInput>Correo electrónico</LabelInput>
         </div>
         <InputEmail type={type} nameInput={"correo"} className=""></InputEmail>
+        
+        {(type=="createByAdmin" || type=="register") && <><LabelInput>Cédula de Ciudadania</LabelInput>
+        <Input nameInput={"cedula"} errorMessage={messageNumber} border={false} verification={checkNumber} type={"number"}></Input></>}
 
-        {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
 
         <LabelInput>Nombres</LabelInput>
         <InputText nameInput={"nombres"}></InputText>
@@ -61,8 +63,9 @@ export const FormStandar = (props) => {
         <LabelInput>Apellidos</LabelInput>
         <InputText nameInput={"apellidos"}></InputText>
 
-        {(type=="createByAdmin" || type=="register") && <><LabelInput>Cédula de Ciudadania</LabelInput>
-        <Input nameInput={"cedula"} errorMessage={messageNumber} border={false} verification={checkNumber} type={"number"}></Input></>}
+
+        {(type == "register") && <><LabelInput>Télefono</LabelInput>
+        <Input nameInput={"telefono"} errorMessage={messageNumber} border={false} verification={checkNumber} type={"number"}></Input></>}
 
         <LabelInput>Fecha de nacimiento</LabelInput>
         <InputDate nameInput={"fecha_nacimiento"}></InputDate>
@@ -70,6 +73,8 @@ export const FormStandar = (props) => {
         <LabelInput>Género</LabelInput>
         <InputGenre nameInput={"sexo"}></InputGenre>
 
+        {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
+        
         {type=="editingUser" && information.rol != "C" && <><LabelInput>Rol</LabelInput>
         <LabelInput>{information.rol}</LabelInput></>}
 

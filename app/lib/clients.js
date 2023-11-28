@@ -1,5 +1,5 @@
 import employees from '../jsons/employees.json' assert {type: 'json'}
-import { DateExportFormat, DateToSlash } from './information';
+import { DateToSlash } from './information';
 
 export async function getClients() {
     try{
@@ -20,6 +20,38 @@ export async function removeClient(id){
         const response = await fetch(url, {
             method: 'DELETE',
         });
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function addClient(client){
+    try{
+        client.contrasen = client.contrasenia;
+        client.fecha_nacimiento = DateToSlash(client.fecha_nacimiento);
+        console.log(client);
+        let url = 'http://localhost:3000/usuario/crearCliente';
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(client)
+        });
+
+        await response.json();
+
+        url = 'http://localhost:3000/cliente/crearCliente';
+        response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(client)
+        });
+
         return await response.json();
     }
     catch(error){

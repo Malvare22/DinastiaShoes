@@ -4,7 +4,6 @@ import { Table } from "../components/table/table";
 import TableAction from "../components/table/table_actions";
 import { columnsClients } from "../components/table/columns";
 import Modal from "../components/modal";
-import { useRouter } from "next/navigation";
 import { getEmployees, removeEmployee } from "../lib/employees";
 import { ToLink } from "../components/buttons";
 import PageContainer from "../components/pageContainer";
@@ -15,7 +14,6 @@ export default function Page() {
   const[user, setUser] =  useState({});
   const[data, setData] = useState([{}]);
   const[viewRemove, setViewRemove] = useState(false);
-  const router = useRouter();
   
   const get = async () => {
     setData( await getClients());
