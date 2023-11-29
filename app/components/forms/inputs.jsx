@@ -5,7 +5,7 @@ import { LabelInput } from "../text";
 import { Button, FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
 import { formContext, DirectionContext } from "./../context";
-import { messageText } from "./verifications";
+import { messagePaswordNoEquals, messagePaswordParams, messageText } from "./verifications";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
@@ -181,7 +181,7 @@ export const InputChangePassword = (props) => {
 
     const verify = (info) => {
         const regex = passwordRegex;
-        return regex.test(info["contrasenia"]) && temporal["contrasenia"] && (info["contrasenia"] == info["contrasenia_2"]);
+        return regex.test(info["contrasenia_nueva_1"]) && (info["contrasenia_nueva_1"] == info["contrasenia_nueva_2"]);
     }
 
     const handleInput = (e) => {
@@ -196,7 +196,7 @@ export const InputChangePassword = (props) => {
      */
     const handleInformation = () => {
         if(verify(temporal)){
-            setInformation({...information, ["contrasenia"] : temporal.contrasenia});
+            setInformation({...information, ["password"] : temporal["contrasenia_actual"], ["contrasen"] : temporal["contrasenia_nueva_1"]});
             setIsVisible(false);
         }
     }
@@ -204,14 +204,18 @@ export const InputChangePassword = (props) => {
     return(
         <div className="space-y-5">
             <div className="space-y-5">
-                <LabelInput>Contraseña</LabelInput>
-                <input required type="password" name={"contrasenia"} onChange={handleInput} className="w-full rounded-lg"></input>
-                {(temporal["contrasenia"] && !temporalVerify)&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+                <LabelInput>Contraseña Actual</LabelInput>
+                <input required type="password" name={"contrasenia_actual"} onChange={handleInput} className="w-full rounded-lg"></input>
             </div>
             <div className="space-y-5">
-                <LabelInput>Confirmar Contraseña</LabelInput>
-                <input required type="password" name={"contrasenia_2"} onChange={handleInput} className="w-full rounded-lg"></input>
-                {temporal["contrasenia"] && !temporalVerify && <div className="text-orange text-sm">Ambas contraseñas deben ser iguales</div>}
+                <LabelInput>Contraseña Nueva</LabelInput>
+                <input required type="password" name={"contrasenia_nueva_1"} onChange={handleInput} className="w-full rounded-lg"></input>
+                {(temporal["contrasenia_nueva_1"] && !temporalVerify)&& <div className="text-orange text-sm">{messagePaswordParams}</div>}
+            </div>
+            <div className="space-y-5">
+                <LabelInput>Confirmar Contraseña Nueva</LabelInput>
+                <input required type="password" name={"contrasenia_nueva_2"} onChange={handleInput} className="w-full rounded-lg"></input>
+                {temporal["contrasenia_nueva_2"] && !temporalVerify && <div className="text-orange text-sm">{messagePaswordNoEquals}</div>}
             </div>
             <div className="flex space-x-10 justify-center">
                 <Button disable={!verify(temporal)} handleButton={handleInformation} color={"bg-blue"}>Aceptar</Button>

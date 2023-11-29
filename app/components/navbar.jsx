@@ -25,6 +25,7 @@ export default function Navbar(){
             <Logo></Logo>
             {!isLoggedIn && <><Categories></Categories><Unlogged></Unlogged></>}
             {isLoggedIn && type == 'C' && <><Categories></Categories><Logged text={localStorage.getItem("names")}></Logged></>}
+            {isLoggedIn && type != 'C' && <><Option>Menú</Option><Option><AccountButton text={localStorage.getItem("names")}></AccountButton></Option></>}
             
         </div>
     )

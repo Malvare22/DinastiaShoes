@@ -24,3 +24,8 @@ export const messageText = "Este input solo admite datos de tipo alfabetico";
 export const messageNumber = "Este input solo admite datos de tipo númerico";
 
 export const messageNoEmpty = "Este campo es obligatorio";
+
+export const messagePaswordParams = "La contraseña debe tener como criterios...";
+
+export const messagePaswordNoEquals = "Ambos campos deben coincidir";
+

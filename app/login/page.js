@@ -42,22 +42,24 @@ export default function Register() {
    * Boton de ejecutar acción de logearse
    */
   const handleButton = async () =>{
-    // if(!validateInformation(validate)){
-    //   setShowFail(true);
-    // }
-    // else{
+    if(!validateInformation(validate)){
+      setShowFail(true);
+    }
+    else{
         const ans = await login(information);
         if(!ans.error){
           localStorage.setItem("token", ans.token);
           localStorage.setItem("type", (ans.usuario).tipo);
+          localStorage.setItem("id", (ans.usuario).cedula);
           localStorage.setItem("names", ((ans.usuario).nombres.split(" "))[0] + " " + ((ans.usuario).apellidos.split(" "))[0]);
           setSessionFlag(!sessionFlag);
-          router.push("/");
+          if((ans.usuario).tipo == 'C') router.push("/");
+          else router.push("/menu");
         }
         else{
-          alert("FAIL")
+          setShowFail(true);
         }
-    // }
+    }
   }
 
 
@@ -85,7 +87,7 @@ export default function Register() {
           </div>
           
           <div className="flex justify-center">
-            <Button handleButton={handleButton}  color="bg-orange">Ingresar</Button>
+            <Button handleButton={handleButton} disable={!validateInformation(validate)} color="bg-orange">Ingresar</Button>
           </div>
         </div>
       </formContext.Provider>

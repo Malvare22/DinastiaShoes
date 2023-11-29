@@ -10,6 +10,57 @@ export function DateToSlash(date){
   return ndate[0] + "/" + ndate[1] + "/"  + ndate[2];
 } 
 
+export async function getProfile(user){
+  try{
+    let url = 'http://localhost:3000/usuario/obtener/' + user;
+    let response = await fetch(url, {
+        method: 'GET',
+    });
+
+    return await response.json();
+  }
+  catch(error){
+      alert(error);
+  }
+};
+
+export async function updateProfile(user){
+  try{
+    let url = 'http://localhost:3000/usuario/actualizar/' + user.cedula;
+    let response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
+    });
+
+      return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function updatePassword(user){
+  try{
+    user.usuario = user.correo;
+    let url = 'http://localhost:3000/usuario/cambiarContra';
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
+    });
+
+      return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
 export const infoBase = {
     "correo" : "",
     "contrasenia" : "",
