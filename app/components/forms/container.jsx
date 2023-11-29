@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { LabelInput } from "../text";
 import { Input, InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText, SquareSelect } from "./inputs";
 import { formContext } from "../context";
@@ -42,10 +42,9 @@ export const FormContainer = (props) => {
  * types puede ser : "register", "editByUser", "editByAdmin", "createByAdmin"
  */
 export const FormStandar = (props) => {
-
+  
   const {type} = props;
   const {information} = useContext(formContext);
-
   return(
     <>
         <div className="flex align-middle items-start mt-5">
@@ -78,14 +77,15 @@ export const FormStandar = (props) => {
         {type=="editingUser" && information.rol != "C" && <><LabelInput>Rol</LabelInput>
         <LabelInput>{information.rol}</LabelInput></>}
 
-        {type=="editByAdmin" && <><LabelInput>Administrar Inventario</LabelInput>
+        {(type=="editByAdmin" || type=="createByAdmin" ) && (information.ventas) && <><LabelInput>Administrar Inventario</LabelInput>
+
         <div className="flex justify-center">
-          <SquareSelect nameInput="inventario" select={false}></SquareSelect>
+          <SquareSelect nameInput={"inventario"} select={ information.inventario == 'T'}></SquareSelect>
         </div>
 
         <LabelInput>Administrar Ventas</LabelInput>
         <div className="flex justify-center">
-          <SquareSelect nameInput="ventas" select={false}></SquareSelect>
+        <SquareSelect nameInput={"ventas"} select={information.ventas == 'T'}></SquareSelect>
         </div></>}
 
     </>

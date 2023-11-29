@@ -58,11 +58,17 @@ export async function removeEmployee(id){
 
 export async function getEmployee(id){
     try{
-        const url = 'http://localhost:3000/usuario/obtener/' + id;
-        const response = await fetch(url, {
+        let url = 'http://localhost:3000/empleado/obtener/' + id;
+        let response = await fetch(url, {
             method: 'GET',
         });
-        return await response.json();
+        
+        let ans;
+        ans = await response.json();
+        ans = {...ans, ["inventario"]: (((ans["empleados"])[0])["inventario"]), ["ventas"]: (((ans["empleados"])[0])["ventas"])};
+        return ans;
+        
+
     }
     catch(error){
         alert(error);
@@ -80,17 +86,16 @@ export async function editEmployee(employee){
             body: JSON.stringify(employee)
         });
 
-        console.log(employee)
-        // await response.json();
+        await response.json();
 
-        // url = 'http://localhost:3000/empleado/crear';
-        // response = await fetch(url, {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(employee)
-        // });
+        url = 'http://localhost:3000/empleado/actualizar/' + employee.cedula;
+        response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(employee)
+        });
         return await response.json();
     }
     catch(error){

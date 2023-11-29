@@ -32,7 +32,7 @@ export default function Page() {
   */
   const makeRemove = () => {
     const post = async () => {
-      const tmp = await removeEmployee(information.cedula);
+      const tmp = await removeEmployee(user.cedula);
       if(tmp.error) alert(tmp.error);
       get();
       setViewRemove(false);

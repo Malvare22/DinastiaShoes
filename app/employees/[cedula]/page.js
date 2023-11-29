@@ -56,7 +56,7 @@ export default function Page({params}) {
     "color" : "bg-green",
     "text": "Aceptar"
   };
-  
+  console.log(information)
   return(
     <formContext.Provider value={{information, setInformation, validate, setValidate}}>
         <div className="mx-12">
