@@ -2,17 +2,21 @@ export async function getDirection(client){
     return "";
 };
 
-export const TemplateUnValidateDirection = {
-    departamento: false,
-    municipio: false,
-    direccion: false,
-    referencias: false
+export const TemplateValidateDirection = {
+    "cedula": true,
+    "departamento": true,
+    "municipio": true,
+    "direccion_completa": true,
+    "informacion_complementaria": true,
+    "telefono": true
 };
 
 
 export const TemplateEmptyDirection = {
-    departamento: "",
-    municipio: "",
-    direccion: "",
-    referencias: ""
+    "cedula": "",
+    "departamento": "",
+    "municipio": "",
+    "direccion_completa": "",
+    "informacion_complementaria": "",
+    "telefono": ""
 };

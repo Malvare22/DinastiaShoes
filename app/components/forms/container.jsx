@@ -62,10 +62,6 @@ export const FormStandar = (props) => {
         <LabelInput>Apellidos</LabelInput>
         <InputText nameInput={"apellidos"}></InputText>
 
-
-        {(type == "register") && <><LabelInput>Télefono</LabelInput>
-        <Input nameInput={"telefono"} errorMessage={messageNumber} border={false} verification={checkNumber} type={"number"}></Input></>}
-
         <LabelInput>Fecha de nacimiento</LabelInput>
         <InputDate nameInput={"fecha_nacimiento"}></InputDate>
 
@@ -74,8 +70,12 @@ export const FormStandar = (props) => {
 
         {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
         
-        {type=="editingUser" && information.rol != "C" && <><LabelInput>Rol</LabelInput>
-        <LabelInput>{information.rol}</LabelInput></>}
+        {
+          type=="editingUser" && information.tipo != "C" && <>
+            <LabelInput>Rola</LabelInput>
+            <LabelInput>{information.rol}</LabelInput>
+          </>
+        }
 
         {(type=="editByAdmin" || type=="createByAdmin" ) && (information.ventas) && <><LabelInput>Administrar Inventario</LabelInput>
 

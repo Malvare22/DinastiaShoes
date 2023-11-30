@@ -1,29 +1,67 @@
 'use client'
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Button } from "../buttons";
 import { LabelInput } from "../text";
 import { Input, InputForDirection } from "./inputs";
-import { checkNoEmpty, messageNoEmpty } from "./verifications";
+import { checkNoEmpty, checkNumber, messageNoEmpty, messageNumber } from "./verifications";
 import { DirectionContext } from "../context";
-import { TemplateEmptyDirection, TemplateUnValidateDirection } from "@/app/lib/direction";
+import { TemplateValidateDirection } from "@/app/lib/direction";
 import { validateInformation } from "@/app/lib/information";
+import { editDirection, getDirection } from "@/app/lib/clients";
+import Modal, { ModalUnstandard } from "../modal";
 
 export default function DirectionForm({type}){
-    const [information, setInformation] = useState(TemplateEmptyDirection);
-    const [validate, setValidate] = useState(TemplateUnValidateDirection);
+    const [information, setInformation] = useState({});
+    const [validate, setValidate] = useState(TemplateValidateDirection);
     const [editing, setEditing] = useState(false);
     const [direction, setDirection] = useState(type==2 ? false: true);
+    const [viewModal , setViewModal] = useState(false);
+    const [informationBase, setInformationBase] = useState({});
 
-    const handleButton = () => {
-        alert("A")
+
+    const handleButton = async () => {
+        if(validateInformation(validate)){
+            const ans = await editDirection(information);
+            if(!ans.error){
+                editDirection(information);
+                setViewModal(false);
+                setEditing(false);
+            }
+            else{
+                alert(ans.error);
+            }
+        }
     };
 
+    const getInformation = async () => {
+        let tmp = {"direccion" : localStorage.getItem("id")};
+        const ans = await getDirection(tmp.direccion); 
+        if(!ans.error){
+            setInformation({...ans, tmp});
+            setInformationBase({...ans, tmp});
+        }
+        else{
+            alert(ans.error);
+        }
+
+    };
+
+    const handleCancelEditing = () =>{
+        setInformation(informationBase);
+        setEditing(false)
+    };
+
+    useEffect(
+        () => {
+            getInformation();
+        }, []
+    )
     return(
         <DirectionContext.Provider value={{information, setInformation, validate, setValidate, editing, setEditing}}>
         {   type != 2 && 
             <div className={`bg-blue mx-12 p-4 text-2xl space-x-2 font-semibold flex align-middle items-center select-none mt-6 ${direction ? "mb-12": " mb-0"}`} onClick={()=>setDirection(!direction)}>
                 <div>
-                    Dirección
+                    Dirección y contacto
                 </div>
                 <div>
                     {direction ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp>}
@@ -31,7 +69,21 @@ export default function DirectionForm({type}){
         
             </div>
         }
-        {!direction && <form className="text-black bg-lightGrey text-xl mx-12 rounded-lg p-6 space-y-4 mb-6">
+        {viewModal && <ModalUnstandard>
+            <div className="space-y-6">
+                <div className="text-center text-black">¿Está seguro de que desea acutalizar su información de dirección y contacto?</div>
+                <div className="flex justify-center space-x-5">
+                <Button color={"bg-green"} handleButton={handleButton}>Aceptar</Button>
+                <Button color={"bg-grey"} handleButton={()=>setViewModal(false)}>Cancelar</Button>
+                </div>
+            </div>
+
+        </ModalUnstandard>}
+        {!direction && information!={} && <form className="text-black bg-lightGrey text-xl mx-12 rounded-lg p-6 space-y-4 mb-6">
+            <div className="space-y-2 w-3/12">
+                <LabelInput>Télefono</LabelInput>
+                <InputForDirection nameInput={"telefono"} errorMessage={messageNumber} verification={checkNumber} type={"number"}/>
+            </div>
             <div className="space-y-2 w-3/12">
                 <LabelInput>Departamento</LabelInput>
                 <InputForDirection nameInput={"departamento"} errorMessage={messageNoEmpty} verification={checkNoEmpty} type={"text"}></InputForDirection>
@@ -42,15 +94,15 @@ export default function DirectionForm({type}){
             </div>
             <div className="space-y-2 w-4/12">
                 <LabelInput>Dirección Completa</LabelInput>
-                <InputForDirection nameInput={"direccion"} errorMessage={messageNoEmpty} verification={checkNoEmpty} type={"text"}></InputForDirection>
+                <InputForDirection nameInput={"direccion_completa"} errorMessage={messageNoEmpty} verification={checkNoEmpty} type={"text"}></InputForDirection>
             </div>
             <div className="space-y-2 w-4/12">
                 <LabelInput>Referencias Adicionales</LabelInput>
-                <InputForDirection nameInput={"referencias"} errorMessage={messageNoEmpty} verification={checkNoEmpty} type={"text"}></InputForDirection>
+                <InputForDirection nameInput={"informacion_complementaria"} errorMessage={messageNoEmpty} verification={checkNoEmpty} type={"text"}></InputForDirection>
             </div>
             <div className="flex justify-center space-x-6">
-                {editing && <><Button color={"bg-green"} handleButton={handleButton} disable={!validateInformation(validate)}>Guardar</Button>
-                <Button color={"bg-grey"} handleButton={()=>{setEditing(false)}}>Cancelar</Button></>}
+                {editing && <><Button color={"bg-green"} handleButton={()=>setViewModal(true)} disable={!validateInformation(validate)}>Guardar</Button>
+                <Button color={"bg-grey"} handleButton={handleCancelEditing}>Cancelar</Button></>}
                 {!editing && <Button color={"bg-yellow"} handleButton={()=>{setEditing(true)}}>Editar</Button>}
             </div>
         </form>}

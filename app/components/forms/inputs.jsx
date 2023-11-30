@@ -338,7 +338,7 @@ export const InputForDirection = (props) => {
 
     return(
         <div className="space-y-5">
-            <input type={type} value={information [nameInput]} disabled={!editing} required className={"w-full rounded-lg border"} onChange={handleInput}></input>
+            <input type={type} value={information [nameInput]} disabled={!editing} required className={"w-full text-lg rounded-lg border"} onChange={handleInput}></input>
             {(!validate[nameInput] )&& <div className="text-orange text-sm">{errorMessage}</div>}
         </div>
     );

@@ -35,7 +35,6 @@ export default function Register() {
     "contrasenia":false,
     "sexo":false,
     "fecha_nacimiento":false,
-    "telefono":false
 });
   const [isVisible, setIsVisible] = useState(false);
   

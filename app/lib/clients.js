@@ -58,3 +58,37 @@ export async function addClient(client){
         alert(error);
     }
 };
+
+export async function editDirection(direction){
+    try{
+
+        let url = 'http://localhost:3000/cliente/actualizar/' + direction.cedula;
+        let response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(direction)
+        });
+
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function getDirection(id){
+    try{
+
+        let url = 'http://localhost:3000/cliente/obtener/' + id;
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};

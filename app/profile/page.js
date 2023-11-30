@@ -30,7 +30,7 @@ export default function FormUser(){
     const router = useRouter();
     const type = localStorage.getItem("type");
     const id = localStorage.getItem("id");
-    console.log(information)
+    
     useEffect(
         () => {
             const get = async () => {
