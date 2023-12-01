@@ -1,4 +1,3 @@
-import methods from '../jsons/methods.json'
 /***
  * Se realiza la consulta a la base de datos
  */
@@ -10,10 +9,6 @@ export async function getMethodById(id){
         });
 
         let data = (await response.json())[0];
-        let imgs = {"logo": data.logo, "qr": data.qr};
-        data.logo = "";
-        data.qr = "";
-        data = {...data, ["imgs"]: imgs};
 
         return data;
     }
@@ -22,34 +17,90 @@ export async function getMethodById(id){
     }
 };
 
-export async function editMethod(id, nombre, logo, qr, info, color){
-    console.log(logo)
-    const img = await fetch(logo).then(res => res.blob());
-    console.log(img)
-    
-    // const emptyBlob = new Blob([], { type: 'image/png' });
-    // const formData = new FormData();
-    // let img1 = emptyBlob, img2 = emptyBlob;
-    // if(qr != ""){
-    //     img2 = await fetch(qr).then(res => res.blob());
-    // }
-    
-    // formData.append("logo", img1);
-    // formData.append("qr", img2);
-    // formData.append("info", info);
-    // formData.append("id", id);
-    // formData.append("nombre", nombre);
-    // formData.append("color", color);
-    // let url = 'http://localhost:3000/medioPago/editar';
-    // let response = await fetch(url, {
-    //     method: 'POST',
-    //     body: formData
-    // });
+export async function editMethod(method, flag){
+    const formData = new FormData();
+    if(flag.logo){
+        const img = await fetch(method.logo).then(res => res.blob());
+        formData.append("logo", img);
 
-    // return await response.json();
+    }
+    else{
+        formData.append("logo", method.logo);
+    }
+    if(flag.qr){
+        const img = await fetch(method.qr).then(res => res.blob());
+        formData.append("qr", img);
+
+    }
+    else{
+        formData.append("logo", method.qr);
+    }
+
+    formData.append("info", method.info);
+    formData.append("id", method.id);
+    formData.append("nombre", method.nombre);
+    formData.append("color", method.color);
+    try{
+        let url = 'http://localhost:3000/medioPago/editar';
+        let response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+
     
 };
 
-export function getMethods(){
-    return methods;
-}
+export async function getMethods(){
+    try{
+        let url = 'http://localhost:3000/medioPago/listar';
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function removeMethod(method){
+    try{
+        let url = 'http://localhost:3000/medioPago/eliminar/' + method.id;
+        let response = await fetch(url, {
+            method: 'DELETE',
+        });
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function createMethod(method){
+    try{
+        const formData = new FormData();
+        let img = await fetch(method.logo).then(res => res.blob());
+        formData.append("logo", img);
+        img = await fetch(method.qr).then(res => res.blob());
+        formData.append("qr", img);
+        formData.append("info", method.info);
+        formData.append("id", method.id);
+        formData.append("nombre", method.nombre);
+        formData.append("color", method.color);
+        let url = 'http://localhost:3000/medioPago/subirImagen';
+        let response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+        return await response.json();
+    
+    }
+    catch(error){
+        alert(error);
+    }
+};

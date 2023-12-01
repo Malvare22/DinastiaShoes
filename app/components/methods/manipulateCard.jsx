@@ -3,7 +3,7 @@ import { Button, FileButton, ToLink } from "@/app/components/buttons";
 import { Card } from "@/app/components/methods/card";
 import Modal from "@/app/components/modal";
 import { PageTittle } from "@/app/components/text";
-import { editMethod, getMethodById } from "@/app/lib/methods";
+import { createMethod, editMethod, getMethodById } from "@/app/lib/methods";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../forms/inputs";
@@ -20,7 +20,7 @@ const PaintIcon = () => {
   </svg>
 };
 
-const ColorInput = ({color, setColor}) => {
+const ColorInput = ({data, setData}) => {
 
     const colorSelector = useRef(); 
 
@@ -30,52 +30,48 @@ const ColorInput = ({color, setColor}) => {
     };
 
     const changeColor = (e) => {
-        setColor(e.target.value);
+        setData({...data, [e.target.name]: e.target.value});
     };
 
     return (
     <>
-        <input type="color" className="invisible w-0" onChange={changeColor} ref={colorSelector}></input>
+        <input type="color" className="invisible w-0" onChange={changeColor} name="color" ref={colorSelector}></input>
         <div className="bg-standardWhite border rounded-lg w-5/12 flex justify-center items-center align-middle space-x-2" onClick={handleInput}>
-            <h3>{color}</h3>
+            <h3>{data.color}</h3>
             <PaintIcon></PaintIcon>
          </div>
     </>);
 };
 
-const imageInputs = {
+const dataTemplate = {
+    nombre: "",
+    color: "",
     logo: "",
-    qr: ""
+    qr: "",
+    info: "",
+    id: "",
 };
 
 export default function ManipulateCard({id, type}){
     
     const [visible, setVisible] = useState(false);
     const router = useRouter();
-
-    const registerMethod = () => {
-        console.log("En hora buena!");
-        router.push("/methods");
-    };
     
-    const [data, setData] = useState({});
-    // const [color, setColor] = useState("");
-    // const [info, setInfo] = useState("");
-    // const [imgs, setImgs] = useState("");
-    // const [name, setName] = useState("");
-    // const [msg, setMsg] = useState("");
+    const [data, setData] = useState(dataTemplate);
+    const [flag, setFlag] = useState({qr: false, logo: false});
+    const [msg, setMsg] = useState("");
 
     const getMethod = async () => {
         let aux;
         aux = await getMethodById(id); 
-        setData(data);
+        setData(aux);
         setMsg("¿Está seguro de que desea modificar el método de pago?");
     };
 
     useEffect(
         () => {
             if(type=="register"){
-                //aux = {color: "", info: "", imgs: imageInputs, modalText:"¿Está seguro de que desea crear el método de pago?"};
+                setMsg("¿Está seguro de que desea crear el método de pago?");
             }
             else{ 
                 getMethod();
@@ -85,28 +81,24 @@ export default function ManipulateCard({id, type}){
     
 
     const validation = () => {
-        //if(info=="" || imgs.logo == "") return false;
+        if(data.info=="" || data.logo == "" || data.qr == "") return false;
         return true;
     }
 
     const handleImage = (e) => {
         const file = e.target.files[0];
     
-        // Verifica que el archivo sea una imagen
-        if (!file.type.startsWith("image/")) {
-          return;
-        }
-    
         // Carga la imagen
         const reader = new FileReader();
         reader.onload = () => {
-          setImgs({...imgs, [e.target.name] : reader.result});
+          setData({...data, [e.target.name] : reader.result});
         };
+        setFlag({...flag, [e.target.name]: true});
         reader.readAsDataURL(file);
       };
 
     const removeQR = () => {
-        setImgs({...imgs, ["qr"]: ""});
+        setData({...data, ["qr"]: ""});
     };
 
     const limitRows = (e) => {
@@ -114,19 +106,36 @@ export default function ManipulateCard({id, type}){
 
         // Limitar el número de líneas
         if (lines.length <= 5) {
-            setInfo(e.target.value);
+            setData({...data, ['info'] : e.target.value});
         }
     };
 
-    const sendQueryMethod = async () => {
-        let ans;
-        if(type=='register'){
+    const handleInput = (e) => {
 
+        const {name, value} = e.target;
+        setData({...data, [name]: value});
+        
+    };
+
+    const sendQueryMethod = async () => {
+
+        if(!validation()) return;
+        
+        if(type=='register'){
+            try{
+                setVisible(false);
+                await createMethod(data);
+                router.push('/methods');
+            }
+            catch(error){
+                alert(error);
+            }
         }
         else{
             try{
-                await editMethod(id, name, imgs.logo, imgs.qr, info, color);
-
+                setVisible(false);
+                await editMethod(data, flag);
+                router.push('/methods');
             }        
             catch(error){
                 alert(error)
@@ -148,12 +157,12 @@ export default function ManipulateCard({id, type}){
             {visible && <div className="text-black"><Modal text={msg} button={btn} setIsVisible={setVisible}></Modal></div>}
             <div className="md:flex md:justify-center md:space-x-28 mb-10">
                 <div>
-                    <Card text={info} imgs={imgs} color={color}></Card>
+                    <Card data={data}></Card>
                 </div>
                 <div className="space-y-8 text-black font-semibold flex flex-col justify-center">
                     <div className="flex space-x-6">
                         <div>Nombre:</div>
-                        <input className="border rounded-lg" value={name} onChange={(e)=>setName(e.target.value)}></input>
+                        <input className="border rounded-lg" value={data.nombre} name="nombre" onChange={handleInput}></input>
                     </div>
                     <FileButton text={"Logo del medio de pago"} name={"logo"} handleButton={handleImage} type={1}></FileButton>
                     <div className="flex items-center space-x-5">
@@ -162,11 +171,11 @@ export default function ManipulateCard({id, type}){
                     </div>
                     <div className="flex space-x-5">
                         <h3>Color de fondo:</h3>
-                        <ColorInput color={color} setColor={setColor}></ColorInput>
+                        <ColorInput data={data} setData={setData}></ColorInput>
                     </div>
                     <div className="flex space-x-5">
                         <h3>Texto:</h3>
-                        <textarea rows={5} className="border rounded-lg w-[250px]" value={info} onChange={limitRows}></textarea>
+                        <textarea rows={5} className="border rounded-lg w-[250px]" value={data.info} onChange={limitRows}></textarea>
                     </div>
                     <div className="flex space-x-5">
                         <Button color="bg-green" disable={!validation()} handleButton={()=> setVisible(true)}>Aceptar</Button>

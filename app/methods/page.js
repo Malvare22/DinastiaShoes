@@ -5,7 +5,7 @@ import TableAction from "../components/table/table_actions";
 import { columnsMethods } from "../components/table/columns";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
-import { getMethods } from "../lib/methods";
+import { getMethods, removeMethod } from "../lib/methods";
 import PageContainer from "../components/pageContainer";
 import { PageTittle } from "../components/text";
 import { ToLink } from "../components/buttons";
@@ -16,17 +16,29 @@ export default function Page() {
   const[viewRemove, setViewRemove] = useState(false);
   const router = useRouter();
   
-  const data = getMethods();
+  const[data, setData] = useState({});
+
+  const getData = async () => {
+    setData(await getMethods());
+  };
+
+  useEffect(
+    () => {
+          getData();
+    }, []
+  )
 
   /**
    * Llama al método de eliminar un metodo de pago
   */
-  const makeRemove = (u) => {
-
+ const makeRemove = async () => {
+    setViewRemove(false);
+    await removeMethod(method);
+    getData();
   };
 
   const btnRemove = {
-    make: () => {makeRemove},
+    make: makeRemove,
     color: "bg-green",
     text: "Aceptar"
   };
