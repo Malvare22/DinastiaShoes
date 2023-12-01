@@ -3,9 +3,10 @@ import { Button, FileButton, ToLink } from "@/app/components/buttons";
 import { Card } from "@/app/components/methods/card";
 import Modal from "@/app/components/modal";
 import { PageTittle } from "@/app/components/text";
-import { getMethodById } from "@/app/lib/methods";
+import { editMethod, getMethodById } from "@/app/lib/methods";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Input } from "../forms/inputs";
 
 const TrashIcon = () => {
     return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" className="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -47,11 +48,8 @@ const imageInputs = {
     qr: ""
 };
 
-
-
 export default function ManipulateCard({id, type}){
-    let aux;
-   
+    
     const [visible, setVisible] = useState(false);
     const router = useRouter();
 
@@ -60,24 +58,34 @@ export default function ManipulateCard({id, type}){
         router.push("/methods");
     };
     
-    const updateMethod = () => {
-        console.log("En hora buena!");
-        router.push("/methods");
+    const [data, setData] = useState({});
+    // const [color, setColor] = useState("");
+    // const [info, setInfo] = useState("");
+    // const [imgs, setImgs] = useState("");
+    // const [name, setName] = useState("");
+    // const [msg, setMsg] = useState("");
+
+    const getMethod = async () => {
+        let aux;
+        aux = await getMethodById(id); 
+        setData(data);
+        setMsg("¿Está seguro de que desea modificar el método de pago?");
     };
+
+    useEffect(
+        () => {
+            if(type=="register"){
+                //aux = {color: "", info: "", imgs: imageInputs, modalText:"¿Está seguro de que desea crear el método de pago?"};
+            }
+            else{ 
+                getMethod();
+            };
+        }, []
+    );  
     
-    if(type=="register") aux = {color: "", info: "", imgs: imageInputs, actionToBackend: registerMethod, modalText:"¿Está seguro de que desea crear el método de pago?"};
-    else{ 
-        aux = getMethodById(id); 
-        aux = {...aux, actionToBackend: updateMethod, modalText:"¿Está seguro de que desea modificar el método de pago?"};
-    };
-   
-    
-    const [color, setColor] = useState(aux.color);
-    const [info, setInfo] = useState(aux.info);
-    const [imgs, setImgs] = useState(aux.imgs);
 
     const validation = () => {
-        if(info=="" || imgs.logo == "") return false;
+        //if(info=="" || imgs.logo == "") return false;
         return true;
     }
 
@@ -85,7 +93,6 @@ export default function ManipulateCard({id, type}){
         const file = e.target.files[0];
     
         // Verifica que el archivo sea una imagen
-        console.log(imgs)
         if (!file.type.startsWith("image/")) {
           return;
         }
@@ -111,10 +118,26 @@ export default function ManipulateCard({id, type}){
         }
     };
 
-    
+    const sendQueryMethod = async () => {
+        let ans;
+        if(type=='register'){
+
+        }
+        else{
+            try{
+                await editMethod(id, name, imgs.logo, imgs.qr, info, color);
+
+            }        
+            catch(error){
+                alert(error)
+            }    
+        }
+ 
+    };
+
 
     const btn = {
-        "make" : () => aux.actionToBackend(router),
+        "make" : sendQueryMethod,
         "text" : "Aceptar",
         "color" : "bg-green"
     };
@@ -122,12 +145,16 @@ export default function ManipulateCard({id, type}){
     return(
         <div className="mx-12">
             <PageTittle>MEDIOS DE PAGO</PageTittle>
-            {visible && <div className="text-black"><Modal text={aux.modalText} button={btn} setIsVisible={setVisible}></Modal></div>}
-            <div className="flex justify-center space-x-28 mb-10">
+            {visible && <div className="text-black"><Modal text={msg} button={btn} setIsVisible={setVisible}></Modal></div>}
+            <div className="md:flex md:justify-center md:space-x-28 mb-10">
                 <div>
                     <Card text={info} imgs={imgs} color={color}></Card>
                 </div>
-                <div className="space-y-8 text-black font-semibold">
+                <div className="space-y-8 text-black font-semibold flex flex-col justify-center">
+                    <div className="flex space-x-6">
+                        <div>Nombre:</div>
+                        <input className="border rounded-lg" value={name} onChange={(e)=>setName(e.target.value)}></input>
+                    </div>
                     <FileButton text={"Logo del medio de pago"} name={"logo"} handleButton={handleImage} type={1}></FileButton>
                     <div className="flex items-center space-x-5">
                         <FileButton text={"Imagen adicional"} name={"qr"} handleButton={handleImage} type={1}></FileButton>
