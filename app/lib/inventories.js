@@ -1,8 +1,8 @@
-import inventories from '../jsons/inventories.json'
+import { url_backend } from "./information";
 
 export async function getInventories(){
     try{
-        let url = 'http://localhost:3000/productos/listar';
+        let url = url_backend + '/productos/listar';
         let response = await fetch(url, {
             method: 'GET',
         });
@@ -49,12 +49,93 @@ export async function getInventories(){
     }
 };
 
+export async function createProduct(product){
+    try{
+        let url = url_backend + '/productos/crear';
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function createInventory(inventory, productId){
+    try{
+        let url = url_backend + '/inventario/crear';
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({...inventory, ["producto_codigo"]: productId}),
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function uploadImagesInventory(images, productId){
+    try{
+        let url = url_backend + '/fotos/subirImagen/' + productId;
+        const formData = new FormData();
+       
+        // const img_to_send = images.map(async (element) => {
+        //    return await fetch(element).then(res => res.blob());
+        // });
+
+        const img_to_send = await fetch(images[0]).then(res => res.blob());
+
+        formData.append('image', img_to_send);
+
+        let response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+        console.log(await response.json());
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function getProducts(id){
+    try{
+        let url = url_backend + '/productos/obtener/' + id;
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
 export const template_tx = {
     nombre: "",
     precio: "",
     color: "",
     talla: "",
     cantidad: "",
+    destacado: "",
+    categoria_id: "",
     descripcion: "",
     descuento: ""
 };
@@ -65,7 +146,10 @@ export const template_validate_tx = {
     color: false,
     talla: false,
     cantidad: false,
+    destacado: false,
+    categoria_id: false,
     descripcion: false,
+    descuento: false
 };
 
 export const template_validate_t3 = {

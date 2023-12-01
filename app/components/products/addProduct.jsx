@@ -1,41 +1,75 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { checkNumber, checkText, messageNumber, messageText } from "../forms/verifications";
 import { formContext } from "../context";
 import { LabelInput } from "../text";
 import { Input } from "../forms/inputs";
 import { Button, ImageButton } from "../buttons";
-import { template_tx } from "@/app/lib/inventories";
+import { createInventory, createProduct, template_tx, uploadImagesInventory } from "@/app/lib/inventories";
+import { getCategories } from "@/app/lib/categories";
+
+const defaultData = {
+    nombre: "",
+    precio: "",
+    color: "",
+    talla: "",
+    cantidad: "",
+    destacado: "B",
+    categoria_id: "",
+    descripcion: "",
+    descuento: "B"
+};
 
 /***
  * Type 1 = registrar nuevo producto sin inventario
  * Type 2 = registrar nuevo producto con inventario
  * Type 3 = editar producto existente
  */
+
 export const AddInventory = ({setVisible, type}) => {
 
-    //Es necesario cambiar los datos que se ingresan si ya existe el producto 
-    let data = template_tx;
-    let handleAction;
-    if(type == 1) {
-        handleAction = () => {
-            alert("Nuevo producto registrado");
-            setVisible(false);
-        };
-    };
-    if(type == 2) {
-
-    };
-    if(type == 3) {
-
-    };
-    const [information, setInformation] = useState(data);
+    const [information, setInformation] = useState(defaultData);
 
     const [validate, setValidate] = useState({});
 
     const [images, setImages] = useState([]);
 
+    //Es necesario cambiar los datos que se ingresan si ya existe el producto 
+    const [categories, setCategories] = useState([]);
+
+    const queryCategories = async () => {
+        const tmp = await getCategories();
+        setInformation({... information, ["categoria_id"]: tmp[0].id});
+        setCategories(tmp);
+    }
+
+    useEffect(
+        () => {
+            queryCategories();
+        }, []
+    );
+
+    const handleAction = async () => {
+        if(type == 1) {
+            setVisible(false);
+            const ans = await createProduct(information);
+            const id = (ans.codigo);
+            await createInventory(information, id);
+            if(images.length != 0){
+                try{
+                    await uploadImagesInventory(images, id);
+                }
+                catch(error){
+                    alert(error);
+                }
+            }
+        }
+    };
+
+    
+
     const handleImage = (e) => {
+        if(images.length >= 5) return;
         const file = e.target.files[0];
     
         // Verifica que el archivo sea una imagen
@@ -63,6 +97,17 @@ export const AddInventory = ({setVisible, type}) => {
         setInformation({...information, [a]: e.target.value});
     };
 
+    const handleSelect = (e) => {
+        const {name, value} = e.target;
+        setInformation({...information, [name]: value});  
+    };
+
+    const handleCheckBox = (e) => {
+        const {checked} = e.target;
+        setInformation({...information, ["destacado"]: checked? "A": "B"});  
+    };
+
+    console.log(information, images)
     return(
         <div>
             <div className="flex text-black space-x-12">
@@ -71,15 +116,35 @@ export const AddInventory = ({setVisible, type}) => {
                    
                     {type==1 && <><div className="mt-8"><LabelInput>Nombre:</LabelInput></div>
                     <div className="ml-4 col-span-5"><Input nameInput={"nombre"} type={"text"} errorMessage={messageText} verification={checkText}></Input></div></>}
+
                     <div className="mt-8"><LabelInput>Precio:</LabelInput></div>
                     <div className="ml-4 col-span-5"><Input nameInput={"precio"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
+
                     <LabelInput>Color:</LabelInput>
                     <div className="ml-4 col-span-5"><Input nameInput={"color"} type={"text"} errorMessage={messageText} verification={checkText}></Input></div>
+
                     <LabelInput>Talla:</LabelInput>
                     <div className="ml-4 col-span-5"><Input nameInput={"talla"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
+
                     <LabelInput>Cantidad:</LabelInput>
                     <div className="ml-4 col-span-5"><Input nameInput={"cantidad"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input></div>
+
+                    {type == 1 && <><LabelInput>Categorias:</LabelInput>
+                    <div className="ml-4 col-span-5">
+                        <select name={"categoria_id"} value={information.categoria_id} onChange={handleSelect}>
+                            {categories && categories.map((element)=>{
+                                return <option value={element.id}>{element.nombre}</option>;
+                            })}
+                        </select>
+                    </div></>}
+
+                    {type == 1 && <><LabelInput>Destacado:</LabelInput>
+                    <div className="ml-4 col-span-5 flex items-center align-middle">
+                        <input type="checkbox" className="w-[20px] h-[20px]" name="destacado" onChange={handleCheckBox}></input>
+                    </div></>}
+
                     {type!=1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5 w-24"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
+
                     {type==1 && <><LabelInput>Descripción:</LabelInput>
                     <div className="col-span-5 ml-4" onChange={handleTextArea}><textarea className="border w-full"></textarea></div></>}
                         
@@ -98,7 +163,11 @@ export const AddInventory = ({setVisible, type}) => {
                             })
                         }
                     </div>
-                   <div className="w-full flex justify-center "><ImageButton text={"Agregar imagen"} handleButton={handleImage}></ImageButton> </div>
+                    
+                   <div className="w-full flex flex-col justify-center ">
+                    <ImageButton text={"Agregar imagen"} disable={images.length == 5} handleButton={handleImage}></ImageButton> 
+                    <div className="w-full flex justify-center bg-blue text-white p-3 rounded-lg text-center text-sm">Solo pueden agregarse un máximo de 5 imagenes por producto</div>
+                   </div>
                 </div>
             </div>
             <div className="flex space-x-6 mt-4">

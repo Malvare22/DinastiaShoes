@@ -60,7 +60,7 @@ export const FileButton = ({text, type, handleButton, name, extension}) =>{
 };
 
 
-export const ImageButton = ({text , handleButton}) =>{
+export const ImageButton = ({text , handleButton, disable}) =>{
     const inputSelector = useRef(); 
 
     const handleInput = () => {
@@ -70,6 +70,6 @@ export const ImageButton = ({text , handleButton}) =>{
    
     return <div className="flex justify-center text-center space-x-4 items-center p-5 rounded-lg">
         <input type="file" className={"invisible w-0"} onChange={handleButton} ref={inputSelector}></input>
-        <Button color={"bg-green"} handleButton={handleInput}>{text}</Button>
+        <Button color={"bg-green"} disable={disable} handleButton={handleInput}>{text}</Button>
     </div>
 };

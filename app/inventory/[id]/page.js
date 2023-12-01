@@ -7,12 +7,28 @@ import { AddInventory } from "@/app/components/products/addProduct";
 import EditInventoryModal from "@/app/components/products/editInventory";
 import VariantCard from "@/app/components/products/variantCard";
 import { PageTittle } from "@/app/components/text";
-import { useState } from "react";
+import { getProducts } from "@/app/lib/inventories";
+import { useEffect, useState } from "react";
 
-export default function Page(){
+export default function Page({params}){
 
     const [viewEditInventory, setViewEditInventory] = useState(false);
     const [viewAdd, setViewAdd] = useState(false);
+    const [data, setData] = useState({});
+
+    const codigo = params.id;
+
+    const getAllData = async () => {
+        console.log(codigo)
+        setData(await getProducts(codigo));
+        console.log(await getProducts(codigo))
+    };
+
+    useEffect(
+        () => {
+            getAllData();
+        }, []
+    );
 
     return(
     <PageContainer>

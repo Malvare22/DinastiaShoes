@@ -26,13 +26,11 @@ export default function Page() {
     }, []
   );
 
-  console.log(data);
-
   const [viewModal, setViewModal] = useState(false);
 
   const handleView = (order) => {
     
-    router.push("/inventory/"+ order.id);
+    router.push("/inventory/"+ order.codigo);
   };
 
   const actions = [{icon: "view", action: handleView}];

@@ -1,4 +1,4 @@
-import employees from '../jsons/employees.json'
+export const url_backend = 'http://localhost:3000';
 
 export function DateToLines(date){
   const ndate = date.split("/");
@@ -12,7 +12,7 @@ export function DateToSlash(date){
 
 export async function getProfile(user){
   try{
-    let url = 'http://localhost:3000/usuario/obtener/' + user;
+    let url = url_backend + '/usuario/obtener/' + user;
     let response = await fetch(url, {
         method: 'GET',
     });
@@ -26,7 +26,7 @@ export async function getProfile(user){
 
 export async function updateProfile(user){
   try{
-    let url = 'http://localhost:3000/usuario/actualizar/' + user.cedula;
+    let url = url_backend + '/usuario/actualizar/' + user.cedula;
     let response = await fetch(url, {
         method: 'PATCH',
         headers: {
@@ -45,7 +45,7 @@ export async function updateProfile(user){
 export async function updatePassword(user){
   try{
     user.usuario = user.correo;
-    let url = 'http://localhost:3000/usuario/cambiarContra';
+    let url = url_backend + '/usuario/cambiarContra';
     let response = await fetch(url, {
         method: 'POST',
         headers: {
