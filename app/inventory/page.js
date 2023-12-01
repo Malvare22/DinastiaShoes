@@ -6,16 +6,27 @@ import PageContainer from "../components/pageContainer";
 import { getInventories } from "../lib/inventories";
 import { PageTittle } from "../components/text";
 import { Button } from "../components/buttons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalInventories } from "../components/modal";
 import { AddInventory } from "../components/products/addProduct";
 
 export default function Page() {
 
+  const [data, setData] = useState({});
   
   const router = useRouter();
+
+  const getData = async () => {
+    setData(await getInventories());
+  };
   
-  const data = getInventories();
+  useEffect(
+    () => {
+      getData();
+    }, []
+  );
+
+  console.log(data);
 
   const [viewModal, setViewModal] = useState(false);
 

@@ -79,7 +79,7 @@ export const columnsOrders = [
 export const columnsInventories = [
     {
         header: "Codigo",
-        accessorKey: "id"
+        accessorKey: "codigo"
     },
     {
         header: "Nombre",
