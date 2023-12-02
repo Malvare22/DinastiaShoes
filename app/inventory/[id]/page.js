@@ -15,6 +15,8 @@ export default function Page({params}){
     const [viewEditInventory, setViewEditInventory] = useState(false);
     const [viewAdd, setViewAdd] = useState(false);
     const [data, setData] = useState({});
+    const [update, setUpdate] = useState(false);
+
 
     const codigo = params.id;
 
@@ -27,21 +29,26 @@ export default function Page({params}){
     useEffect(
         () => {
             getAllData();
-        }, []
+        }, [update]
     );
 
     return(
     <PageContainer>
         {viewAdd && <ModalInventories><AddInventory setVisible={setViewAdd} type={2}></AddInventory></ModalInventories>}
-        {viewEditInventory && <div className="text-black"><EditInventoryModal setVisible={setViewEditInventory} nombre={"Test"} descripcion={"A"} destacado={true}></EditInventoryModal></div>}
         <div className="flex flex-col justify-center align-middle items-center">
-            <PageTittle>Tacones</PageTittle>
+            <PageTittle>{data.nombre}</PageTittle>
             <div className="text-black w-6/12 flex flex-col items-end">
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin elit quis justo laoreet, commodo convallis odio rutrum. Vestibulum luctus justo sit amet pretium elementum. Nullam tempor nibh mauris, ac bibendum neque imperdiet vitae. Mauris a sagittis ante, vitae tincidunt augue. Sed elementum leo ut elementum vehicula. Sed malesuada sem lorem, a tincidunt sem consequat vel. Quisque a consequat elit. In convallis leo erat, id facilisis libero imperdiet convallis.</div>
+                <div className="border w-full">{data.descripcion}</div>
                 <div><Button color={"bg-grisAzulado"} handleButton={()=>setViewEditInventory(true)}>Editar</Button></div>
             </div>
         </div>
-        <VariantCard></VariantCard> 
+        {
+            data.inventarios && (data.inventarios).map(
+                (element, index) => {
+                    return <VariantCard key={index} variant={element} update={update} setUpdate={setUpdate}></VariantCard>;
+                }
+            )
+        }
         <Button color={"bg-grisAzulado"} handleButton={()=> setViewAdd(true)}>Añadir</Button>
     </PageContainer>
     );

@@ -307,7 +307,7 @@ export const SquareSelectSmall = (props) => {
 
 
 export const Input = (props) => {
-    const {nameInput, errorMessage, verification, type, border} = props;
+    const {nameInput, errorMessage, verification, type, border, className} = props;
     const {information, setInformation, validate, setValidate, editing} = useContext(formContext);
 
     const handleInput = ((e) => {
@@ -319,7 +319,7 @@ export const Input = (props) => {
 
     return(
         <div className="space-y-5">
-            <input type={type} value={information [nameInput]} disabled={false} required className={"w-full rounded-lg " + (border!=undefined && border==false ? "": "border")} onChange={handleInput}></input>
+            <input type={type} value={information [nameInput]} disabled={false} required className={"w-full rounded-lg " + (border!=undefined && border==false ? "": "border") + " " + (information[nameInput] == "" ? "border-2 border-yellow":" ") + (information [nameInput] != "" && !validate[nameInput] ? "border-2 border-darkRed" : "")} onChange={handleInput}></input>
             {(information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{errorMessage}</div>}
         </div>
     );

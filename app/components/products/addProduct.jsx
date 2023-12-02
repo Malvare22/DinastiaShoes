@@ -5,8 +5,9 @@ import { formContext } from "../context";
 import { LabelInput } from "../text";
 import { Input } from "../forms/inputs";
 import { Button, ImageButton } from "../buttons";
-import { createInventory, createProduct, template_tx, uploadImagesInventory } from "@/app/lib/inventories";
+import { createInventory, createProduct, editInventory, template_tx, uploadImagesInventory } from "@/app/lib/inventories";
 import { getCategories } from "@/app/lib/categories";
+import { validateInformation } from "@/app/lib/information";
 
 const defaultData = {
     nombre: "",
@@ -20,19 +21,35 @@ const defaultData = {
     descuento: "B"
 };
 
+const defaultValidate = {
+    nombre: false,
+    precio: false,
+    color: false,
+    talla: false,
+    cantidad: false,
+};
+
+const dataValid = {
+    nombre: true,
+    precio: true,
+    color: true,
+    talla: true,
+    cantidad: true,
+};
+
 /***
  * Type 1 = registrar nuevo producto sin inventario
  * Type 2 = registrar nuevo producto con inventario
  * Type 3 = editar producto existente
  */
 
-export const AddInventory = ({setVisible, type}) => {
+export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs}) => {
 
-    const [information, setInformation] = useState(defaultData);
+    const [information, setInformation] = useState(type!=3 ? defaultData: data);
 
-    const [validate, setValidate] = useState({});
+    const [validate, setValidate] = useState(type!=3 ? defaultValidate: dataValid);
 
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState((imgs) ? imgs : []);
 
     //Es necesario cambiar los datos que se ingresan si ya existe el producto 
     const [categories, setCategories] = useState([]);
@@ -52,21 +69,37 @@ export const AddInventory = ({setVisible, type}) => {
     const handleAction = async () => {
         if(type == 1) {
             setVisible(false);
-            const ans = await createProduct(information);
-            const id = (ans.codigo);
-            await createInventory(information, id);
-            if(images.length != 0){
-                try{
-                    await uploadImagesInventory(images, id);
-                }
-                catch(error){
-                    alert(error);
+            try{
+                const ans = await createProduct(information);
+                const id = (ans.codigo);
+                const id_inventario = (await createInventory(information, id)).codigo;
+                if(images.length != 0){
+                    
+                    await uploadImagesInventory(images, id_inventario);
+                    
                 }
             }
+            catch(error){
+                alert(error);
+            }
         }
-    };
+        if(type == 3) {
+            setVisible(false);
+            try{
+                await editInventory(information);
+                if(images.length != 0){
+                    
+                    await uploadImagesInventory(images, information.codigo);
+                    
+                }
+            }
+            catch(error){
+                alert(error);
+            }
+        }
+        setUpdate(!update);
 
-    
+    };
 
     const handleImage = (e) => {
         if(images.length >= 5) return;
@@ -107,7 +140,6 @@ export const AddInventory = ({setVisible, type}) => {
         setInformation({...information, ["destacado"]: checked? "A": "B"});  
     };
 
-    console.log(information, images)
     return(
         <div>
             <div className="flex text-black space-x-12">
@@ -171,7 +203,7 @@ export const AddInventory = ({setVisible, type}) => {
                 </div>
             </div>
             <div className="flex space-x-6 mt-4">
-                <Button color={"bg-green"} handleButton={handleAction}>Agregar</Button>
+                <Button color={"bg-green"} handleButton={handleAction} disable={!validateInformation(validate)}>Agregar</Button>
                 <Button color={"bg-red"} handleButton={()=>setVisible(false)}>Cancelar</Button>
             </div>
         </div>

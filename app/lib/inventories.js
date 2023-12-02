@@ -87,6 +87,25 @@ export async function createInventory(inventory, productId){
     }
 };
 
+export async function editInventory(inventory){
+    try{
+        let url = url_backend + '/inventario/actualizar/' + inventory.codigo;
+        let response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(inventory),
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
 export async function uploadImagesInventory(images, productId){
     try{
         let url = url_backend + '/fotos/subirImagen/' + productId;
@@ -95,16 +114,23 @@ export async function uploadImagesInventory(images, productId){
         // const img_to_send = images.map(async (element) => {
         //    return await fetch(element).then(res => res.blob());
         // });
+       
+        const imagePromises = images.map(
+            async (img) => {
+                return await fetch(img).then(res => res.blob());
+            }
+        );
 
-        const img_to_send = await fetch(images[0]).then(res => res.blob());
+        const imageBlobs = await Promise.all(imagePromises);
 
-        formData.append('image', img_to_send);
-
+        imageBlobs.forEach(blob => {
+            formData.append('image', blob);
+        });
+            
         let response = await fetch(url, {
             method: 'POST',
             body: formData,
         });
-        console.log(await response.json());
         return await response.json();
         
     }
@@ -127,6 +153,25 @@ export async function getProducts(id){
         alert(error);
     }
 };
+
+export async function updateProduct(product){
+    try{
+        let url = url_backend + '/productos/actualizar/' + product.codigo;
+            
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(product),
+        });
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+}
 
 export const template_tx = {
     nombre: "",

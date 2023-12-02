@@ -21,15 +21,15 @@ export const VarianCarousel = ({ images }) => {
     };
   
     return (
-      <div className="border-black relative h-[300px] w-[450px] mb-5">
+      <div className="border-black relative h-[300px] w-[450px]">
         <div className="flex justify-center">
             <img
             src={images[currentImageIndex]}
             alt={`Image ${currentImageIndex}`}
-            className="h-[300px] w-[450px]"
+            className="h-[260px] w-[410px]"
             />
         </div>
-        <div className="mx-1 absolute top-1/2 transform -translate-y-1/2 left-0">
+        <div className="mx-5 absolute top-1/2 transform -translate-y-1/2 left-0">
           <button
             onClick={prevImage}
             className="text-white bg-black p-2 rounded-full mr-2"
@@ -37,7 +37,7 @@ export const VarianCarousel = ({ images }) => {
             &#9665;
           </button>
         </div>
-        <div className="mx-1 absolute top-1/2 transform -translate-y-1/2 right-0">
+        <div className="mx-5 absolute top-1/2 transform -translate-y-1/2 right-0">
           <button
             onClick={nextImage}
             className="text-white bg-black p-2 rounded-full ml-2"

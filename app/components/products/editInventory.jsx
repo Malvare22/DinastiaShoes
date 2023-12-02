@@ -7,27 +7,32 @@ import { formContext } from '../context';
 import { useState } from "react";
 import { checkText, messageText } from "../forms/verifications";
 import { Button } from "../buttons";
-import { editInventory } from "@/app/lib/products";
 import { validateInformation } from "@/app/lib/information";
+import { updateProduct } from "@/app/lib/inventories";
 
-export default function EditInventoryModal({setVisible, descripcion, nombre, destacado}){
-    const [information, setInformation] = useState({"nombre": nombre, "descripcion": descripcion, "destacado":destacado});
-    const [validate, setValidate] = useState({"nombre": true, "descripcion": true, "destacado": true});
+export default function EditInventoryModal({setVisible, data, update, setUpdate}){
+    const [information, setInformation] = useState(data);
+    const [validate, setValidate] = useState({"nombre": true});
     
-    const handleAccept = () => {
+    const handleAccept = async () => {
         if(validateInformation(validate)){
-            editInventory(information);
-            setVisible(false);
+            try{
+                information.destacado = information.destacado == 'A' ? 'A' : 'B';
+                await updateProduct(information);
+                setVisible(false);
+                setUpdate(!update);
+            }
+            catch(error){
+                alert(error);
+            }
+            
         };
     };
 
-    const handleTextArea = (e) => {
-        if(e.target.value.length != 0){
-            setValidate({...validate, ["descripcion"]: true});
-        }
-        else{
-            setValidate({...validate, ["descripcion"]: false});
-        }
+    console.log(information)
+    const handleInput = (e) => {
+        const {value, name} = e.target;
+        setInformation({...information, [name]: value});
     };
 
     return(
@@ -45,13 +50,13 @@ export default function EditInventoryModal({setVisible, descripcion, nombre, des
                             <LabelInput>Destacado: </LabelInput>
                         </div>
                         <div className="col-span-7 md:ms-10 mt-10">
-                        <div className=""><SquareSelectSmall nameInput={"destacado"}></SquareSelectSmall></div>
+                        <div className=""><SquareSelectSmall nameInput={"destacado"} select={(information.destacado == 'A')}></SquareSelectSmall></div>
                         </div>
                         <div className="col-span-1 mt-10">
                             <LabelInput>Descripción: </LabelInput>
                         </div>
                         <div className="col-span-7 md:ms-10 mt-10">
-                        <textarea required onChange={handleTextArea} className="w-full border"></textarea>
+                        <textarea required onChange={handleInput} name="descripcion" value={information["descripcion"]} className="w-full border"></textarea>
                         </div>
                     </div>
                     <div className="flex space-x-6 mt-6">

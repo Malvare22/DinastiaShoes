@@ -13,6 +13,7 @@ import { AddInventory } from "../components/products/addProduct";
 export default function Page() {
 
   const [data, setData] = useState({});
+  const [update, setUpdate] = useState(false);
   
   const router = useRouter();
 
@@ -23,7 +24,7 @@ export default function Page() {
   useEffect(
     () => {
       getData();
-    }, []
+    }, [update]
   );
 
   const [viewModal, setViewModal] = useState(false);
@@ -43,7 +44,7 @@ export default function Page() {
   return (
       <PageContainer>;
         <PageTittle>Inventarios</PageTittle>
-        {viewModal && <ModalInventories><AddInventory setVisible={setViewModal} type={1}></AddInventory></ModalInventories>}
+        {viewModal && <ModalInventories><AddInventory setVisible={setViewModal} update={update} setUpdate={setUpdate} type={1}></AddInventory></ModalInventories>}
         <Button handleButton={handleAdd} color={"bg-green"}>Agregar inventario</Button>
         <Table columns={columnsInventories} data={data} actions={actions}></Table>
     </PageContainer>
