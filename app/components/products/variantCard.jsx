@@ -53,35 +53,35 @@ export default function VariantCard({variant, update, setUpdate}){
     };
 
     return(
-        <div className="flex p-6 bg-lightGrey justify-center my-8 w-[675px] rounded-lg hover:bg-grisAzulado text-black hover:text-white ">
+        <div className="flex p-6 bg-lightGrey justify-center my-8 w-[625px] rounded-lg hover:bg-grisAzulado text-black hover:text-white ">
             {
                 viewEdit && <ModalInventories><div className="text-black"><AddInventory type={3} setVisible={setViewEdit} data={variant} update={update} setUpdate={setUpdate} imgs={images}></AddInventory></div></ModalInventories>
             }
             {visible && <div className="text-black"><Modal button={btn} text={"¿Está seguro de que desea eliminar este producto?"} setIsVisible={setVisible}></Modal></div>}
-            <div className="w-7/12">
+            <div className="w-[300px]">
                 <div className="grid grid-cols-4 space-y-6 font-semibold text-xl">
-                    <div className="col-span-1 mt-6">
+                    <div className="col-span-2 mt-6">
                         <Text>Color:</Text>
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Text>{variant.color}</Text>
                     </div>
-                    <div className="col-span-1">
+                    <div className="col-span-2">
                         <Text>Talla:</Text>
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Text>{variant.talla}</Text>
                     </div>
-                    <div className="col-span-1">
+                    <div className="col-span-2">
                         <Text>Cantidad:</Text>
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Text>{variant.cantidad}</Text>
                     </div>
-                    <div className="col-span-1">
+                    <div className="col-span-2">
                         <Text>Precio:</Text>
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Text>{variant.precio}</Text>
                     </div>
                 </div>
@@ -89,6 +89,22 @@ export default function VariantCard({variant, update, setUpdate}){
                     <Button color={"bg-green"} handleButton={()=> setViewEdit(true)}>Editar</Button>
                     <Button color={"bg-red"} handleButton={handleRemove}>Eliminar</Button>
                 </div> */}
+                <div className="flex justify-center items-center space-x-4 my-4 pr-6">
+                    <button onClick={
+                        (e)=> {
+                            e.preventDefault();
+                            setViewEdit(true);
+                        }
+
+                    } className="bg-green text-white rounded-md p-2 w-[100px]">Editar</button>
+                     <button onClick={
+                        (e)=> {
+                            e.preventDefault();
+                            handleRemove();
+                        }
+
+                    } className="bg-red text-white rounded-md p-2 w-[100px]">Eliminar</button>
+                </div>
             </div>
             <div className="">
                 <VarianCarousel images={images}></VarianCarousel>

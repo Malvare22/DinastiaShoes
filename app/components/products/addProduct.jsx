@@ -27,6 +27,7 @@ const defaultValidate = {
     color: false,
     talla: false,
     cantidad: false,
+    descuento: false
 };
 
 const dataValid = {
@@ -35,6 +36,7 @@ const dataValid = {
     color: true,
     talla: true,
     cantidad: true,
+    descuento: true
 };
 
 /***
@@ -170,7 +172,7 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
                         <input type="checkbox" className="w-[20px] h-[20px]" name="destacado" onChange={handleCheckBox}></input>
                     </div></>}
 
-                    {type!=1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5 w-24"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
+                    {type!=1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
 
                     {type==1 && <><LabelInput>Descripción:</LabelInput>
                     <div className="col-span-5 ml-4" onChange={handleTextArea}><textarea className="border w-full"></textarea></div></>}

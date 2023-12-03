@@ -43,14 +43,15 @@ export default function Page({params}){
                 <div><Button color={"bg-grisAzulado"} handleButton={()=>setViewEditInventory(true)}>Editar</Button></div>
             </div>
         </div>
-        {
-            data.inventarios && (data.inventarios).map(
+        <div className="lg:grid lg:grid-cols-2 place-items-center">
+            {
+                data.inventarios && (data.inventarios).map(
                 (element, index) => {
                     return <VariantCard key={index} variant={element} update={update} setUpdate={setUpdate}></VariantCard>;
-                }
-            )
-        }
-        <Button color={"bg-grisAzulado"} handleButton={()=> setViewAdd(true)}>Añadir</Button>
+                })
+            }
+        </div>
+        <div className="flex justify-center mb-10"><Button color={"bg-grisAzulado"} handleButton={()=> setViewAdd(true)}>Añadir</Button></div>
     </PageContainer>
     );
 };

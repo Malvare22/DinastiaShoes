@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const ToLink = (props) => {
     return(
@@ -11,15 +11,24 @@ export const ToLink = (props) => {
 
 export const Button = (props) => {
 
-    const {handleButton, color, disable} = props;
+    const {handleButton, color, disable, className} = props;
     
+    const [nc, setNc] = useState("");
+
     const onAction = (e) => {
         e.preventDefault();
         handleButton();
     }
 
+    useEffect(
+        () => {
+            setNc((color.split("-"))[1]);
+        }, []
+    )
+    
+
     return(
-        <button onClick={onAction} disabled={(disable)} className={"text-white text-center min-w-[150px] mt-4 p-2 rounded-lg font-semibold "+ (disable? "opacity-25": "" ) + " " + color}>{props.children}</button>
+        <button onClick={onAction} disabled={(disable)} className={"text-white text-center min-w-[150px] mt-4 p-2 rounded-lg font-semibold"+ (disable? " opacity-25": "" ) + " " + color + " hover:bg-" + nc + "-700"}>{props.children}</button>
     );
 }
 

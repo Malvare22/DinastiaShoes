@@ -21,12 +21,12 @@ export const VarianCarousel = ({ images }) => {
     };
   
     return (
-      <div className="border-black relative h-[300px] w-[450px]">
+      <div className="border-black relative h-[270px] w-[340px]">
         <div className="flex justify-center">
             <img
             src={images[currentImageIndex]}
             alt={`Image ${currentImageIndex}`}
-            className="h-[260px] w-[410px]"
+            className="h-[250px] w-[330px]"
             />
         </div>
         <div className="mx-5 absolute top-1/2 transform -translate-y-1/2 left-0">
