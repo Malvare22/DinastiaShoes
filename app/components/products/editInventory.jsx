@@ -17,7 +17,7 @@ export default function EditInventoryModal({setVisible, data, update, setUpdate}
     const handleAccept = async () => {
         if(validateInformation(validate)){
             try{
-                information.destacado = information.destacado == 'A' ? 'A' : 'B';
+                information.destacado = information.destacado ? 'A' : 'B';
                 await updateProduct(information);
                 setVisible(false);
                 setUpdate(!update);
@@ -39,7 +39,7 @@ export default function EditInventoryModal({setVisible, data, update, setUpdate}
         <formContext.Provider value={{information, setInformation, validate, setValidate}}>
             <ModalUnstandard setVisible={setVisible}>
                 <form>
-                    <div className="md:grid md:grid-cols-8">
+                    <div className="md:grid md:grid-cols-8 text-black">
                         <div className="col-span-1">
                             <LabelInput>Nombre: </LabelInput>
                         </div>

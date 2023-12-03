@@ -50,7 +50,7 @@ export const VarianCarousel = ({ images }) => {
         {images.map((_, index) => (
           <div
             key={index}
-            className={`h-1 w-20 mx-2 ${
+            className={`h-1 w-10 mx-2 ${
               currentImageIndex === index ? 'bg-blueDark' : 'bg-black'
             }`}
           />

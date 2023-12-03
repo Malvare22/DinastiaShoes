@@ -13,6 +13,7 @@ import { ProductCarousel } from "../imageCarousel";
 import { VarianCarousel } from "./carousel";
 import EditInventoryModal from "./editInventory";
 import { AddInventory } from "./addProduct";
+import { deleteInventory } from "@/app/lib/inventories";
 
 export default function VariantCard({variant, update, setUpdate}){
     
@@ -34,20 +35,31 @@ export default function VariantCard({variant, update, setUpdate}){
         setVisible(true);
     };
 
+    const removeVariant = async () => {
+        try{
+            setVisible(false);
+            deleteInventory(variant.codigo);
+            setUpdate(!update);
+        }
+        catch(error){
+            alert(error);
+        }
+    };
+
     const btn = {
         text: "Eliminar",
-        make: ()=>alert("A"),
+        make: removeVariant,
         color: "bg-red"
     };
 
     return(
-        <div className="flex p-6 bg-lightGrey justify-center my-8 w-[800px] rounded-lg">
+        <div className="flex p-6 bg-lightGrey justify-center my-8 w-[675px] rounded-lg hover:bg-grisAzulado text-black hover:text-white ">
             {
                 viewEdit && <ModalInventories><div className="text-black"><AddInventory type={3} setVisible={setViewEdit} data={variant} update={update} setUpdate={setUpdate} imgs={images}></AddInventory></div></ModalInventories>
             }
             {visible && <div className="text-black"><Modal button={btn} text={"¿Está seguro de que desea eliminar este producto?"} setIsVisible={setVisible}></Modal></div>}
             <div className="w-7/12">
-                <div className="grid grid-cols-4 space-y-6 text-black font-semibold text-xl">
+                <div className="grid grid-cols-4 space-y-6 font-semibold text-xl">
                     <div className="col-span-1 mt-6">
                         <Text>Color:</Text>
                     </div>
@@ -73,10 +85,10 @@ export default function VariantCard({variant, update, setUpdate}){
                         <Text>{variant.precio}</Text>
                     </div>
                 </div>
-                <div className="flex space-x-6 mt-6 items-center align-middle">
+                {/* <div className="flex space-x-6 mt-6 items-center align-middle">
                     <Button color={"bg-green"} handleButton={()=> setViewEdit(true)}>Editar</Button>
                     <Button color={"bg-red"} handleButton={handleRemove}>Eliminar</Button>
-                </div>
+                </div> */}
             </div>
             <div className="">
                 <VarianCarousel images={images}></VarianCarousel>

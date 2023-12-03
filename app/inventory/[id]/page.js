@@ -34,7 +34,8 @@ export default function Page({params}){
 
     return(
     <PageContainer>
-        {viewAdd && <ModalInventories><AddInventory setVisible={setViewAdd} type={2}></AddInventory></ModalInventories>}
+        {viewAdd && <ModalInventories><AddInventory setVisible={setViewAdd} type={2} productId={codigo} setUpdate={setUpdate} update={update}></AddInventory></ModalInventories>}
+        {viewEditInventory && <EditInventoryModal setVisible={setViewEditInventory} data={data} update={update} setUpdate={setUpdate} />}
         <div className="flex flex-col justify-center align-middle items-center">
             <PageTittle>{data.nombre}</PageTittle>
             <div className="text-black w-6/12 flex flex-col items-end">

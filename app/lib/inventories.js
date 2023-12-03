@@ -106,6 +106,21 @@ export async function editInventory(inventory){
     }
 };
 
+export async function deleteInventory(id){
+    try{
+        let url = url_backend + '/inventario/eliminar/' + id;
+        let response = await fetch(url, {
+            method: 'DELETE',
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
 export async function uploadImagesInventory(images, productId){
     try{
         let url = url_backend + '/fotos/subirImagen/' + productId;
@@ -115,15 +130,24 @@ export async function uploadImagesInventory(images, productId){
         //    return await fetch(element).then(res => res.blob());
         // });
        
-        const imagePromises = images.map(
-            async (img) => {
-                return await fetch(img).then(res => res.blob());
+        const imagePromises = images.map(async (img) => {
+            try {
+                const blob = await fetch(img).then(res => res.blob());
+                return blob;
+            } catch (error) {
+                console.log(error);
+                // Si hay un error, puedes retornar un valor predeterminado o manejarlo de otra manera
+                return null;
             }
-        );
+        });
 
-        const imageBlobs = await Promise.all(imagePromises);
+        const resolvedBlobs = await Promise.all(imagePromises);
 
-        imageBlobs.forEach(blob => {
+        // Filtrar blobs nulos (si es necesario)
+        const validBlobs = resolvedBlobs.filter(blob => blob !== null);
+
+        // Agregar los blobs válidos al FormData
+        validBlobs.forEach(blob => {
             formData.append('image', blob);
         });
             

@@ -18,7 +18,7 @@ const defaultData = {
     destacado: "B",
     categoria_id: "",
     descripcion: "",
-    descuento: "B"
+    descuento: ""
 };
 
 const defaultValidate = {
@@ -43,7 +43,7 @@ const dataValid = {
  * Type 3 = editar producto existente
  */
 
-export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs}) => {
+export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, productId}) => {
 
     const [information, setInformation] = useState(type!=3 ? defaultData: data);
 
@@ -62,40 +62,35 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs}) 
 
     useEffect(
         () => {
-            queryCategories();
+            if(type == 1) queryCategories();
+            if(type == 2) setValidate({...validate, ["nombre"]: true});
         }, []
     );
 
     const handleAction = async () => {
-        if(type == 1) {
+        try{
             setVisible(false);
-            try{
+            let id_pa_enviar;
+            if(type == 1) {
                 const ans = await createProduct(information);
                 const id = (ans.codigo);
-                const id_inventario = (await createInventory(information, id)).codigo;
-                if(images.length != 0){
-                    
-                    await uploadImagesInventory(images, id_inventario);
-                    
-                }
+                id_pa_enviar = (await createInventory(information, id)).codigo;
+            
             }
-            catch(error){
-                alert(error);
+            if(type == 3) {
+                await editInventory(information);    
+                id_pa_enviar = information.codigo;          
+            }
+            if(type == 2) {
+                id_pa_enviar = (await createInventory(information, productId)).codigo;
+                
+            }
+            if(images.length != 0){    
+                await uploadImagesInventory(images, id_pa_enviar); 
             }
         }
-        if(type == 3) {
-            setVisible(false);
-            try{
-                await editInventory(information);
-                if(images.length != 0){
-                    
-                    await uploadImagesInventory(images, information.codigo);
-                    
-                }
-            }
-            catch(error){
-                alert(error);
-            }
+        catch(error){
+            alert(error);
         }
         setUpdate(!update);
 
