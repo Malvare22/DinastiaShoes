@@ -51,7 +51,7 @@ const WhatsAppIcon = () => {
 const ImageTDSF = () => {
     return(
         <div className="flex content-center items-center justify-center">
-            <Image width={75} height={75} src="/images/Footer/logo_TDSF.png"></Image>
+            <Image width={75} height={75} alt="logo-TDSF" src="/images/Footer/logo_TDSF.png"></Image>
         </div>
     );
 }
@@ -59,7 +59,7 @@ const ImageTDSF = () => {
 const ImageUFPS = () => {
     return(
         <div className="flex content-center items-center justify-center">
-            <Image width={100} height={100} src="/images/Footer/logo_ufps.png"></Image>
+            <Image width={100} height={100} alt="logo-UFPS" src="/images/Footer/logo_ufps.png"></Image>
         </div>
     );
 }
@@ -67,7 +67,7 @@ const ImageUFPS = () => {
 const ImageSistemas = () => {
     return(
         <div className="flex content-center items-center justify-center mx-[110px]">
-            <Image width={80} height={100} src="/images/Footer/logo_sistemas.png"></Image>
+            <Image width={80} height={100} alt="logo-Sistemas-UFPS" src="/images/Footer/logo_sistemas.png"></Image>
         </div>
     );
 }

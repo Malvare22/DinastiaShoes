@@ -48,7 +48,7 @@ const dataValid = {
 export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, productId}) => {
 
     const [information, setInformation] = useState(type!=3 ? defaultData: data);
-
+    console.log(information)
     const [validate, setValidate] = useState(type!=3 ? defaultValidate: dataValid);
 
     const [images, setImages] = useState((imgs) ? imgs : []);
@@ -90,11 +90,11 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
             if(images.length != 0){    
                 await uploadImagesInventory(images, id_pa_enviar); 
             }
+            location.reload();
         }
         catch(error){
             alert(error);
         }
-        setUpdate(!update);
 
     };
 

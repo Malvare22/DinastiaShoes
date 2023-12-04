@@ -27,7 +27,7 @@ export default function Page({params}){
     useEffect(
         () => {
             getAllData();
-        }, [update]
+        }, []
     );
 
     return(

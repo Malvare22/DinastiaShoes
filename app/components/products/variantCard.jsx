@@ -39,7 +39,7 @@ export default function VariantCard({variant, update, setUpdate}){
         try{
             setVisible(false);
             await deleteInventory(variant.codigo);
-            setUpdate(!update);
+            location.reload();
 
         }
         catch(error){

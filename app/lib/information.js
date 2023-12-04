@@ -179,7 +179,7 @@ export const sendLogin = (information) => {
     console.log(information);
 }
 
-export async function sendChangePassword(password, token){
+export async function sendChangePassword(information, token){
   try{
     let url = url_backend + '/usuario/olvidarContra/' + token;
     let response = await fetch(url, {
@@ -187,7 +187,7 @@ export async function sendChangePassword(password, token){
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(password)
+        body: JSON.stringify(information)
     });
 
       return await response.json();
@@ -195,6 +195,5 @@ export async function sendChangePassword(password, token){
   catch(error){
     alert(error);
   }
-    console.log(information);
 }
 

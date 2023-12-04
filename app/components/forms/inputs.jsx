@@ -89,7 +89,7 @@ export const InputGenre = (props) => {
 
     return(
         <div className="space-y-5">
-            {editing==false? <input className="w-full rounded-lg" disabled="true" value={information[nameInput] == 'M' ? "Masculino":"Femenino" }>
+            {editing==false? <input className="w-full rounded-lg" disabled={true} value={information[nameInput] == 'M' ? "Masculino":"Femenino" }>
             </input>: 
             <select value={information[nameInput]} className={"w-full rounded-lg"} disabled={editing==false} onChange={handleInput}>
                 <option value="" disabled selected hidden>Selecciona...</option>
