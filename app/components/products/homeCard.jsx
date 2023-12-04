@@ -1,20 +1,40 @@
-import { getShoesCardHome } from "@/app/lib/products";
+'use client'
+import { getProductsDestacados, getShoesCardHome } from "@/app/lib/products";
 import Image from "next/image";
 import { CardProduct } from "./cardProduct";
+import { useEffect, useState } from "react";
 
-const fetchProductsCards = async () =>{
-    const data = await getShoesCardHome()
-    return (data)
-} 
+export const HomeCardsGroup = () => {
 
-export const HomeCardsGroup = async ({number}) => {
+    const [data, setData] = useState([]);
 
-    const products = await fetchProductsCards();    
+    const getData = async () => {
+        setData(await getProductsDestacados());
+    };
+
+    useEffect(
+        () => {
+            getData();
+        }, []
+    )
+
+    console.log(data);
+
     return(
         <div className="grid grid-cols-4 md:grid-cols-6 mx-20 my-7">
-            {products.map((product, i) =>{
-                if(number && i>5) return;
-                return <CardProduct key={i} title={product.title} img={product.image} price={product.price}></CardProduct>
+            {
+                data.map((product, i) =>{
+                    const temp = (product.inventarios)[0];
+                    if(temp){
+                        const aux = (temp.fotos)[0];
+                        let img = '';
+                        if(aux){
+                            img = aux.url_foto;
+                            return <CardProduct key={i} title={product.nombre} img={img} price={temp.precio}></CardProduct>
+
+                        }
+                    }
+                
             })}
         </div>
     );
