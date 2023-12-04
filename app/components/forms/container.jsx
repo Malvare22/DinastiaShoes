@@ -16,7 +16,7 @@ export const FormContainer = (props) => {
     // if(!my) my = "my-20";
   
     if(type=="register" || type=="login"){
-      w = "w-5/12";
+      w = "w-5/12 py-6";
       my = "my-20";
     }
     else if(type=="editingByAdmin"){

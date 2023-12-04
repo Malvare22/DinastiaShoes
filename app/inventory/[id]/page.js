@@ -21,9 +21,7 @@ export default function Page({params}){
     const codigo = params.id;
 
     const getAllData = async () => {
-        console.log(codigo)
         setData(await getProducts(codigo));
-        console.log(await getProducts(codigo))
     };
 
     useEffect(

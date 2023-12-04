@@ -19,6 +19,12 @@ export function checkNoEmpty(info) {
   return info.trim().length != 0;
 };
 
+export function checkEmail(info){
+  const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  return regex.test(info);
+}
+
 export const messageText = "Este input solo admite datos de tipo alfabetico";
 
 export const messageNumber = "Este input solo admite datos de tipo númerico";

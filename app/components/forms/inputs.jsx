@@ -156,12 +156,12 @@ export const InputRegisterPassword = (props) => {
             <div className="space-y-5">
                 <LabelInput>Contraseña</LabelInput>
                 <input required type="password" name={nameInput1} onChange={handleInput} className="w-full rounded-lg"></input>
-                {(information[nameInput1] != "" && !validate[nameInput1]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+                {(information[nameInput1] != "" && !validate[nameInput1]) && <div className="text-orange text-sm">{messagePaswordParams}</div>}
             </div>
             <div className="space-y-5">
                 <LabelInput>Confirmar Contraseña</LabelInput>
                 <input required type="password" name={nameInput2} onChange={handleInput} className="w-full rounded-lg"></input>
-                {(information[nameInput2] != "" && !validate[nameInput1]) && <div className="text-orange text-sm">Ambas contraseñas deben ser iguales</div>}
+                {(information[nameInput2] != "" && !validate[nameInput1]) && <div className="text-orange text-sm">{messagePaswordNoEquals}</div>}
             </div>
         </div>
     );

@@ -6,25 +6,17 @@ import { InputDate, InputEmail, InputGenre, InputPassword, InputRegisterEmail, I
 import { LabelInput, TitleInput} from "../components/text";
 import { sendRecoveryEmail, validateInformation } from "../lib/information";
 import { useRouter } from "next/navigation";
-
-const infoBase = {
-  "correo" : ""
-};
-
-const validateBase = {
-  "correo" : false
-};
+import { checkEmail } from "../components/forms/verifications";
 
 
 export default function Register() {
   
-  const [information, setInformation] = useState(infoBase);
-  const [validate, setValidate] = useState(validateBase);
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
-  const handleButton = () => {
-    if(validateInformation(validate)){
-      sendRecoveryEmail(information);
+  const handleButton = async () => {
+    if(checkEmail(email)){
+      await sendRecoveryEmail(email);
       
       router.push("/recovery/send");
 
@@ -32,14 +24,14 @@ export default function Register() {
   }
 
   return (
-    <FormContainer>
+    <FormContainer type={"register"}>
       <TitleInput>
           Recuperar Contraseña
       </TitleInput>
       <LabelInput>Correo electrónico</LabelInput>
-      <InputRegisterEmail information={information} setInformation={setInformation} validate={validate} setValidate={setValidate} nameInput={"correo"}></InputRegisterEmail>
+      <input className="my-6 w-full rounded-md" value={email} onChange={(e)=> {setEmail(e.target.value);}}></input>
       <div className="flex justify-center">
-        <FormButton handleButton={handleButton} disable={!(validateInformation(validate))} color="bg-orange">Recuperar Contraseña</FormButton>
+        <Button handleButton={handleButton} disable={!checkEmail(email)} color="bg-orange">Recuperar Contraseña</Button>
       </div>
     </FormContainer>
   )

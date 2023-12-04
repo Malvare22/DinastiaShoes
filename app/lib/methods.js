@@ -19,22 +19,14 @@ export async function getMethodById(id){
 
 export async function editMethod(method, flag){
     const formData = new FormData();
-    if(flag.logo){
-        const img = await fetch(method.logo).then(res => res.blob());
-        formData.append("logo", img);
+ 
+    let img = await fetch(method.logo).then(res => res.blob());
+    formData.append("logo", img);
 
-    }
-    else{
-        formData.append("logo", method.logo);
-    }
-    if(flag.qr){
-        const img = await fetch(method.qr).then(res => res.blob());
-        formData.append("qr", img);
 
-    }
-    else{
-        formData.append("logo", method.qr);
-    }
+    img = await fetch(method.qr).then(res => res.blob());
+    formData.append("qr", img);
+
 
     formData.append("info", method.info);
     formData.append("id", method.id);

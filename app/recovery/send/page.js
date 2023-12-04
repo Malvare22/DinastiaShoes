@@ -7,7 +7,7 @@ import { LabelInput, TitleInput} from "../../components/text";
 export default function Register() {
 
   return (
-    <FormContainer>
+    <FormContainer type={'register'}>
       <TitleInput>
         Correo electrónico enviado
       </TitleInput>

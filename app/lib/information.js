@@ -56,9 +56,9 @@ export async function updatePassword(user){
 
       return await response.json();
     }
-    catch(error){
-        alert(error);
-    }
+  catch(error){
+      alert(error);
+  }
 };
 
 export const infoBase = {
@@ -161,15 +161,40 @@ export const sendRegister = (information) => {
     console.log(information);
 }
 
-export const sendRecoveryEmail = (information) => {
-    console.log(information);
+export async function sendRecoveryEmail(email){
+  try{
+    let url = url_backend + '/usuario/enviarCorreo/' + email;
+    let response = await fetch(url, {
+        method: 'POST',
+    });
+
+      return await response.json();
+    }
+  catch(error){
+      alert(error);
+  }
 }
 
 export const sendLogin = (information) => {
     console.log(information);
 }
 
-export const sendChangePassword = (information) => {
+export async function sendChangePassword(password, token){
+  try{
+    let url = url_backend + '/usuario/olvidarContra/' + token;
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(password)
+    });
+
+      return await response.json();
+  }
+  catch(error){
+    alert(error);
+  }
     console.log(information);
 }
 

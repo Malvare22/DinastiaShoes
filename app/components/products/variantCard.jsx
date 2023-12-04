@@ -38,8 +38,9 @@ export default function VariantCard({variant, update, setUpdate}){
     const removeVariant = async () => {
         try{
             setVisible(false);
-            deleteInventory(variant.codigo);
+            await deleteInventory(variant.codigo);
             setUpdate(!update);
+
         }
         catch(error){
             alert(error);
