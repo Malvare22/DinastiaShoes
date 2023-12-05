@@ -57,7 +57,7 @@ const Logged = ({text}) => {
                 <LetterIcon></LetterIcon>
             </Option>
             <Option>
-                <CarIcon></CarIcon>
+                <Link href={"/cart"}><CarIcon></CarIcon></Link>
             </Option>
             <Option>
                 <AccountButton text={text}></AccountButton>
