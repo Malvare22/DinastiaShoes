@@ -62,7 +62,7 @@ export async function addClient(client){
 export async function editDirection(direction){
     try{
 
-        let url = 'http://localhost:3000/cliente/actualizar/' + direction.cedula;
+        let url = 'http://localhost:3000/cliente/actualizar/' + localStorage.getItem('id');
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {

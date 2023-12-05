@@ -86,7 +86,7 @@ export const ImageCarousel = ({ images }) => {
     };
   
     return (
-      <div className="border-black border relative h-[550px] md:me-[100px] md:w-7/12 p-10">
+      <div className="border-black border relative h-[550px] md:me-[100px] md:w-7/12 p-10 bg-redWine">
         <div className="flex justify-center border-3 border-black">
             <img
             src={images[currentImageIndex]}

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { ProductCarousel } from '../../components/imageCarousel';
 import { HomeCardsGroup } from '../../components/products/homeCard';
 import { getProducts } from '@/app/lib/inventories';
+import { AddToCart } from '@/app/lib/cart';
+import { useRouter } from 'next/navigation';
 
 export default function Page({params}){
     
@@ -15,6 +17,8 @@ export default function Page({params}){
     const [images, setImages] = useState([]);
 
     const [mapColors, setMapColors] = useState([]);
+
+    const [cantidad, setCantidad] = useState(1);
 
     const [currentVariant, setCurrentVariant] = useState(-1);
     
@@ -70,12 +74,11 @@ export default function Page({params}){
             }
         }, [currentVariant]
     );
-    
     return(
         <div className="mt-20">
             {data.length!= 0 && <><div className="md:flex md:justify-center">
                     <ProductCarousel images={images}></ProductCarousel>
-                    <PriceCard data={data} mapColors={mapColors} currentVariant={currentVariant} setCurrentVariant={setCurrentVariant}></PriceCard>
+                    <PriceCard data={data} mapColors={mapColors} currentVariant={currentVariant} setCurrentVariant={setCurrentVariant} cantidad={cantidad} setCantidad={setCantidad}></PriceCard>
             </div>
             <div className="text-black px-[100px] my-10">
                 <div className="font-bold text-3xl">
@@ -99,7 +102,7 @@ export default function Page({params}){
     );
 } 
 
-const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant}) => {
+const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant, cantidad, setCantidad}) => {
 
     //color actual (string)
     const [currentColor, setCurrentColor] = useState('');
@@ -108,7 +111,7 @@ const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant}) => {
     const [tallas, setTallas] = useState([]);
     
     const limit = [];
-    for(let i = 0; i<= Math.min(10, currentVariant.cantidad); i++){
+    for(let i = 1; i<= Math.min(10, currentVariant.cantidad); i++){
         limit.push(i)
     };
 
@@ -171,24 +174,24 @@ const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant}) => {
                     </div>
                 </div>
                 <div className="flex justify-center space-x-2 align-middle items-center">
-                    <div className="font-bold text-black text-xl">
+                    {limit != 0 && <><div className="font-bold text-black text-xl">
                         Cantidad:
                     </div>
                     <div className="font-bold text-black text-xl">
-                        <select className="bg-pink">
+                        <select className="bg-pink" onChange={(e)=>{setCantidad(e.target.value)}}>
                             {
                                 limit.map(
-                                    (i) => (<option key={i}>{i}</option>)
+                                    (i) => (<option value={i} key={i}>{i}</option>)
                                 )
                             }
                         </select>
-                    </div>
+                    </div></>}
                     <div className="text-grey text-sm">
                         ({currentVariant.cantidad} unidades disponibles)
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <AddItem></AddItem>
+                    <AddItem disable={limit==0} cantidad={cantidad} producto={currentVariant}></AddItem>
                 </div>
             </div>
         </div>
@@ -267,12 +270,18 @@ const Option = ({children, id, onClick, select, setSelect, currentVariant, setCu
     return <div className={(status == true ? "bg-redWine text-white" : "bg-[#B4B2B2] text-black") + " p-2 font-semibold rounded-lg cursor-pointer"} onClick={handleButton}>{children}</div>;
 }
 
-const AddItem = (props) => {
+const AddItem = ({disable, producto, cantidad}) => {
 
-    const {disable} = props;
+    const router = useRouter();
 
-    const handleButton = () => {
-
+    const handleButton = async () => {
+        try{
+            await AddToCart(producto, cantidad);
+            router.push('/cart');
+        }
+        catch(error){
+            alert(error);
+        }
     }
     
     return(
