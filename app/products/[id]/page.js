@@ -1,34 +1,97 @@
 'use client'
-import { Button } from "../components/buttons";
-import { ProductCarousel } from "../components/imageCarousel";
-import { HomeCardsGroup } from "../components/products/homeCard";
+import { useEffect, useState } from 'react';
+import { ProductCarousel } from '../../components/imageCarousel';
+import { HomeCardsGroup } from '../../components/products/homeCard';
+import { getProducts } from '@/app/lib/inventories';
 
-const images = [ "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"];
+export default function Page({params}){
+    
+    const id = params.id;
+    
+    const [data, setData] = useState([]);
 
-const products = [];
+    const [auxImages, setAuxImages] = useState([]);
 
-export default function Page(){
+    const [images, setImages] = useState([]);
+
+    const [mapColors, setMapColors] = useState([]);
+
+    const [currentVariant, setCurrentVariant] = useState(-1);
+    
+    const getData = async () => {
+        const info = await getProducts(id);
+        setData(info);
+        const tmp_mapa_colors = new Map();
+        const tmp_colors = [];
+        let tmp_aux_images = [];
+        (info["inventarios"]).forEach(
+            (variant) => {
+  
+                const color = variant.color;
+                if(tmp_mapa_colors.has(color)){
+                    const actual = (tmp_mapa_colors.get(color));
+                    actual.push(variant);
+                    tmp_mapa_colors.set(color, actual);
+                }
+                else{
+                    tmp_colors.push(color);
+                    tmp_mapa_colors.set(color, [variant]);
+                }
+                if(tmp_aux_images.length == 0 && (variant.fotos).length != 0){
+                    tmp_aux_images = (variant.fotos).map(
+                        (img) => {
+                            return img["url_foto"];
+                        }
+                    );
+                }
+            }
+        );
+        setAuxImages(tmp_aux_images);
+        setMapColors(tmp_mapa_colors);
+        
+    };
+
+    useEffect(
+        () => {
+            getData();
+        }, []
+    );
+
+    useEffect(
+        () => {
+            if(currentVariant!=-1 && (currentVariant.fotos).length != 0){
+                let aux = (currentVariant.fotos).map(
+                    (img) => {return img["url_foto"]} 
+                    );
+                setImages(aux);
+            }
+            else{
+                setImages(auxImages);
+            }
+        }, [currentVariant]
+    );
+    
     return(
         <div className="mt-20">
-            <div className="md:flex md:justify-center">
+            {data.length!= 0 && <><div className="md:flex md:justify-center">
                     <ProductCarousel images={images}></ProductCarousel>
-                    <PriceCard></PriceCard>
+                    <PriceCard data={data} mapColors={mapColors} currentVariant={currentVariant} setCurrentVariant={setCurrentVariant}></PriceCard>
             </div>
             <div className="text-black px-[100px] my-10">
                 <div className="font-bold text-3xl">
                     Detalles
                 </div>
                 <div className="font-sans text-xl mt-5">
-                    C++ es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. La intención de su creación fue extender al lenguaje de programación C y añadir mecanismos que permiten la manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un lenguaje híbrido.
-
-                    Posteriormente se añadieron facilidades de programación genérica, que se sumaron a los paradigmas de programación estructurada y programación orientada a objetos. Por esto se suele decir que el C++ es un lenguaje de programación multiparadigma.
+                    {
+                        data.descripcion
+                    }
                 </div>
             </div>
             <div className="text-black px-[100px]">
                 <div className="font-bold text-3xl">
                     Otros productos
                 </div>
-            </div>
+            </div></>}
             <div>
                 <HomeCardsGroup number="6"></HomeCardsGroup>
             </div>
@@ -36,46 +99,75 @@ export default function Page(){
     );
 } 
 
-const PriceCard = () => {
+const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant}) => {
+
+    //color actual (string)
+    const [currentColor, setCurrentColor] = useState('');
+    //Lista de colores
+    const [colors, setColors] = useState([]);
+    const [tallas, setTallas] = useState([]);
+    
+    const limit = [];
+    for(let i = 0; i<= Math.min(10, currentVariant.cantidad); i++){
+        limit.push(i)
+    };
+
+    useEffect(
+        () => {
+            const tmp = [];
+            for(const [color, value] of mapColors){
+                tmp.push(color);
+            }
+            setColors(tmp);
+            setCurrentColor(tmp[0]);
+        }, []
+    );
+
+    useEffect(
+        () => {
+            
+            setTallas(mapColors.get(currentColor));
+            
+        }, [currentColor]
+    );
+
     return(
         <div className="bg-pink p-8 flex items-center align-middle justify-center">
             <div className="space-y-7">
                 <div className="text-black text-4xl font-bold text-center">
-                    Nombre del Producto
+                    {data.nombre}
                 </div>
                 <div className="text-black w-full flex justify-center">
                     <div>
-                        <div>
-                            <s>$178.000</s>
-                        </div>
+                        {currentVariant.descuento != 0 && <div>
+                            <s>${currentVariant.precio}</s>
+                        </div>}
                         <div className="flex items-center space-x-2">
                             <div className="text-4xl">
-                                $158.000
+                                ${currentVariant.precio}
                             </div>
-                            <div className="bg-blue text-standardWhite font-bold p-2 rounded-lg">
-                                25% OFF
-                            </div>
+                            {currentVariant.descuento != 0 && <div className="bg-blue text-standardWhite font-bold p-2 rounded-lg">
+                                {currentVariant.descuento}% OFF
+                            </div>}
                         </div>
                     </div>
                 </div>
                 <div className="text-black space-y-2">
                     <div className="font-bold text-2xl text-center">
-                        Color: Azul
+                        Color:
                     </div>
                     <div className="flex space-x-4 justify-center">
-                        <Option>Azul</Option>
-                        <Option>Blanco</Option>
-                        <Option>Rojo</Option>
+                        {
+                            <GrupoColores colores={colors} currentColor={currentColor} setCurrentColor={setCurrentColor}/>
+                        }
                     </div>
                 </div>
                 <div className="text-black space-y-2">
                     <div div className="font-bold text-2xl text-center">
-                        Talla: 3
+                        Talla:
                     </div>
                     <div className="flex space-x-4 justify-center">
-                        <Option>1</Option>
-                        <Option>2</Option>
-                        <Option>3</Option>
+                        {<GrupoTallas tallas={tallas} currentVariant={currentVariant} setCurrentVariant={setCurrentVariant}/>}
                     </div>
                 </div>
                 <div className="flex justify-center space-x-2 align-middle items-center">
@@ -84,11 +176,15 @@ const PriceCard = () => {
                     </div>
                     <div className="font-bold text-black text-xl">
                         <select className="bg-pink">
-                            <option>1 Unidad</option>
+                            {
+                                limit.map(
+                                    (i) => (<option key={i}>{i}</option>)
+                                )
+                            }
                         </select>
                     </div>
                     <div className="text-grey text-sm">
-                        (X unidades disponibles)
+                        ({currentVariant.cantidad} unidades disponibles)
                     </div>
                 </div>
                 <div className="flex justify-center">
@@ -99,10 +195,76 @@ const PriceCard = () => {
     );
 }
 
+const GrupoColores = ({colores, currentColor, setCurrentColor}) => {
 
-const Option = ({children, selected, id, }) =>{
+    return(
+        <>
+            {
+                colores.map(
+                    (color, index) => {
+                        return <Color key={index} name={color} select={currentColor} setSelect={setCurrentColor}>{color}</Color>;
+                    }
+                )
+            }
+        </>
+    );
+};
 
-    return <div className="bg-[#B4B2B2] text-black p-2 font-semibold rounded-lg cursor-pointer">{children}</div>;
+const GrupoTallas = ({tallas, currentVariant, setCurrentVariant}) => {
+
+    const [select, setSelect] = useState(-1);
+
+    return(
+        <>
+            {
+                tallas && tallas.map(
+                    (variant, index) => {
+                        return <Option key={variant.codigo} select={select} id={variant.codigo} currentVariant={currentVariant} setSelect={setSelect} variant={variant} setCurrentVariant={setCurrentVariant}>{variant.talla}</Option>;
+                    }
+                )
+            }
+        </>
+    );
+};
+
+const Color = ({children, name, onClick, select, setSelect}) =>{
+
+    const [status, setStatus] = useState(false);
+
+    useEffect(
+        () => {
+            setStatus(select == name);
+        }, [select]
+    )
+
+    const handleButton = () => {
+        setSelect(name);
+    };
+
+    return <div className={(status == true ? "bg-redWine text-white" : "bg-[#B4B2B2] text-black") + " p-2 font-semibold rounded-lg cursor-pointer"} onClick={handleButton}>{children}</div>;
+}
+
+const Option = ({children, id, onClick, select, setSelect, currentVariant, setCurrentVariant , variant}) =>{
+
+    const [status, setStatus] = useState(false);
+
+
+
+    useEffect(
+        () => {
+            setStatus(select == id);
+            if(currentVariant == -1){
+                handleButton();
+            }
+        }, [select]
+    )
+
+    const handleButton = () => {
+        setSelect(id);
+        setCurrentVariant(variant);
+    };
+
+    return <div className={(status == true ? "bg-redWine text-white" : "bg-[#B4B2B2] text-black") + " p-2 font-semibold rounded-lg cursor-pointer"} onClick={handleButton}>{children}</div>;
 }
 
 const AddItem = (props) => {

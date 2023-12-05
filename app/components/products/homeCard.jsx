@@ -18,8 +18,6 @@ export const HomeCardsGroup = () => {
         }, []
     )
 
-    console.log(data);
-
     return(
         <div className="grid grid-cols-4 md:grid-cols-6 mx-20 my-7">
             {
@@ -30,7 +28,7 @@ export const HomeCardsGroup = () => {
                         let img = '';
                         if(aux){
                             img = aux.url_foto;
-                            return <CardProduct key={i} title={product.nombre} img={img} price={temp.precio}></CardProduct>
+                            return <CardProduct key={i} title={product.nombre} img={img} id={temp["producto_codigo"]} price={temp.precio}></CardProduct>
 
                         }
                     }

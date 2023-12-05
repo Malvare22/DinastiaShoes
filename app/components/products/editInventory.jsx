@@ -20,7 +20,7 @@ export default function EditInventoryModal({setVisible, data, update, setUpdate}
                 information.destacado = information.destacado ? 'A' : 'B';
                 await updateProduct(information);
                 setVisible(false);
-                setUpdate(!update);
+                location.reload();
             }
             catch(error){
                 alert(error);
@@ -29,7 +29,6 @@ export default function EditInventoryModal({setVisible, data, update, setUpdate}
         };
     };
 
-    console.log(information)
     const handleInput = (e) => {
         const {value, name} = e.target;
         setInformation({...information, [name]: value});
