@@ -52,10 +52,12 @@ const Unlogged = () => {
 const Logged = ({text}) => {
     return(
         <div className="flex content-center items-center justify-center space-x-6">
-            <Option>
-                <h3 className="mx-4 content-center">Contactanos</h3>
-                <LetterIcon></LetterIcon>
-            </Option>
+            <div className="hover:text-orange">
+                <Option>
+                    <h3 className="mx-4 content-center">Contactanos</h3>
+                    <LetterIcon></LetterIcon>
+                </Option>
+            </div>
             <Option>
                 <Link href={"/cart"}><CarIcon></CarIcon></Link>
             </Option>
@@ -84,7 +86,7 @@ const AccountButton = ({text}) =>{
     };
 
     return(
-        <div className="flex border-2 rounded-lg items-center justify-center relative" >
+        <div className={"flex border-2 rounded-lg items-center justify-center relative " + (!press && " hover:text-orange")}  >
             <div className="flex items-center p-3" onClick={HandleButton}>
                 <div className="mx-3"><UserIcon></UserIcon></div>
                     <div className="text-sm">{text}</div>
@@ -110,16 +112,21 @@ const Categories = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(()=>{
-        const fetchCategories = async () =>{
-            const data = await getPrincipalCategories()
-            setCategories(data)
+        const getCategories = async () =>{
+            try{
+                const data = await getPrincipalCategories()
+                setCategories(data)
+            }   
+            catch(error){
+                console.log(error);                
+            }
         } 
-        fetchCategories()
+        getCategories();
     }, [])
 
     return(
-        <div className="flex content-center items-center justify-center space-x-6 my-6">
-                {categories.map((type, i)=>{return <Option key={i}>{type.nombre}</Option>}
+        <div className="flex content-center items-center justify-center space-x-12 my-6">
+                {categories.map((categorie)=>{return <Link href={'/products?categoria=' + categorie.id} className="hover:text-orange" key={categorie.id}><Option>{categorie.nombre}</Option></Link>}
                 )}
         </div>
     );
@@ -145,7 +152,7 @@ const Logo = () => {
 }
 
 const CarIcon = () =>{
-    return <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" className="bi bi-cart-fill" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>;
+    return <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" className={"bi bi-cart-fill hover:fill-orange fill-white"} viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>;
 }
 
 const LetterIcon = () =>{

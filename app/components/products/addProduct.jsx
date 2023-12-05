@@ -50,7 +50,6 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
     const [information, setInformation] = useState(type!=3 ? defaultData: data);
     console.log(information)
     const [validate, setValidate] = useState(type!=3 ? defaultValidate: dataValid);
-
     const [images, setImages] = useState((imgs) ? imgs : []);
 
     //Es necesario cambiar los datos que se ingresan si ya existe el producto 
@@ -172,10 +171,10 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
                         <input type="checkbox" className="w-[20px] h-[20px]" name="destacado" onChange={handleCheckBox}></input>
                     </div></>}
 
-                    {type!=1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
+                    {type==1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
 
                     {type==1 && <><LabelInput>Descripción:</LabelInput>
-                    <div className="col-span-5 ml-4" onChange={handleTextArea}><textarea className="border w-full"></textarea></div></>}
+                    <div className="col-span-5 ml-4"><textarea className="border w-full" value={information.descripcion} name="descripcion" onChange={handleTextArea}></textarea></div></>}
                         
                     
                 </formContext.Provider>

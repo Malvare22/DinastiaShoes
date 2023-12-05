@@ -93,7 +93,7 @@ export default function Page(){
                         Total: ${prefix}
                     </div>
                     <div className="flex space-x-6">
-                        <Button color="bg-green">Continuar</Button>
+                        <ToLink link='/delivery' color="bg-green">Continuar</ToLink>
                         <Button color="bg-lightRed" handleButton={handleClean} disable={flag}>Limpiar Carrito</Button>
                         <ToLink link="/products" color="bg-grisAzulado">Añadir</ToLink>
                     </div>

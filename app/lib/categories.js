@@ -1,13 +1,25 @@
 import categories from '../jsons/categories.json' assert {type: 'json'}
 
-export const getPrincipalCategories = async () => {
-    let c = [];
-    for(let i = 0; i<5; i++){
-        c.push(categories[i]);
-    }
+export async function getPrincipalCategories(){
+    try{
+        const url = 'http://localhost:3000/categoria/listar';
+        const response = await fetch(url, {
+            method: 'GET',
+        });
+        const categories = await response.json();
+        const data = [];
+        categories.forEach(categorie => {
+            if(categorie.destacado == 'A'){
+                data.push(categorie);
+            }
+        });
 
-    return c;
-} 
+        return data;
+    }
+    catch(error){
+        alert(error);
+    }
+};
 
 export async function getCategories(){
     try{

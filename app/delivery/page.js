@@ -22,7 +22,7 @@ export default function Page() {
                 <DeliverySendCard handleCard={handleCard} actual={select}></DeliverySendCard>
             </div>
             <div className="flex space-x-6 my-12">
-                <Button color="bg-green">Continuar</Button>
+                <ToLink link='/direction' color="bg-green">Continuar</ToLink>
                 <ToLink link="/cart" color="bg-grey">Cancelar</ToLink>
             </div>
         </PageContainer>

@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../lib/products";
+import { getAllProducts, getProductsByCategorie } from "../lib/products";
 import { CardProduct } from "../components/products/cardProduct";
 import { PageTittle } from "../components/text";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
 
@@ -11,23 +12,32 @@ export default function Page() {
 
   const [products, setProducts] = useState([]);
   const [actualPage, setActualPage] = useState(1);
-  const [total, setTotal] = useState(10);
+  const [total, setTotal] = useState(20);
   const [limit, setLimit] = useState(0);
+
+  const vals = useSearchParams();
+  const id_categoria = vals.get('categoria');
 
   useEffect(
     () => {
       const getData = async () => {
-        const data = await getAllProducts();
-        console.log(data);
-        setProducts(data);
-        setLimit(Math.ceil(data.length/total));
+        try{
+          const data = await getProductsByCategorie(id_categoria);
+          console.log(data);
+          setProducts(data);
+          setLimit(Math.ceil(data.length/total));
+          setActualPage(1);
+        }
+        catch(error){
+          console.log(error);
+        }
 
       };
       
       getData();
       
     }
-  ,[]);
+  ,[id_categoria]);
 
   const nextPage = () => {
     if(actualPage<limit){
@@ -53,11 +63,17 @@ export default function Page() {
           </div>
           <div className="w-full">
             <div className="grid grid-cols-5">
-              {products.slice(((actualPage-1)*total),((actualPage)*total)).map(
-                (product) => {
-                  return <CardProduct key={product.id} img={product.image} price={product.price} title={product.title}></CardProduct>;
-                }
-              )}
+              {
+                  products.slice(((actualPage-1)*total),((actualPage)*total)).map((product, i) =>{
+                      const temp = (product.inventarios)[0];
+                      if(temp){
+                          
+                            return <CardProduct key={i} title={product.nombre} img={""} id={temp["producto_codigo"]} price={temp.precio}></CardProduct>
+  
+                          
+                      }
+                  
+              })}
             </div>
             <div className="flex justify-center space-x-4 my-6">
               <PageButton handleButton={backPage}><BacktArrow></BacktArrow></PageButton>
