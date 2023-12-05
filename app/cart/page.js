@@ -13,6 +13,7 @@ export default function Page(){
     const [flag, setFlag] = useState(false);
     const [total, setTotal] = useState([]);
     const [prefix, setPrefix] = useState(0);
+    let j = -1;
 
     const getData = async () => {
         const tmp_data = await getCart();
@@ -41,6 +42,7 @@ export default function Page(){
     useEffect(
         () => {
             let sum = 0;
+            console.log(total);
             (total).forEach((i) => {
                 sum += i;
             });
@@ -72,17 +74,20 @@ export default function Page(){
             {data.length == 0? <CartEmpty></CartEmpty>:<><div className="flex align-middle items-center space-x-2"><PageTittle>Carrito de Compra </PageTittle><CartIcon></CartIcon></div>
             <div className="mx-5">
                 <div className="grid grid-cols-2 place-items-center">
-                    {total.length != 0 && data.map(
-                        (product) => {
-                            {
-                                return product && (product.inventarios).map(
-                                    (variante, index) => { 
-                                        return <CartProduct product={variante} nombre={product.nombre} id={index} total={total} setTotal={setTotal}></CartProduct>;
-                                    }
-                                )
+                    {
+                        total.length != 0 && data.map(
+                            (product) => {
+                                {
+                                    return product && (product.inventarios).map(
+                                        (variante) => { 
+                                            j++;
+                                            return <CartProduct product={variante} key={j} nombre={product.nombre} id={j} total={total} setTotal={setTotal}></CartProduct>;
+                                        }
+                                    )
+                                }
                             }
-                        }
-                    )}
+                        )
+                    }
                 </div>
                 <div className="mb-20 mt-10">
                     <div className="text-black font-semibold text-2xl">
