@@ -42,7 +42,6 @@ export default function Page(){
     useEffect(
         () => {
             let sum = 0;
-            console.log(total);
             (total).forEach((i) => {
                 sum += i;
             });

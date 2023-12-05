@@ -3,33 +3,51 @@ import { useEffect, useState } from "react";
 import { Button } from "./buttons";
 import { MinusIcon, PlusIcon } from "./icons/icons";
 import { LabelInput } from "./text";
-import { removeProductCart } from "../lib/cart";
+import { AddToCart, removeProductCart } from "../lib/cart";
 
 export const CartProduct = ({product, nombre, total, setTotal, id}) => {
     const limit = product.cantidad;
     const [count, setCount] = useState(((product.carrito_detalles)[0]).cantidad);
     const cartId = ((product.carrito_detalles)[0]).carrito_id;
     const [flag, setFlag] = useState(false);
+    const [disableButton, setDisableButton] = useState(false);
+
+    const modifyCart = async () => {
+        try{
+            await AddToCart(product, count);
+        }
+        catch(error){
+            console.log(error);
+        }
+    };
 
     useEffect(
         () => {
             const tmp = total.slice();
             (tmp)[id] = (count*(product.precio));
             setTotal(tmp);
+            modifyCart();
+            setTimeout(() => {
+                setDisableButton(false);
+              }, 2000);
+            
         }, [count]
     );
 
-    const minus = () => {
+    const minus = (e) => {
+        e.preventDefault();
         if(count>1){ 
+            setDisableButton(true);
             setCount(count-1);
         }
         
     };
 
-    const plus = () => {
+    const plus = (e) => {
+        e.preventDefault();
         if(count<limit){
+            setDisableButton(true);
             setCount(count+1);
-
         } 
 
     };
@@ -63,8 +81,8 @@ export const CartProduct = ({product, nombre, total, setTotal, id}) => {
                     <div>Cantidad:</div>
                     <div className="flex align-middle items-center space-x-3">
                         <LabelInput>{count}</LabelInput>
-                        <div className={`${count==1 && "opacity-20"}`} onClick={minus}><MinusIcon/></div>
-                        <div className={`${count==limit && "opacity-20"}`}  onClick={plus}><PlusIcon/></div>
+                        <button className={`${(count==1 || disableButton) && "opacity-20"}`} onClick={minus} disabled={count==1 || disableButton}><MinusIcon/></button>
+                        <button className={`${(count==limit || disableButton) && "opacity-20"}`} disabled={count==limit || disableButton} onClick={plus}><PlusIcon/></button>
                     </div>
                     <div>Precio por unidad:</div>
                     <div>${product.precio}</div>
