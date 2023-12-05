@@ -71,7 +71,7 @@ export default function Page(){
         <PageContainer>
             {data.length == 0? <CartEmpty></CartEmpty>:<><div className="flex align-middle items-center space-x-2"><PageTittle>Carrito de Compra </PageTittle><CartIcon></CartIcon></div>
             <div className="mx-5">
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-2 place-items-center">
                     {total.length != 0 && data.map(
                         (product) => {
                             {
@@ -84,7 +84,7 @@ export default function Page(){
                         }
                     )}
                 </div>
-                <div className="my-20">
+                <div className="mb-20 mt-10">
                     <div className="text-black font-semibold text-2xl">
                         Total: ${prefix}
                     </div>

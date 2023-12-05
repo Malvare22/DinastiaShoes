@@ -50,7 +50,7 @@ export const CartProduct = ({product, nombre, total, setTotal, id}) => {
     }
 
     return(
-        <div className="bg-lightGrey text-black w-10/12 p-8 space-y-6 rounded-lg select-none">
+        <div className="bg-lightGrey text-black w-10/12 p-8 space-y-6 rounded-lg select-none mb-6">
             <div className="text-2xl font-semibold">
                     {nombre}
             </div>
