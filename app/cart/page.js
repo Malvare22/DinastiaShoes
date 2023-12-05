@@ -15,7 +15,21 @@ export default function Page(){
     const [prefix, setPrefix] = useState(0);
 
     const getData = async () => {
-        setData(await getCart());
+        const tmp_data = await getCart();
+        setData(tmp_data);
+        const tmp_total = [];
+        (tmp_data).forEach(
+            (product) => {
+                {
+                    product && (product.inventarios).forEach(
+                        (variante) => { 
+                            tmp_total.push((variante.carrito_detalles[0].cantidad) * variante.precio);
+                        }
+                    )
+                }
+            }
+        );
+        setTotal(tmp_total);
     };
 
     useEffect(
@@ -27,11 +41,13 @@ export default function Page(){
     useEffect(
         () => {
             let sum = 0;
-            total.forEach(
-                (i) => sum+=i
-            );
+            (total).forEach((i) => {
+                sum += i;
+            });
+
             setPrefix(sum);
-        }, [, total]
+            
+        }, [total]
     );
 
     const cleanCart = async () => {
@@ -50,15 +66,13 @@ export default function Page(){
         cleanCart();
     };
 
-    console.log(data);
-
     return(
 
         <PageContainer>
             {data.length == 0? <CartEmpty></CartEmpty>:<><div className="flex align-middle items-center space-x-2"><PageTittle>Carrito de Compra </PageTittle><CartIcon></CartIcon></div>
             <div className="mx-5">
                 <div className="grid grid-cols-2">
-                    {data.length != 0 && data.map(
+                    {total.length != 0 && data.map(
                         (product) => {
                             {
                                 return product && (product.inventarios).map(
@@ -72,7 +86,7 @@ export default function Page(){
                 </div>
                 <div className="my-20">
                     <div className="text-black font-semibold text-2xl">
-                        {prefix}
+                        Total: ${prefix}
                     </div>
                     <div className="flex space-x-6">
                         <Button color="bg-green">Continuar</Button>

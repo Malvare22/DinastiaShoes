@@ -10,24 +10,28 @@ export const CartProduct = ({product, nombre, total, setTotal, id}) => {
     const [count, setCount] = useState(((product.carrito_detalles)[0]).cantidad);
     const cartId = ((product.carrito_detalles)[0]).carrito_id;
     const [flag, setFlag] = useState(false);
-    const [localSum, setLocalSum] = useState(0);
 
     useEffect(
         () => {
-            const ans = (count)*(product.precio);
-            setLocalSum(ans);
-            let nTotal = [...total];
-            nTotal[id] = ans;
-            setTotal(nTotal);
+            const tmp = total.slice();
+            (tmp)[id] = (count*(product.precio));
+            setTotal(tmp);
         }, [count]
     );
 
     const minus = () => {
-        if(count>1) setCount(count-1);
+        if(count>1){ 
+            setCount(count-1);
+        }
+        
     };
 
     const plus = () => {
-        if(count<limit) setCount(count+1);
+        if(count<limit){
+            setCount(count+1);
+
+        } 
+
     };
 
     const removeProduct = async () => {
@@ -72,7 +76,7 @@ export const CartProduct = ({product, nombre, total, setTotal, id}) => {
             <div className="md:flex md:justify-between">
                 <Button color={"bg-lightRed"} handleButton={handleButton} disable={flag}>Eliminar</Button>
                 <div className="text-xl font-bold text-end">
-                    Total del producto: <br></br> ${localSum}
+                    Total del producto: <br></br> ${(count)*(product.precio)}
                 </div>
             </div>
         </div>
