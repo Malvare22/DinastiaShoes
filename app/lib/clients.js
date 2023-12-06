@@ -1,5 +1,5 @@
 import employees from '../jsons/employees.json' assert {type: 'json'}
-import { DateToSlash } from './information';
+import { DateToSlash, url_backend } from './information';
 
 export async function getClients() {
     try{
@@ -69,6 +69,25 @@ export async function editDirection(direction){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(direction)
+        });
+
+        return await response.json();
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function sendContact(information){
+    try{
+
+        let url = url_backend + '/usuario/enviarCorreoContacto';
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(information)
         });
 
         return await response.json();

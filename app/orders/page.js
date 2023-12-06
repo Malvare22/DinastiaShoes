@@ -19,10 +19,17 @@ export default function Page() {
       const tmp_data = [];
       const tmp = await getAllOrders();
       tmp.forEach(element => {
-          tmp_data.push({"id": element.id,  "direccion": element.direccion, "mediopago_id": element.mediopago_id, "cliente": "sdsg"});
-          console.log(element.cliente_cedula)
+          const medio = (element[1])['medio'];
+          const carrito = (element[0])['carr'];
+          const cedula = carrito['cliente_cedula'];
+          const estado = carrito['estado'];
+          const fecha = carrito['fecha'];
+          const direccion = carrito['direccion'];
+          const id_pedido = carrito['id'];
+          const nombre_medio = medio['nombre'];
+          tmp_data.push({"id": id_pedido, "direccion": direccion, "medio_pago": nombre_medio, "cliente": cedula, "estado": estado, "fecha": fecha});
       });
-      setData(tmp);
+      setData(tmp_data);
     }
     catch(error){
       console.log(error);

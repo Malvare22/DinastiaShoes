@@ -43,7 +43,7 @@ export const PurchaseFrame = ({condition}) => {
     
     return(
         <PageContainer>
-            <div className="bg-lightGrey text-center text-black flex flex-col align-middle p-24 space-y-10">
+            <div className="bg-lightGrey text-center text-black flex flex-col align-middle p-24 space-y-10 my-10">
                 {
                     condition == 1 && <><div className="text-4xl">{m1}</div><div className="flex justify-center"><SuccesfulIcon></SuccesfulIcon></div><div className="text-font-semibold"><B1></B1></div><div><ToLink link="/" color="bg-yellow">Volver al inicio</ToLink></div></>
                 }

@@ -7,6 +7,7 @@ import { VaucherFail } from "../components/methods/vaucher";
 import { getMethods } from "../lib/methods";
 import { Card } from "../components/methods/card";
 import { createOrder } from "../lib/order";
+import { useRouter } from "next/navigation";
 
 export default function Page(){
 
@@ -15,6 +16,7 @@ export default function Page(){
     const [view, setView] = useState(false);
     const baseText = "Anexar Comprobante de Pago";
     const [text, setText] = useState(baseText);
+    const router = useRouter();
 
     const [select, setSelect] = useState(-1);
 
@@ -22,7 +24,7 @@ export default function Page(){
         try{
             setMethods(await getMethods());
         }   
-        catch(error){
+        catch{
             console.log(error);
         }
     };
@@ -30,9 +32,10 @@ export default function Page(){
     const handleSend = async () => {
         try{
             await createOrder(voucher, select);
+            router.push('/purchase?code=1')
         }
-        catch(error){
-            alert(error);
+        catch{
+            router.push('/purchase?code=2')
         }
     };
 
@@ -76,14 +79,14 @@ export default function Page(){
 
             <div className="flex justify-center">
                 <div className="text-black inline-block">
-                    <FileButton type={1} name={"voucher"} text={text} extension={".pdf, .png, .jpg"} handleButton={handleButton}></FileButton>
+                    <FileButton type={1} name={"voucher"} text={text} extension={".png, .jpg"} handleButton={handleButton}></FileButton>
                     {view && <VaucherFail></VaucherFail>}
                     
                 </div>
                 
             </div>
             <div className="flex justify-center space-x-20 mb-10">
-                        <Button color="bg-green" handleButton={handleSend} disable={select == -1}>Continuar</Button>
+                        <Button color="bg-green" handleButton={handleSend} disable={select == -1 || Object.keys(voucher).length === 0}>Continuar</Button>
                         <ToLink link="/direction" color="bg-grey">Cancelar</ToLink>
                     </div>
         </PageContainer>

@@ -61,6 +61,10 @@ export const columnsOrders = [
         accessorKey: "id"
     },
     {
+        header: "Estado",
+        accessorKey: "estado"
+    },
+    {
         header: "Cliente",
         accessorKey: "cliente"
     },
@@ -69,8 +73,12 @@ export const columnsOrders = [
         accessorKey: "direccion"
     },
     {
+        header: "Fecha",
+        accessorKey: "fecha"
+    },
+    {
         header: "Medio de Pago",
-        accessorKey: "mediopago_id"
+        accessorKey: "medio_pago"
     },
    
 

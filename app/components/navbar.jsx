@@ -36,10 +36,14 @@ export default function Navbar(){
 const Unlogged = () => {
     return(
         <div className="flex justify-center lg:justify-start space-x-6">
-            <Option>
-                <h3 className="mx-4 content-center">Contactanos</h3>
-                <LetterIcon></LetterIcon>
-            </Option>
+            <div className="hover:text-orange flex items-center align-middle">
+                <Link href={'/contact'}>
+                    <Option>
+                        <h3 className="mx-4 content-center">Contactanos</h3>
+                        <LetterIcon></LetterIcon>
+                    </Option>
+                </Link>
+            </div>
             <Option>
                 <Link href={"/cart"}><CarIcon></CarIcon></Link>
             </Option>
@@ -55,10 +59,12 @@ const Logged = ({text}) => {
     return(
         <div className="flex content-center items-center justify-center space-x-6">
             <div className="hover:text-orange">
-                <Option>
-                    <h3 className="mx-4 content-center">Contactanos</h3>
-                    <LetterIcon></LetterIcon>
-                </Option>
+                <Link href={'/contact'}>
+                    <Option>
+                        <h3 className="mx-4 content-center">Contactanos</h3>
+                        <LetterIcon></LetterIcon>
+                    </Option>
+                </Link>
             </div>
             <Option>
                 <Link href={"/cart"}><CarIcon></CarIcon></Link>
