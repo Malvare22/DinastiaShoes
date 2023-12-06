@@ -32,6 +32,19 @@ export async function createOrder(comprobante, medio_pago_id){
    
 };
 
+export async function updateOrder(data){
+    
+    let url = url_backend + '/pedido/actualizar';
+   
+    let response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+    return await response.json();
+
+   
+};
+
 export async function getAllOrders(){
     try{
         let url = url_backend + '/pedido/listar';

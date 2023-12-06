@@ -32,7 +32,7 @@ export const Table = (props) => {
                                             </th>
                                         )
                                     )}
-                                    <th className="bg-grisAzulado md:p-5 rounded-lg md:w-40">Acciones</th>
+                                    {actions.length != 0 && <th className="bg-grisAzulado md:p-5 rounded-lg md:w-40">Acciones</th>}
                                 </tr>
                             )
                         )
@@ -49,13 +49,13 @@ export const Table = (props) => {
                                         </td>
                                     ))
                                 }
-                                <td className="bg-lightGrey md:p-5 rounded-lg space-x-5"> 
-                                    { 
-                                        actions.map((act)=>{
-                                            return <TableAction action={() => act.action(data[index])} icon={act.icon}></TableAction>
-                                        })
-                                    }
-                                </td>
+                                {actions.length!= 0 && <td className="bg-lightGrey md:p-5 rounded-lg space-x-5"> 
+                                    
+                                    {actions.map((act)=>{
+                                        return <TableAction action={() => act.action(data[index])} icon={act.icon}></TableAction>
+                                    })}
+                                    
+                                </td>}
 
                             </tr>
                         ))
