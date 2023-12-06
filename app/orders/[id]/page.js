@@ -1,5 +1,5 @@
 'use client'
-import { Button, FileButton, ToLink } from "@/app/components/buttons";
+import { Button, DownloadIcon, FileButton, ToLink } from "@/app/components/buttons";
 import { Card } from "@/app/components/methods/card";
 import ManipulateCard from "@/app/components/methods/manipulateCard";
 import Modal from "@/app/components/modal";
@@ -15,7 +15,6 @@ export default function Page({params}){
 
     const [products, setProducts] = useState([]);
     const [data, setData] = useState({});
-    const router = useRouter();
 
   const getData = async () => {
     try{
@@ -87,17 +86,33 @@ const OrderForm = ({data}) => {
     const router = useRouter();
 
     const [estado, setEstado] = useState(data.pedido.estado);
+    const [archivo, setArchivo] = useState([]);
 
     const backPage = () => {
         router.push("/orders");
-    }
+    };
+
+    const importImage = async () => {
+        await fetch(data.pedido.comprobante).then(response => {
+            if (!response.ok) {
+                console.log(`Error al descargar la imagen. Código de estado: ${response.status}`);
+            }
+            return response.blob();
+        }).then(blob => {setArchivo(window.URL.createObjectURL(blob));});
+    };
+
+    useEffect(
+        () => {
+            importImage();
+        }, []
+    );
 
     const handleUpdate = async () => {
         try{
             const to_send = {"id": data.pedido.id, "estado": estado};
             //console.log(to_send);
             await updateOrder(to_send);
-            //location.reload();
+            location.reload();
         }
         catch(error){
             console.log(error);
@@ -131,7 +146,7 @@ const OrderForm = ({data}) => {
                             <Row>Municipio:</Row>
                             <Row>Dirreción Completa:</Row>
                             <Row>Referencias Adicionales:</Row>
-                            <FileButton type={2} text={"Comprobante de pago"}></FileButton>
+                            {archivo.length != 0 && <DownloadButton text={"Comprobante de pago"} file={archivo} name={data.usuario.cedula}></DownloadButton>}
 
                     </div>
                     <div className="space-y-10">
@@ -173,4 +188,13 @@ const Select = ({estado, setEstado}) => {
             }   
         </select>
     );
+};
+
+export const DownloadButton = ({text, file, name}) =>{
+
+   
+    return (<a href={file} download={"comprobante_" + name + ""}><div className="flex justify-center text-center space-x-4 items-center p-5 rounded-lg bg-lightGrey cursor-pointer">
+    <h3>{text}</h3>
+    <DownloadIcon></DownloadIcon>
+    </div></a>);
 };
