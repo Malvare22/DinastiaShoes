@@ -128,6 +128,7 @@ const Categories = () => {
         <div className="flex content-center items-center justify-center space-x-12 my-6">
                 {categories.map((categorie)=>{return <Link href={'/products?categoria=' + categorie.id} className="hover:text-orange" key={categorie.id}><Option>{categorie.nombre}</Option></Link>}
                 )}
+                <Link href={'/products?categoria=' + "All"} className="hover:text-orange"><Option>{"Todos los productos"}</Option></Link>
         </div>
     );
 }

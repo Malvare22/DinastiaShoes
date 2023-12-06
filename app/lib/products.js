@@ -15,7 +15,7 @@ export const getAllProducts = async () => {
             method: 'GET',
            
         });
-        const data =  await response.json();
+        return await response.json();
         
     }
     catch(error){
@@ -65,6 +65,61 @@ export async function getProductsDestacados(){
         alert(error);
     }
 }
+
+export async function getAsideInformation(){
+    try{
+        let url = url_backend + "/productos/listarColoresTallas";
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        
+        return await response.json();
+        
+
+    }
+    catch(error){
+        alert(error);
+    }
+}
+
+export async function getAllPhotos(){
+    try{
+        let url = url_backend + "/fotos/listar";
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        
+        const data = await response.json();
+
+        const mapa = new Map();
+
+        
+
+    }
+    catch(error){
+        alert(error);
+    }
+}
+
+
+export async function filteredByColorAndTalla(content){
+    try{
+        let url = url_backend + '/productos/filtrarColoresTallas';
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(content),
+        });
+
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
+};
 
 export const getProduct = (id) => {
     return "";

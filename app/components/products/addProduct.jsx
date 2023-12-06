@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { checkNumber, checkText, messageNumber, messageText } from "../forms/verifications";
+import { checkDescuento, checkNumber, checkText, messageDescuento, messageNumber, messageText } from "../forms/verifications";
 import { formContext } from "../context";
 import { LabelInput } from "../text";
 import { Input } from "../forms/inputs";
@@ -48,8 +48,8 @@ const dataValid = {
 export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, productId}) => {
 
     const [information, setInformation] = useState(type!=3 ? defaultData: data);
-    console.log(information)
     const [validate, setValidate] = useState(type!=3 ? defaultValidate: dataValid);
+    console.log(validate)
     const [images, setImages] = useState((imgs) ? imgs : []);
 
     //Es necesario cambiar los datos que se ingresan si ya existe el producto 
@@ -171,7 +171,7 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
                         <input type="checkbox" className="w-[20px] h-[20px]" name="destacado" onChange={handleCheckBox}></input>
                     </div></>}
 
-                    {type==1 && <><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5"><Input nameInput={"descuento"} type={"number"} errorMessage={messageNumber} verification={checkNumber}></Input><div className="mx-2">%</div></div></>}
+                    {<><LabelInput>Descuento:</LabelInput><div className="ml-4 flex col-span-5"><Input nameInput={"descuento"} type={"number"} errorMessage={messageDescuento} verification={checkDescuento}></Input><div className="mx-2">%</div></div></>}
 
                     {type==1 && <><LabelInput>Descripción:</LabelInput>
                     <div className="col-span-5 ml-4"><textarea className="border w-full" value={information.descripcion} name="descripcion" onChange={handleTextArea}></textarea></div></>}
@@ -194,12 +194,12 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
                     
                    <div className="w-full flex flex-col justify-center ">
                     <ImageButton text={"Agregar imagen"} disable={images.length == 5} handleButton={handleImage}></ImageButton> 
-                    <div className="w-full flex justify-center bg-blue text-white p-3 rounded-lg text-center text-sm">Solo pueden agregarse un máximo de 5 imagenes por producto</div>
+                    <div className="w-full flex justify-center bg-blue text-white p-3 rounded-lg text-center text-sm">Solo pueden agregarse un máximo de 5 imagenes por variante de un producto, las creaciones de inventario requiren una imagen de manera obligatoria</div>
                    </div>
                 </div>
             </div>
             <div className="flex space-x-6 mt-4">
-                <Button color={"bg-green"} handleButton={handleAction} disable={!validateInformation(validate)}>Agregar</Button>
+                <Button color={"bg-green"} handleButton={handleAction} disable={!validateInformation(validate) || (images.length == 0)}>Agregar</Button>
                 <Button color={"bg-red"} handleButton={()=>setVisible(false)}>Cancelar</Button>
             </div>
         </div>

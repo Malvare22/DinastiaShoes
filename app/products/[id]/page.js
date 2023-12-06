@@ -143,7 +143,7 @@ const PriceCard = ({data, mapColors, currentVariant, setCurrentVariant, cantidad
                 <div className="text-black w-full flex justify-center">
                     <div>
                         {currentVariant.descuento != 0 && <div>
-                            <s>${currentVariant.precio}</s>
+                            <s>${Math.ceil((currentVariant.precio * 100)/((100 - currentVariant.descuento)))}</s>
                         </div>}
                         <div className="flex items-center space-x-2">
                             <div className="text-4xl">
