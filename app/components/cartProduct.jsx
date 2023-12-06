@@ -111,3 +111,35 @@ export const CartEmpty = () => {
     );
 };
 
+export const CardOrderProduct = ({product}) => {
+    
+
+    return(
+        <div className="bg-lightGrey text-black w-[500px] p-8 space-y-6 rounded-lg select-none mb-6">
+            <div className="text-2xl font-semibold">
+                    {"nombre"}
+            </div>
+            <div className="md:grid md:grid-cols-2">
+                <div className="grid grid-cols-2 text-base font-medium">
+                    <div>Color:</div>
+                    <div>""</div>
+                    <div>Talla:</div>
+                    <div>""</div>
+                    <div>Cantidad:</div>
+                    <div>Cantidad:</div>
+                    <div>Precio por unidad:</div>
+                    <div>$""</div>
+                </div>
+                <div className="flex align-middle">
+                    <img src={""} className="w-60 h-40"></img>
+                </div>
+            </div>
+            <div className="md:flex md:justify-center">
+                <div className="text-xl font-bold text-center">
+                    Total del producto: ${"11"}
+                </div>
+            </div>
+        </div>
+    );
+};
+

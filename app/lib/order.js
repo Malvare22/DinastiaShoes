@@ -77,3 +77,18 @@ export async function getOrderById(id){
         alert(error);
     }
 };
+
+export async function getOrdersForClient(){
+    try{
+        let url = url_backend + '/pedido/listarUsuario/' + localStorage.getItem('id');
+
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        return await response.json();
+
+    }
+    catch(error){
+        alert(error);
+    }
+};
