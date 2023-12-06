@@ -278,7 +278,7 @@ const AddItem = ({disable, producto, cantidad}) => {
 
     const handleButton = async () => {
         try{
-            if(sessionFlag == false){
+            if(!(localStorage.getItem('token'))){
                 router.push('/login');
             }
             else{

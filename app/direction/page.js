@@ -14,8 +14,9 @@ export default function Page(){
     return(
         <div className="my-10">
             <DirectionForm type={2}></DirectionForm>
-            <div className="mb-10 flex justify-center">
+            <div className="mb-10 flex justify-center space-x-6">
                 <ToLink link='/selectMethod' color='bg-green'>Continuar</ToLink>
+                <ToLink link='/cart' color='bg-grey'>Cancelar</ToLink>
             </div>
         </div>
     );

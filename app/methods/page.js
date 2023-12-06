@@ -33,8 +33,13 @@ export default function Page() {
   */
  const makeRemove = async () => {
     setViewRemove(false);
-    await removeMethod(method);
-    getData();
+    try{
+      await removeMethod(method);
+      location.reload();
+    }
+    catch(error){
+      console.log(error);
+    }
   };
 
   const btnRemove = {

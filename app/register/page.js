@@ -8,6 +8,7 @@ import { infoBase, sendRegister, validateInformation, verifyRegister, registerUs
 import Modal, { ModalCloseButton } from "../components/modal";
 import { formContext } from "../components/context";
 import { addClient } from "../lib/clients";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   
@@ -38,10 +39,12 @@ export default function Register() {
 });
   const [isVisible, setIsVisible] = useState(false);
   
+  const router = useRouter();
+
   const handleButton = () =>{
-    // if(validateInformation(validate)){
+    if(validateInformation(validate)){
       setIsVisible(true);
-    // }
+    }
   }
 
   /**
@@ -54,7 +57,8 @@ export default function Register() {
         alert(tmp.error);
       }
       else{
-        alert("GOOD");
+        alert("¡Usuario creado de manera exitosa!", "Por favor inicie sesión");
+        router.push('/login');
       }
     };
 

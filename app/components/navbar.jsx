@@ -17,6 +17,8 @@ export default function Navbar(){
         setIsLoggedIn(!!token);
     }, [sessionFlag]);
 
+
+
     const type = localStorage.getItem("type") ? localStorage.getItem("type") : '';
 
     return(
@@ -25,7 +27,7 @@ export default function Navbar(){
             <Logo></Logo>
             {!isLoggedIn && <><Categories></Categories><Unlogged></Unlogged></>}
             {isLoggedIn && type == 'C' && <><Categories></Categories><Logged text={localStorage.getItem("names")}></Logged></>}
-            {isLoggedIn && type != 'C' && <><Option>Menú</Option><Option><AccountButton text={localStorage.getItem("names")}></AccountButton></Option></>}
+            {isLoggedIn && type != 'C' && <><div className="hover:text-orange flex align-middle items-center"><Option><Link href={'/menu'}>Menú Principal</Link></Option></div><Option><AccountButton text={localStorage.getItem("names")}></AccountButton></Option></>}
             
         </div>
     )

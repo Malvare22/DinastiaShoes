@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { SessionContext } from "../components/template";
 
 export default function Page(){
-    const {sessionFlag} = useContext(SessionContext);
+
     const router = useRouter();
     const [data, setData] = useState([]);
     const [flag, setFlag] = useState(false);
@@ -38,7 +38,7 @@ export default function Page(){
 
     useEffect(
         () => {
-            if(sessionFlag == false){
+            if(!(localStorage.getItem('token'))){
                 router.push('/login');
             }
             else getData();
@@ -99,9 +99,9 @@ export default function Page(){
                         Total: ${prefix}
                     </div>
                     <div className="flex space-x-6">
-                        <ToLink link='/delivery' color="bg-green">Continuar</ToLink>
+                        <ToLink link='/direction' color="bg-green">Continuar</ToLink>
                         <Button color="bg-lightRed" handleButton={handleClean} disable={flag}>Limpiar Carrito</Button>
-                        <ToLink link="/products" color="bg-grisAzulado">Añadir</ToLink>
+                        <ToLink link="/products?categoria=All" color="bg-grisAzulado">Añadir</ToLink>
                     </div>
                 </div>
             </div></>}

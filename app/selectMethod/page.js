@@ -6,6 +6,7 @@ import { PageTittle } from "../components/text";
 import { VaucherFail } from "../components/methods/vaucher";
 import { getMethods } from "../lib/methods";
 import { Card } from "../components/methods/card";
+import { createOrder } from "../lib/order";
 
 export default function Page(){
 
@@ -15,12 +16,23 @@ export default function Page(){
     const baseText = "Anexar Comprobante de Pago";
     const [text, setText] = useState(baseText);
 
+    const [select, setSelect] = useState(-1);
+
     const getData = async () => {
         try{
             setMethods(await getMethods());
         }   
         catch(error){
             console.log(error);
+        }
+    };
+
+    const handleSend = async () => {
+        try{
+            await createOrder(voucher, select);
+        }
+        catch(error){
+            alert(error);
         }
     };
 
@@ -56,8 +68,8 @@ export default function Page(){
             </PageTittle>
             <div className="grid lg:grid-cols-3 grid-cols-1 place-items-center">
                 {methods.map(
-                    (method, index) => {
-                        return <div key={index} className="mb-10"><Card data={method}></Card></div>;
+                    (method) => {
+                        return <Option key={method.id} id={method.id} select={select} setSelect={setSelect}><Card data={method}></Card></Option>;
                     }
                 )}
             </div>
@@ -71,9 +83,17 @@ export default function Page(){
                 
             </div>
             <div className="flex justify-center space-x-20 mb-10">
-                        <Button color="bg-green">Continuar</Button>
+                        <Button color="bg-green" handleButton={handleSend} disable={select == -1}>Continuar</Button>
                         <ToLink link="/direction" color="bg-grey">Cancelar</ToLink>
                     </div>
         </PageContainer>
+    );
+};
+
+const Option = ({id, children, setSelect, select}) => {
+    return(
+        <div className={"mb-10 cursor-pointer border-4 rounded-lg hover:border-black " + (select==id && "border-blueDark") } onClick={() => setSelect(id)}>
+            {children}
+        </div>
     );
 };
