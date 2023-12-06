@@ -61,16 +61,16 @@ export const columnsOrders = [
         accessorKey: "id"
     },
     {
-        header: "Nombre",
-        accessorKey: "nombre"
+        header: "Cliente",
+        accessorKey: "cliente"
     },
     {
-        header: "Dirrecion",
+        header: "Dirección",
         accessorKey: "direccion"
     },
     {
-        header: "Telefono",
-        accessorKey: "telefono"
+        header: "Medio de Pago",
+        accessorKey: "mediopago_id"
     },
    
 

@@ -5,19 +5,40 @@ import ManipulateCard from "@/app/components/methods/manipulateCard";
 import Modal from "@/app/components/modal";
 import PageContainer from "@/app/components/pageContainer";
 import { LabelInput, PageTittle } from "@/app/components/text";
-import { getOrderById } from "@/app/lib/orders";
+import { getOrderById } from "@/app/lib/order";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Page({params}){
 
-    const order = getOrderById(params.id);
+    const [data, setData] = useState([]);
     const router = useRouter();
+
+  const getData = async () => {
+    try{
+
+      const tmp_data = [];
+      const order = await getOrderById(params.id);
+        console.log(order);
+      setData(tmp);
+    }
+    catch(error){
+      console.log(error);
+    }
+  };  
+
+    useEffect(
+    () => {
+        getData();
+    }, []
+    )
+    
+    
 
     return(
         <PageContainer>
-            <PageTittle>PEDIDO Nº{order.id}</PageTittle>
-            <OrderForm order={order} router={router}></OrderForm>
+            <PageTittle>PEDIDO Nº{params.id}</PageTittle>
+            {/* <OrderForm order={order} router={router}></OrderForm> */}
         </PageContainer>
     );
 };

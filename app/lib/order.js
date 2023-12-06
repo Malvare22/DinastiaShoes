@@ -35,3 +35,33 @@ export async function createOrder(comprobante, medio_pago_id){
         alert(error);
     }
 };
+
+export async function getAllOrders(){
+    try{
+        let url = url_backend + '/pedido/listar';
+
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        return await response.json();
+
+    }
+    catch(error){
+        alert(error);
+    }
+};
+
+export async function getOrderById(id){
+    try{
+        let url = url_backend + '/pedido/obtener/' + id;
+
+        let response = await fetch(url, {
+            method: 'GET',
+        });
+        return await response.json();
+
+    }
+    catch(error){
+        alert(error);
+    }
+};
