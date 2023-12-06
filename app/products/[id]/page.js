@@ -1,10 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProductCarousel } from '../../components/imageCarousel';
 import { HomeCardsGroup } from '../../components/products/homeCard';
 import { getProducts } from '@/app/lib/inventories';
 import { AddToCart } from '@/app/lib/cart';
 import { useRouter } from 'next/navigation';
+import { SessionContext } from '@/app/components/template';
 
 export default function Page({params}){
     
@@ -273,11 +274,17 @@ const Option = ({children, id, onClick, select, setSelect, currentVariant, setCu
 const AddItem = ({disable, producto, cantidad}) => {
 
     const router = useRouter();
+    const {sessionFlag} = useContext(SessionContext);
 
     const handleButton = async () => {
         try{
-            await AddToCart(producto, cantidad);
-            router.push('/cart');
+            if(sessionFlag == false){
+                router.push('/login');
+            }
+            else{
+                await AddToCart(producto, cantidad);
+                router.push('/cart');
+            }
         }
         catch(error){
             alert(error);

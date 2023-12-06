@@ -1,14 +1,17 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, ToLink } from "../components/buttons";
 import { CartEmpty, CartProduct } from "../components/cartProduct";
 import { CartIcon } from "../components/icons/icons";
 import PageContainer from "../components/pageContainer";
 import { PageTittle } from "../components/text";
 import { getCart, removeAllCart } from "../lib/cart";
+import { useRouter } from "next/navigation";
+import { SessionContext } from "../components/template";
 
 export default function Page(){
-
+    const {sessionFlag} = useContext(SessionContext);
+    const router = useRouter();
     const [data, setData] = useState([]);
     const [flag, setFlag] = useState(false);
     const [total, setTotal] = useState([]);
@@ -35,7 +38,10 @@ export default function Page(){
 
     useEffect(
         () => {
-            getData();
+            if(sessionFlag == false){
+                router.push('/login');
+            }
+            else getData();
         }, []
     );
 
