@@ -105,6 +105,7 @@ const AccountButton = ({text}) =>{
                 <>
                     <div className="rounded-lg flex-col text-sm items-center absolute top-[100%] z-10 border-2 w-full">
                         <div className="w-full p-3 bg-blue cursor-pointer"><Link href={"/profile"}>Ver Perfil</Link></div>
+                        {localStorage.getItem('type') == 'C' && <div className="w-full p-3 bg-redWine cursor-pointer"><Link href={'/historial'}>Mis pedidos</Link></div>}
                         <div className="w-full p-3 bg-red cursor-pointer" onClick={closeSession}>Cerrar Sesión</div>
                     </div>
                     

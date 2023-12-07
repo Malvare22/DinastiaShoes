@@ -175,7 +175,7 @@ const Row = ({children}) => {
 };
 
 const options = ['P', 'A', 'D', 'E', 'R'];
-const diccionario = {'P': 'Pendiente', "A": 'Aprobado', "D":'Despachado', "E":'Entregado', "R": 'Rechazado'};
+export const diccionario = {'P': 'Pendiente', "A": 'Aprobado', "D":'Despachado', "E":'Entregado', "R": 'Rechazado'};
 
 
 const Select = ({estado, setEstado}) => {

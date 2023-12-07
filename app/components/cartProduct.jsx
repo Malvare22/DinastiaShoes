@@ -117,26 +117,26 @@ export const CardOrderProduct = ({product}) => {
     return(
         <div className="bg-lightGrey text-black w-[500px] p-8 space-y-6 rounded-lg select-none mb-6">
             <div className="text-2xl font-semibold">
-                    {"nombre"}
+                    {product.nombre}
             </div>
             <div className="md:grid md:grid-cols-2">
                 <div className="grid grid-cols-2 text-base font-medium">
                     <div>Color:</div>
-                    <div>""</div>
+                    <div>{product.color}</div>
                     <div>Talla:</div>
-                    <div>""</div>
+                    <div>{product.talla}</div>
                     <div>Cantidad:</div>
-                    <div>Cantidad:</div>
+                    <div>{product.cantidad}</div>
                     <div>Precio por unidad:</div>
-                    <div>$""</div>
+                    <div>${product.precio}</div>
                 </div>
                 <div className="flex align-middle">
-                    <img src={""} className="w-60 h-40"></img>
+                    <img src={product.foto} className="w-60 h-40"></img>
                 </div>
             </div>
             <div className="md:flex md:justify-center">
                 <div className="text-xl font-bold text-center">
-                    Total del producto: ${"11"}
+                    Total del producto: ${product.cantidad * product.precio}
                 </div>
             </div>
         </div>

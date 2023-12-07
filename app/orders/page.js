@@ -5,6 +5,7 @@ import {columnsOrders } from "../components/table/columns";
 import PageContainer from "../components/pageContainer";
 import { useEffect, useState } from "react";
 import { getAllOrders } from "../lib/order";
+import { diccionario } from "./[id]/page";
 
 export default function Page() {
 
@@ -27,7 +28,7 @@ export default function Page() {
           const direccion = carrito['direccion'];
           const id_pedido = carrito['id'];
           const nombre_medio = medio['nombre'];
-          tmp_data.push({"id": id_pedido, "direccion": direccion, "medio_pago": nombre_medio, "cliente": cedula, "estado": estado, "fecha": fecha});
+          tmp_data.push({"id": id_pedido, "direccion": direccion, "medio_pago": nombre_medio, "cliente": cedula, "estado": diccionario[estado], "fecha": fecha});
       });
       setData(tmp_data);
     }
