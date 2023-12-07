@@ -31,11 +31,14 @@ export default function Page(){
 
     const handleSend = async () => {
         try{
-            await createOrder(voucher, select);
-            router.push('/purchase?code=1')
+            const tempo = await createOrder(voucher, select);
+            if(tempo.error){
+                router.push('/purchase?code=2');
+            }
+            router.push('/purchase?code=1');
         }
         catch{
-            router.push('/purchase?code=2')
+            router.push('/purchase?code=2');
         }
     };
 
