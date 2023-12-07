@@ -72,7 +72,7 @@ export const FormStandar = (props) => {
         
         {
           type=="editingUser" && information.tipo != "C" && <>
-            <LabelInput>Rola</LabelInput>
+            <LabelInput>Rol</LabelInput>
             <LabelInput>{information.rol}</LabelInput>
           </>
         }

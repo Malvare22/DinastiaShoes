@@ -1,7 +1,9 @@
+import { url_backend } from "./information";
+
 export const login = async (user) => {
 
     try{
-        const url = 'http://localhost:3000/usuario/login';
+        const url = url_backend + '/usuario/login';
         const response = await fetch(url, {
             method: 'POST',
             headers: {

@@ -5,7 +5,7 @@ import { LabelInput } from "../text";
 import { Button, FormButton } from "../buttons";
 import { ModalCloseButton } from "../modal";
 import { formContext, DirectionContext } from "./../context";
-import { messagePaswordNoEquals, messagePaswordParams, messageText } from "./verifications";
+import { messageDate, messageGeneric, messagePaswordNoEquals, messagePaswordParams, messageText } from "./verifications";
 
 //Los componentes hacen referencia a los campos de registro, los que poseen Register los diferencia de aquellos que son los del login
 
@@ -35,7 +35,7 @@ export const InputDate = (props) => {
     return(
         <div className="space-y-5">
             <input type="date" value={information[nameInput]} disabled={editing==false} required className={"w-full rounded-lg"} onChange={handleInput}></input>
-            {(information[nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            {(information[nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{messageGeneric}</div>}
         </div>
     );
 }
@@ -96,7 +96,7 @@ export const InputGenre = (props) => {
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
             </select>}
-            {editing == true && (information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            {editing == true && (information [nameInput] != "" && !validate[nameInput] )&& <div className="text-orange text-sm">{messageGeneric}</div>}
         </div>
     );
 }
@@ -124,7 +124,7 @@ export const InputEmail = (props) => {
     return(
         <div className="space-y-5">
             <input type="email" value={information [nameInput]} disabled={editing==false} required onChange={handleInput} className={"w-full rounded-lg"}></input>
-            {(type != "login" && "" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">La información no corresponde a un campo valido</div>}
+            {(type != "login" && "" != information[nameInput] && !validate[nameInput]) && <div className="text-orange text-sm">{messageGeneric}</div>}
         </div>
         
     );
@@ -245,7 +245,7 @@ export const InputPassword = (props) => {
     return(
         <div className="space-y-5">
             <input required type="password" onChange={handleInput} className="w-full rounded-lg"></input>
-            {type!="login" && information[nameInput] && !validate[nameInput] && <div className="text-orange text-sm">Error</div>}
+            {type!="login" && information[nameInput] && !validate[nameInput] && <div className="text-orange text-sm">{messageGeneric}</div>}
         </div>
     );
 }

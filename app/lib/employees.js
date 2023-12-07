@@ -1,9 +1,9 @@
 import employees from '../jsons/employees.json' assert {type: 'json'}
-import { DateExportFormat, DateToSlash } from './information';
+import { DateExportFormat, DateToSlash, url_backend } from './information';
 
 export async function getEmployees() {
     try{
-        const url = 'http://localhost:3000/usuario/listarFiltrado/E';
+        const url = url_backend + '/usuario/listarFiltrado/E';
         const response = await fetch(url, {
             method: 'GET',
         });
@@ -17,7 +17,7 @@ export async function getEmployees() {
 export async function addEmployee(employee){
     try{
         employee.fecha_nacimiento = DateToSlash(employee.fecha_nacimiento);
-        let url = 'http://localhost:3000/usuario/crearEmpleado';
+        let url = url_backend + '/usuario/crearEmpleado';
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -27,7 +27,7 @@ export async function addEmployee(employee){
         });
         await response.json();
 
-        url = 'http://localhost:3000/empleado/crear';
+        url = url_backend + '/empleado/crear';
         response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -45,7 +45,7 @@ export async function addEmployee(employee){
 
 export async function removeEmployee(id){
     try{
-        const url = 'http://localhost:3000/usuario/eliminar/' + id;
+        const url = url_backend + '/usuario/eliminar/' + id;
         const response = await fetch(url, {
             method: 'DELETE',
         });
@@ -58,7 +58,7 @@ export async function removeEmployee(id){
 
 export async function getEmployee(id){
     try{
-        let url = 'http://localhost:3000/empleado/obtener/' + id;
+        let url = url_backend + '/empleado/obtener/' + id;
         let response = await fetch(url, {
             method: 'GET',
         });
@@ -77,7 +77,7 @@ export async function getEmployee(id){
 
 export async function editEmployee(employee){
     try{
-        let url = 'http://localhost:3000/usuario/actualizar/' + employee.cedula;
+        let url = url_backend + '/usuario/actualizar/' + employee.cedula;
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {
@@ -88,7 +88,7 @@ export async function editEmployee(employee){
 
         await response.json();
 
-        url = 'http://localhost:3000/empleado/actualizar/' + employee.cedula;
+        url = url_backend + '/empleado/actualizar/' + employee.cedula;
         response = await fetch(url, {
             method: 'PATCH',
             headers: {

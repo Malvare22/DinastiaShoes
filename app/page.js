@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Navbar from './components/navbar'
 import { Footer } from './components/footer'
 import { HomeCardsGroup } from './components/products/homeCard'
-import { ImageCarousel } from './components/imageCarousel';
+import { ImageCarousel, IndexImageCarousel } from './components/imageCarousel';
 import { getProductsDestacados } from './lib/products';
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
   return (
       <>
         
-          <ImageCarousel images={images}></ImageCarousel>
+          <IndexImageCarousel></IndexImageCarousel>
           <h1 className='text-black text-center font-sans text-3xl my-7 font-semibold'>PRODUCTOS DESTACADOS</h1>
           <HomeCardsGroup></HomeCardsGroup>
         

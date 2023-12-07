@@ -3,7 +3,7 @@ import { DateToSlash, url_backend } from './information';
 
 export async function getClients() {
     try{
-        const url = 'http://localhost:3000/usuario/listarFiltrado/C';
+        const url = url_backend + '/usuario/listarFiltrado/C';
         const response = await fetch(url, {
             method: 'GET',
         });
@@ -16,7 +16,7 @@ export async function getClients() {
 
 export async function removeClient(id){
     try{
-        const url = 'http://localhost:3000/usuario/eliminar/' + id;
+        const url = url_backend + '/usuario/eliminar/' + id;
         const response = await fetch(url, {
             method: 'DELETE',
         });
@@ -32,7 +32,7 @@ export async function addClient(client){
         client.contrasen = client.contrasenia;
         client.fecha_nacimiento = DateToSlash(client.fecha_nacimiento);
         console.log(client);
-        let url = 'http://localhost:3000/usuario/crearCliente';
+        let url = url_backend + '/usuario/crearCliente';
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -43,7 +43,7 @@ export async function addClient(client){
 
         await response.json();
 
-        url = 'http://localhost:3000/cliente/crearCliente';
+        url = url_backend + '/cliente/crearCliente';
         response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -62,7 +62,7 @@ export async function addClient(client){
 export async function editDirection(direction){
     try{
 
-        let url = 'http://localhost:3000/cliente/actualizar/' + localStorage.getItem('id');
+        let url = url_backend + '/cliente/actualizar/' + localStorage.getItem('id');
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {
@@ -100,7 +100,7 @@ export async function sendContact(information){
 export async function getDirection(id){
     try{
 
-        let url = 'http://localhost:3000/cliente/obtener/' + id;
+        let url = url_backend + '/cliente/obtener/' + id;
         let response = await fetch(url, {
             method: 'GET',
         });

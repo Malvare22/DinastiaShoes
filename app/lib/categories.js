@@ -1,8 +1,9 @@
 import categories from '../jsons/categories.json' assert {type: 'json'}
+import { url_backend } from './information';
 
 export async function getPrincipalCategories(){
     try{
-        const url = 'http://localhost:3000/categoria/listar';
+        const url = url_backend + '/categoria/listar';
         const response = await fetch(url, {
             method: 'GET',
         });
@@ -23,7 +24,7 @@ export async function getPrincipalCategories(){
 
 export async function getCategories(){
     try{
-        const url = 'http://localhost:3000/categoria/listar';
+        const url = url_backend + '/categoria/listar';
         const response = await fetch(url, {
             method: 'GET',
         });
@@ -36,7 +37,7 @@ export async function getCategories(){
 
 export async function removeCategorie(id){
     try{
-        const url = 'http://localhost:3000/categoria/eliminar/' + id;
+        const url = url_backend + '/categoria/eliminar/' + id;
         const response = await fetch(url, {
             method: 'DELETE',
         });
@@ -50,7 +51,7 @@ export async function removeCategorie(id){
 export async function addCategorie(categorie){
     try{
         categorie.destacado = categorie.destacado == 'T' ? 'A' : 'B'; 
-        let url = 'http://localhost:3000/categoria/crear';
+        let url = url_backend + '/categoria/crear';
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -69,7 +70,7 @@ export async function addCategorie(categorie){
 export async function editCategorie(categorie){
     try{
         categorie.destacado = categorie.destacado == 'T' ? 'A' : 'B'; 
-        let url = 'http://localhost:3000/categoria/actualizar/' + categorie.id;
+        let url = url_backend + '/categoria/actualizar/' + categorie.id;
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {

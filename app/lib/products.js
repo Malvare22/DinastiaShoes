@@ -125,6 +125,15 @@ export const getProduct = (id) => {
     return "";
 };
 
+export async function getRandomImage(){
+    let url = url_backend + '/fotos/listaraleatorio';
+    let response = await fetch(url, {
+        method: 'GET',
+    });
+
+    return await response.json();
+};
+
 export const editInventory = (inventory) => {
     alert(inventory);
 };

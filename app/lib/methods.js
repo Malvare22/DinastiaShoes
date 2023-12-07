@@ -1,9 +1,11 @@
+import { url_backend } from "./information";
+
 /***
  * Se realiza la consulta a la base de datos
  */
 export async function getMethodById(id){
     try{
-        let url = 'http://localhost:3000/medioPago/obtener/' + id;
+        let url = url_backend + '/medioPago/obtener/' + id;
         let response = await fetch(url, {
             method: 'GET'
         });
@@ -33,7 +35,7 @@ export async function editMethod(method, flag){
     formData.append("nombre", method.nombre);
     formData.append("color", method.color);
     try{
-        let url = 'http://localhost:3000/medioPago/editar';
+        let url = url_backend + '/medioPago/editar';
         let response = await fetch(url, {
             method: 'POST',
             body: formData
@@ -49,7 +51,7 @@ export async function editMethod(method, flag){
 
 export async function getMethods(){
     try{
-        let url = 'http://localhost:3000/medioPago/listar';
+        let url = url_backend + '/medioPago/listar';
         let response = await fetch(url, {
             method: 'GET',
         });
@@ -62,7 +64,7 @@ export async function getMethods(){
 
 export async function removeMethod(method){
     try{
-        let url = 'http://localhost:3000/medioPago/eliminar/' + method.id;
+        let url = url_backend + '/medioPago/eliminar/' + method.id;
         let response = await fetch(url, {
             method: 'DELETE',
         });
@@ -84,7 +86,7 @@ export async function createMethod(method){
         formData.append("id", method.id);
         formData.append("nombre", method.nombre);
         formData.append("color", method.color);
-        let url = 'http://localhost:3000/medioPago/subirImagen';
+        let url = url_backend + '/medioPago/subirImagen';
         let response = await fetch(url, {
             method: 'POST',
             body: formData
