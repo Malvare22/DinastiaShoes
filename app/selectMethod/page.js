@@ -24,7 +24,7 @@ export default function Page(){
         try{
             setMethods(await getMethods());
         }   
-        catch{
+        catch(error){
             console.log(error);
         }
     };
@@ -35,9 +35,9 @@ export default function Page(){
             if(tempo.error){
                 router.push('/purchase?code=2');
             }
-            router.push('/purchase?code=1');
+            else router.push('/purchase?code=1');
         }
-        catch{
+        catch(error){
             router.push('/purchase?code=2');
         }
     };

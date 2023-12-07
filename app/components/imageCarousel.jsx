@@ -75,7 +75,6 @@ export const ImageCarousel = ({ images }) => {
         setImages(
           data.map(
             (element) => {
-              console.log(element['url_foto']);
               return element['url_foto'];
             }
           )
