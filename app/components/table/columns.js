@@ -26,14 +26,7 @@ export const columnsClients = [
         header: "Correo",
         accessorKey: "correo"
     },
-    {
-        header: "Télefono",
-        accessorKey: "telefono"
-    },
-    {
-        header: "Dirección",
-        accessorKey: "direccion"
-    },
+
 ];
 
 export const columnsMethods = [
