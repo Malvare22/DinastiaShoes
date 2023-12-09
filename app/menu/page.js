@@ -65,6 +65,7 @@ export const MenuVentas = () => {
 export const MenuInventarios = () => {
   return (
     <>
+      <InventoryOption/>
       <CategoriesOption/>
     </>
   )
