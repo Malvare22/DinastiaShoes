@@ -1,0 +1,12 @@
+[
+    {
+        "nombre" : "Tacones Champagne",
+        "foto" : "/images/Productos/1.png",
+        "precio" : "123000"
+    },
+    {
+        "nombre" : "Tennis AirBag",
+        "foto" : "/images/Productos/2.png",
+        "precio" : "320000"
+    }
+]

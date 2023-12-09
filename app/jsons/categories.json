@@ -1,22 +1,20 @@
-[
-    {
-        "nombre": "Deportivo",
-        "id": "1"
-    },
-    {
-        "nombre": "Casual",
-        "id": "2"
-    },
-    {
-        "nombre": "Callejero",
-        "id": "3"
-    },
-    {
-        "nombre": "Zapatillas",
-        "id": "4"
-    },
-    {
-        "nombre": "Colección",
-        "id": "5"
-    }
-]
+[{"id":1,"nombre":"Realmix","destacado":false},
+{"id":2,"nombre":"Edgetag","destacado":true},
+{"id":3,"nombre":"Thoughtstorm","destacado":false},
+{"id":4,"nombre":"Zoomlounge","destacado":true},
+{"id":5,"nombre":"Twitterbridge","destacado":true},
+{"id":6,"nombre":"Jayo","destacado":true},
+{"id":7,"nombre":"Thoughtstorm","destacado":false},
+{"id":8,"nombre":"Skibox","destacado":true},
+{"id":9,"nombre":"Quinu","destacado":false},
+{"id":10,"nombre":"Zoonoodle","destacado":false},
+{"id":11,"nombre":"Zoonder","destacado":false},
+{"id":12,"nombre":"Realbuzz","destacado":false},
+{"id":13,"nombre":"Zoovu","destacado":false},
+{"id":14,"nombre":"Bubblebox","destacado":false},
+{"id":15,"nombre":"Wordware","destacado":true},
+{"id":16,"nombre":"Cogibox","destacado":false},
+{"id":17,"nombre":"Ooba","destacado":true},
+{"id":18,"nombre":"Tagtune","destacado":true},
+{"id":19,"nombre":"Yadel","destacado":false},
+{"id":20,"nombre":"Mudo","destacado":true}]
