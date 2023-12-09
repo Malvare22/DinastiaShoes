@@ -6,6 +6,7 @@ import { getProducts } from '@/app/lib/inventories';
 import { AddToCart } from '@/app/lib/cart';
 import { useRouter } from 'next/navigation';
 import { SessionContext } from '@/app/components/template';
+import { readLocalStorage } from '@/app/components/hooks/useLocalStorage';
 
 export default function Page({params}){
     
@@ -278,7 +279,7 @@ const AddItem = ({disable, producto, cantidad}) => {
 
     const handleButton = async () => {
         try{
-            if(!(localStorage.getItem('token'))){
+            if(!(readLocalStorage('token'))){
                 router.push('/login');
             }
             else{

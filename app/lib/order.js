@@ -1,3 +1,4 @@
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 import { getCart } from "./cart";
 import { url_backend } from "./information";
 
@@ -19,7 +20,7 @@ export async function createOrder(comprobante, medio_pago_id){
     const fechaFormateada = `${dia < 10 ? '0' : ''}${dia}/${mes < 10 ? '0' : ''}${mes}/${año}`;
 
     formData.append('fecha', fechaFormateada);
-    formData.append('cliente_cedula', localStorage.getItem('id'));
+    formData.append('cliente_cedula', readLocalStorage('id'));
     formData.append('mediodepago', medio_pago_id);
     let img = await fetch(comprobante).then(res => res.blob());
     formData.append('comprobar', img);
@@ -80,7 +81,7 @@ export async function getOrderById(id){
 
 export async function getOrdersForClient(){
     try{
-        let url = url_backend + '/pedido/listarUsuario/' + localStorage.getItem('id');
+        let url = url_backend + '/pedido/listarUsuario/' + readLocalStorage('id');
 
         let response = await fetch(url, {
             method: 'GET',

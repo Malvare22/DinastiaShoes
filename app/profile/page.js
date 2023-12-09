@@ -10,6 +10,7 @@ import { formContext } from "../components/context";
 import DirectionForm from "../components/forms/direction";
 import { useRouter } from "next/navigation";
 import { SessionContext } from "../components/template";
+import { clearLocalStorage, readLocalStorage } from "../components/hooks/useLocalStorage";
 
 
 /**
@@ -28,8 +29,8 @@ export default function FormUser(){
     const {sessionFlag, setSessionFlag} = useContext(SessionContext);
 
     const router = useRouter();
-    const type = localStorage.getItem("type");
-    const id = localStorage.getItem("id");
+    const type = readLocalStorage("type");
+    const id = readLocalStorage("id");
     
     useEffect(
         () => {
@@ -71,7 +72,7 @@ export default function FormUser(){
     const handleCloseSession = () => {
         
         setSessionFlag(!sessionFlag);
-        localStorage.clear();
+        clearLocalStorage();
         router.push("/login");
 
 

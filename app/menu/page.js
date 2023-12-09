@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { CategoriesOption, ClientOption, EmployeesOption, InventoryOption, MenuOption, MethodOption, OrderOption } from "../components/menu/menuSection";
 import PageContainer from "../components/pageContainer";
 import { getEmployee } from "../lib/employees";
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export default function Page() {
-  const [type, setType] = useState(localStorage.getItem("type"));
+  const [type, setType] = useState(readLocalStorage("type"));
   const [data, setData] = useState({});
 
   const getData = async () => {
     try{
-        const tmp = await getEmployee(localStorage.getItem('id'));
+        const tmp = await getEmployee(readLocalStorage('id'));
         setData(tmp);
     }
     catch(error){

@@ -6,6 +6,7 @@ import {getPrincipalCategories} from '../lib/categories'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SessionContext } from "./template";
+import { clearLocalStorage, readLocalStorage } from "./hooks/useLocalStorage";
 
 export default function Navbar(){
 
@@ -13,21 +14,21 @@ export default function Navbar(){
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = readLocalStorage('token');
         setIsLoggedIn(!!token);
     }, [sessionFlag]);
 
 
 
-    const type = localStorage.getItem("type") ? localStorage.getItem("type") : '';
+    const type = readLocalStorage("type") ? readLocalStorage("type") : '';
 
     return(
         <div className="bg-blue md:p-5 lg:flex content-center align-middle lg:justify-between select-none">
             
             <Logo></Logo>
             {!isLoggedIn && <><Categories></Categories><Unlogged></Unlogged></>}
-            {isLoggedIn && type == 'C' && <><Categories></Categories><Logged text={localStorage.getItem("names")}></Logged></>}
-            {isLoggedIn && type != 'C' && <><div className="hover:text-orange flex align-middle items-center"><Option><Link href={'/menu'}>Menú Principal</Link></Option></div><Option><AccountButton text={localStorage.getItem("names")}></AccountButton></Option></>}
+            {isLoggedIn && type == 'C' && <><Categories></Categories><Logged text={readLocalStorage("names")}></Logged></>}
+            {isLoggedIn && type != 'C' && <><div className="hover:text-orange flex align-middle items-center"><Option><Link href={'/menu'}>Menú Principal</Link></Option></div><Option><AccountButton text={readLocalStorage("names")}></AccountButton></Option></>}
             
         </div>
     )
@@ -88,7 +89,7 @@ const AccountButton = ({text}) =>{
     }
 
     const closeSession = () => {
-        localStorage.clear();
+        clearLocalStorage();
         setSessionFlag(!sessionFlag);
         router.push("/login");
     };
@@ -105,7 +106,7 @@ const AccountButton = ({text}) =>{
                 <>
                     <div className="rounded-lg flex-col text-sm items-center absolute top-[100%] z-10 border-2 w-full">
                         <div className="w-full p-3 bg-blue cursor-pointer"><Link href={"/profile"}>Ver Perfil</Link></div>
-                        {localStorage.getItem('type') == 'C' && <div className="w-full p-3 bg-redWine cursor-pointer"><Link href={'/historial'}>Mis pedidos</Link></div>}
+                        {readLocalStorage('type') == 'C' && <div className="w-full p-3 bg-redWine cursor-pointer"><Link href={'/historial'}>Mis pedidos</Link></div>}
                         <div className="w-full p-3 bg-red cursor-pointer" onClick={closeSession}>Cerrar Sesión</div>
                     </div>
                     

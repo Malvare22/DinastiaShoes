@@ -1,3 +1,4 @@
+import { readLocalStorage } from '../components/hooks/useLocalStorage';
 import employees from '../jsons/employees.json' assert {type: 'json'}
 import { DateToSlash, url_backend } from './information';
 
@@ -62,7 +63,7 @@ export async function addClient(client){
 export async function editDirection(direction){
     try{
 
-        let url = url_backend + '/cliente/actualizar/' + localStorage.getItem('id');
+        let url = url_backend + '/cliente/actualizar/' + readLocalStorage('id');
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {

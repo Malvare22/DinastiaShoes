@@ -8,6 +8,7 @@ import { PageTittle } from "../components/text";
 import { getCart, removeAllCart } from "../lib/cart";
 import { useRouter } from "next/navigation";
 import { SessionContext } from "../components/template";
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export default function Page(){
 
@@ -38,7 +39,7 @@ export default function Page(){
 
     useEffect(
         () => {
-            if(!(localStorage.getItem('token'))){
+            if(!(readLocalStorage('token'))){
                 router.push('/login');
             }
             else getData();

@@ -1,3 +1,4 @@
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 import { url_backend } from "./information";
 
 export async function AddToCart(product, amount){
@@ -9,7 +10,7 @@ export async function AddToCart(product, amount){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "cedula": localStorage.getItem('id'),
+                "cedula": readLocalStorage('id'),
                 "producto": product.codigo,
                 "cantidad": amount
             })
@@ -24,7 +25,7 @@ export async function AddToCart(product, amount){
 
 export async function getCart(){
     try{
-        let url = url_backend + '/carrito/listar/' + localStorage.getItem('id');
+        let url = url_backend + '/carrito/listar/' + readLocalStorage('id');
         let response = await fetch(url, {
             method: 'GET',
            

@@ -9,6 +9,7 @@ import { formContext } from "../components/context";
 import { login } from "../lib/users";
 import { useRouter } from "next/navigation";
 import { SessionContext } from "../components/template";
+import useLocalStorage, { saveLocalStorage } from "../components/hooks/useLocalStorage";
 
 /***
  * Mensaje de error en el logeo por datos incorrectos
@@ -48,10 +49,10 @@ export default function Register() {
     else{
         const ans = await login(information);
         if(!ans.error){
-          localStorage.setItem("token", ans.token);
-          localStorage.setItem("type", (ans.usuario).tipo);
-          localStorage.setItem("id", (ans.usuario).cedula);
-          localStorage.setItem("names", ((ans.usuario).nombres.split(" "))[0] + " " + ((ans.usuario).apellidos.split(" "))[0]);
+          saveLocalStorage("token", ans.token);
+          saveLocalStorage("type", (ans.usuario).tipo);
+          saveLocalStorage("id", (ans.usuario).cedula);
+          saveLocalStorage("names", ((ans.usuario).nombres.split(" "))[0] + " " + ((ans.usuario).apellidos.split(" "))[0]);
           setSessionFlag(!sessionFlag);
           if((ans.usuario).tipo == 'C') router.push("/");
           else router.push("/menu");

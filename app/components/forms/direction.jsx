@@ -9,6 +9,7 @@ import { TemplateValidateDirection } from "@/app/lib/direction";
 import { validateInformation } from "@/app/lib/information";
 import { editDirection, getDirection } from "@/app/lib/clients";
 import Modal, { ModalUnstandard } from "../modal";
+import { readLocalStorage } from "../hooks/useLocalStorage";
 
 export default function DirectionForm({type}){
     const [information, setInformation] = useState({});
@@ -33,7 +34,7 @@ export default function DirectionForm({type}){
     };
 
     const getInformation = async () => {
-        let tmp = {"direccion" : localStorage.getItem("id")};
+        let tmp = {"direccion" : readLocalStorage("id")};
         const ans = await getDirection(tmp.direccion); 
         if(!ans.error){
             console.log(ans)
