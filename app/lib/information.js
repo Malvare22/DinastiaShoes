@@ -1,4 +1,4 @@
-export const url_backend = 'http://34.138.81.113:3000';
+export const url_backend = 'http://dinastiashoes.ddns.net:3000';
 
 export function DateToLines(date){
   const ndate = date.split("/");
