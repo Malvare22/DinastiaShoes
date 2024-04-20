@@ -1,4 +1,4 @@
-export const url_backend = 'http://34.138.81.113:3000';
+export const url_backend = 'http://34.73.211.152:3000';
 
 export function DateToLines(date){a
   const ndate = date.split("/");
