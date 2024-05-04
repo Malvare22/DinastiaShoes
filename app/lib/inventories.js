@@ -1,5 +1,4 @@
 import { url_backend } from "./information";
-import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export async function getInventories(){
     try{
@@ -56,22 +55,17 @@ export async function createProduct(product){
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
+            'Content-Type': 'application/json',
             },
             body: JSON.stringify(product),
         });
 
-        const x = await response.json();
-
-    if(x.error) throw new Error('Token inválido o permisos insuficientes');
-    
-    return x;
-
-  }
-  catch(error){
-      alert(error);
-  }
+        return await response.json();
+        
+    }
+    catch(error){
+        alert(error);
+    }
 };
 
 export async function createInventory(inventory, productId){
@@ -80,18 +74,13 @@ export async function createInventory(inventory, productId){
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
+            'Content-Type': 'application/json',
             },
             body: JSON.stringify({...inventory, ["producto_codigo"]: productId}),
         });
 
-        const x = await response.json();
-
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        return await response.json();
         
-        return x;
-
     }
     catch(error){
         alert(error);
@@ -104,18 +93,13 @@ export async function editInventory(inventory){
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
+            'Content-Type': 'application/json',
             },
             body: JSON.stringify(inventory),
         });
-        
-        const x = await response.json();
 
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        return await response.json();
         
-        return x;
-
     }
     catch(error){
         alert(error);
@@ -127,18 +111,10 @@ export async function deleteInventory(id){
         let url = url_backend + '/inventario/eliminar/' + id;
         let response = await fetch(url, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
-            },
         });
 
-        const x = await response.json();
-
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        return await response.json();
         
-        return x;
-
     }
     catch(error){
         alert(error);
@@ -177,19 +153,10 @@ export async function uploadImagesInventory(images, productId){
             
         let response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
-            },
             body: formData,
         });
+        return await response.json();
         
-        const x = await response.json();
-
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
-        
-        return x;
-
     }
     catch(error){
         alert(error);
@@ -219,17 +186,11 @@ export async function updateProduct(product){
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': readLocalStorage('token')
-            },
+                },
                 body: JSON.stringify(product),
         });
+        return await response.json();
         
-        const x = await response.json();
-
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
-        
-        return x;
-
     }
     catch(error){
         alert(error);
@@ -268,4 +229,3 @@ export const template_validate_t3 = {
     cantidad: true,
     descripcion: true,
 };
-
