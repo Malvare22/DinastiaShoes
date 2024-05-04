@@ -7,8 +7,17 @@ export async function getClients() {
         const url = url_backend + '/usuario/listarFiltrado/C';
         const response = await fetch(url, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+
     }
     catch(error){
         alert(error);
@@ -20,8 +29,17 @@ export async function removeClient(id){
         const url = url_backend + '/usuario/eliminar/' + id;
         const response = await fetch(url, {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+
     }
     catch(error){
         alert(error);
@@ -68,11 +86,17 @@ export async function editDirection(direction){
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(direction)
         });
 
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+
     }
     catch(error){
         alert(error);
@@ -104,9 +128,18 @@ export async function getDirection(id){
         let url = url_backend + '/cliente/obtener/' + id;
         let response = await fetch(url, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
 
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+
     }
     catch(error){
         alert(error);

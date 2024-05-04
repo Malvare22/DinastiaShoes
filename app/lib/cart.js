@@ -8,6 +8,7 @@ export async function AddToCart(product, amount){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify({
                 "cedula": readLocalStorage('id'),
@@ -15,7 +16,11 @@ export async function AddToCart(product, amount){
                 "cantidad": amount
             })
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
@@ -28,9 +33,16 @@ export async function getCart(){
         let url = url_backend + '/carrito/listar/' + readLocalStorage('id');
         let response = await fetch(url, {
             method: 'GET',
-           
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
@@ -46,6 +58,7 @@ export async function removeProductCart(product, cartId){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify({
                 "id": cartId,
@@ -53,7 +66,11 @@ export async function removeProductCart(product, cartId){
             })
            
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
@@ -67,8 +84,16 @@ export async function removeAllCart(cartId){
         let url = url_backend + '/carrito/eliminarTodo/' + cartId;
         let response = await fetch(url, {
             method: 'DELETE',  
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){

@@ -21,19 +21,21 @@ export default function Page(){
 
     const getData = async () => {
         const tmp_data = await getCart();
-        setData(tmp_data);
         const tmp_total = [];
-        (tmp_data).forEach(
-            (product) => {
-                {
-                    product && (product.inventarios).forEach(
-                        (variante) => { 
-                            tmp_total.push((variante.carrito_detalles[0].cantidad) * variante.precio);
-                        }
-                    )
+        if(Array.isArray(tmp_data)){
+            setData(tmp_data);
+            (tmp_data).forEach(
+                (product) => {
+                    {
+                        product && (product.inventarios).forEach(
+                            (variante) => { 
+                                tmp_total.push((variante.carrito_detalles[0].cantidad) * variante.precio);
+                            }
+                        )
+                    }
                 }
-            }
-        );
+            );
+        } 
         setTotal(tmp_total);
     };
 

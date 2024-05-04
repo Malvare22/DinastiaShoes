@@ -1,6 +1,7 @@
 //import data from '../jsons/shoes.json' assert {type: 'json'}
 
 import { url_backend } from "./information";
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export const getShoesCardHome = async () => {
     const res = await fetch('https://fakestoreapi.com/products')

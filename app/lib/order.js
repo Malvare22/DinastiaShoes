@@ -26,25 +26,48 @@ export async function createOrder(comprobante, medio_pago_id){
     formData.append('comprobar', img);
     let response = await fetch(url, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': readLocalStorage('token')
+        },
         body: formData
     });
-    return await response.json();
+    try{
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+    }
+    catch(error){
+        alert(error);
+    }
 
    
 };
 
 export async function updateOrder(data){
-    
-    let url = url_backend + '/pedido/actualizar';
    
-    let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    return await response.json();
+    try{
+        let url = url_backend + '/pedido/actualizar';
+    
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
+            body: JSON.stringify(data),
+        });
+        const x = await response.json();
+
+            if(x.error) throw new Error('Token inválido o permisos insuficientes');
+            
+            return x;
+    }
+    catch(error){
+        alert(error);
+    }
 
    
 };
@@ -55,12 +78,20 @@ export async function getAllOrders(){
 
         let response = await fetch(url, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
-        console.log(error);
+        alert(error);
     }
 };
 
@@ -70,8 +101,16 @@ export async function getOrderById(id){
 
         let response = await fetch(url, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
@@ -85,8 +124,16 @@ export async function getOrdersForClient(){
 
         let response = await fetch(url, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){

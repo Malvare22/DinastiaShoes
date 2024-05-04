@@ -129,7 +129,7 @@ const Aside = () => {
 
   const getData = async () => {
     try{
-      setData(await getAsideInformation());
+      console.log(await getAsideInformation());
     }
     catch(error){
       console.log(error);

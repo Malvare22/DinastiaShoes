@@ -1,4 +1,6 @@
-export const url_backend = 'http://35.243.202.64:3000';
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
+
+export const url_backend = 'http://localhost:3000';
 
 export function DateToLines(date){a
   const ndate = date.split("/");
@@ -15,9 +17,18 @@ export async function getProfile(user){
     let url = url_backend + '/usuario/obtener/' + user;
     let response = await fetch(url, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': readLocalStorage('token')
+        },
     });
 
-    return await response.json();
+    const x = await response.json();
+
+    if(x.error) throw new Error('Token inválido o permisos insuficientes');
+    
+    return x;
+
   }
   catch(error){
       alert(error);
@@ -30,16 +41,22 @@ export async function updateProfile(user){
     let response = await fetch(url, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
+          'authorization': readLocalStorage('token')
         },
         body: JSON.stringify(user)
     });
 
-      return await response.json();
-    }
-    catch(error){
-        alert(error);
-    }
+    const x = await response.json();
+
+    if(x.error) throw new Error('Token inválido o permisos insuficientes');
+    
+    return x;
+
+  }
+  catch(error){
+      alert(error);
+  }
 };
 
 export async function updatePassword(user){

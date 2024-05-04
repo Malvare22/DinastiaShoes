@@ -1,5 +1,6 @@
 import categories from '../jsons/categories.json' assert {type: 'json'}
 import { url_backend } from './information';
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export async function getPrincipalCategories(){
     try{
@@ -40,8 +41,17 @@ export async function removeCategorie(id){
         const url = url_backend + '/categoria/eliminar/' + id;
         const response = await fetch(url, {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
+
     }
     catch(error){
         alert(error);
@@ -56,10 +66,15 @@ export async function addCategorie(categorie){
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(categorie)
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
@@ -75,10 +90,15 @@ export async function editCategorie(categorie){
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(categorie)
         });
-        return await response.json();
+        const x = await response.json();
+
+        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        
+        return x;
 
     }
     catch(error){
