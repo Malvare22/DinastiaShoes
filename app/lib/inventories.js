@@ -1,3 +1,4 @@
+import { readLocalStorage } from "../components/hooks/useLocalStorage";
 import { url_backend } from "./information";
 
 export async function getInventories(){
@@ -74,7 +75,8 @@ export async function createInventory(inventory, productId){
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify({...inventory, ["producto_codigo"]: productId}),
         });
@@ -93,7 +95,8 @@ export async function editInventory(inventory){
         let response = await fetch(url, {
             method: 'PATCH',
             headers: {
-            'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(inventory),
         });
@@ -111,6 +114,10 @@ export async function deleteInventory(id){
         let url = url_backend + '/inventario/eliminar/' + id;
         let response = await fetch(url, {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
         });
 
         return await response.json();
@@ -153,6 +160,9 @@ export async function uploadImagesInventory(images, productId){
             
         let response = await fetch(url, {
             method: 'POST',
+            headers: {
+                'authorization': readLocalStorage('token')
+            },
             body: formData,
         });
         return await response.json();

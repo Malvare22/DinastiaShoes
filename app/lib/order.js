@@ -17,9 +17,6 @@ export async function createOrder(comprobante, medio_pago_id){
     const año = fechaActual.getFullYear();
 
     // Formatea la fecha como un string en el formato dd/mm/yyyy
-    const fechaFormateada = `${dia < 10 ? '0' : ''}${dia}/${mes < 10 ? '0' : ''}${mes}/${año}`;
-
-    formData.append('fecha', fechaFormateada);
     formData.append('cliente_cedula', readLocalStorage('id'));
     formData.append('mediodepago', medio_pago_id);
     let img = await fetch(comprobante).then(res => res.blob());
@@ -27,7 +24,6 @@ export async function createOrder(comprobante, medio_pago_id){
     let response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             'authorization': readLocalStorage('token')
         },
         body: formData

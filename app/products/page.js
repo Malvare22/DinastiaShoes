@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [actualPage, setActualPage] = useState(1);
   const [total, setTotal] = useState(15);
   const [limit, setLimit] = useState(0);
@@ -69,6 +69,7 @@ export default function Page() {
     }
   };
 
+  //console.log(products)
 
   return (
       <div>
@@ -80,13 +81,13 @@ export default function Page() {
               <Aside></Aside>
           </div>
           <div className="w-full">
-            {products.length == 0 ? <NotFound></NotFound>:<><div className="grid grid-cols-5">
+            {products == null ? <NotFound></NotFound>:<><div className="grid grid-cols-5">
               {
                   products.slice(((actualPage-1)*total),((actualPage)*total)).map((product, i) =>{
                       
                       return product.inventarios.map(
                         (variant) => {
-                          return <CardProduct key={i} title={product.nombre} img={variant.fotos[0].url_foto} id={variant["producto_codigo"]} price={variant.precio}></CardProduct>
+                          return variant.fotos.length != 0 && <CardProduct key={i} title={product.nombre} img={variant.fotos[0].url_foto} id={variant["producto_codigo"]} price={variant.precio}></CardProduct>
                         }
                       )
               })}
@@ -129,7 +130,7 @@ const Aside = () => {
 
   const getData = async () => {
     try{
-      console.log(await getAsideInformation());
+      setData(await getAsideInformation());
     }
     catch(error){
       console.log(error);

@@ -10,7 +10,6 @@ export async function getMethodById(id){
         let response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'authorization': readLocalStorage('token')
             },
         });
@@ -48,7 +47,6 @@ export async function editMethod(method, flag){
         let response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'authorization': readLocalStorage('token')
             },
             body: formData
@@ -94,7 +92,6 @@ export async function removeMethod(method){
         let response = await fetch(url, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'authorization': readLocalStorage('token')
             },
         });
@@ -125,7 +122,6 @@ export async function createMethod(method){
         let response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'authorization': readLocalStorage('token')
             },
             body: formData
