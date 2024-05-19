@@ -56,7 +56,8 @@ export async function createProduct(product){
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(product),
         });
