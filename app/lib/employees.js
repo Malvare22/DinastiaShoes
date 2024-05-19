@@ -38,20 +38,20 @@ export async function addEmployee(employee){
             body: JSON.stringify(EMPLOYEE)
         });
 
-        console.log(EMPLOYEE)
-        // const x = await response.json();
-        // console.log(EMPLOYEE);
-        // //if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        //console.log(EMPLOYEE)
+        const x = await response.json();
+        console.log(EMPLOYEE);
+        //if(x.error) throw new Error('Token inválido o permisos insuficientes');
 
-        // url = url_backend + '/empleado/crear';
-        // response = await fetch(url, {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'authorization': readLocalStorage('token')
-        //     },
-        //     body: JSON.stringify(employee)
-        // });
+        url = url_backend + '/empleado/crear';
+        response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': readLocalStorage('token')
+            },
+            body: JSON.stringify(employee)
+        });
         return await response.json();
 
     }
