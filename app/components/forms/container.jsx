@@ -42,9 +42,9 @@ export const FormContainer = (props) => {
  * types puede ser : "register", "editByUser", "editByAdmin", "createByAdmin"
  */
 export const FormStandar = (props) => {
-  
   const {type} = props;
   const {information} = useContext(formContext);
+  
   return(
     <>
         <div className="flex align-middle items-start mt-5">
@@ -73,7 +73,7 @@ export const FormStandar = (props) => {
         {
           type=="editingUser" && information.tipo != "C" && <>
             <LabelInput>Rol</LabelInput>
-            <LabelInput>{information.rol}</LabelInput>
+            <LabelInput>{information.rol != undefined? information.rol : 'Administrador'}</LabelInput>
           </>
         }
 

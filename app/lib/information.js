@@ -12,6 +12,11 @@ export function DateToSlash(date){
   return ndate[0] + "/" + ndate[1] + "/"  + ndate[2];
 } 
 
+export function DateToPls(date){
+  const ndate = date.split("-");
+  return ndate[2] + "/" + ndate[1] + "/"  + ndate[0];
+}
+
 export async function getProfile(user){
   try{
     let url = url_backend + '/usuario/obtener/' + user;

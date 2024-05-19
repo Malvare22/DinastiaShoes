@@ -1,5 +1,5 @@
 import employees from '../jsons/employees.json' assert {type: 'json'}
-import { DateExportFormat, DateToSlash, url_backend } from './information';
+import { DateExportFormat, DateToPls, DateToSlash, url_backend } from './information';
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export async function getEmployees() {
@@ -26,7 +26,7 @@ export async function getEmployees() {
 
 export async function addEmployee(employee){
     try{
-        employee.fecha_nacimiento = DateToSlash(employee.fecha_nacimiento);
+        employee.fecha_nacimiento = DateToPls(employee.fecha_nacimiento);
         let url = url_backend + '/usuario/crearEmpleado';
         let response = await fetch(url, {
             method: 'PUT',
@@ -37,7 +37,8 @@ export async function addEmployee(employee){
             body: JSON.stringify(employee)
         });
         const x = await response.json();
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        console.log(employee);
+        //if(x.error) throw new Error('Token inválido o permisos insuficientes');
 
         url = url_backend + '/empleado/crear';
         response = await fetch(url, {
