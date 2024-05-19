@@ -196,6 +196,7 @@ export async function updateProduct(product){
         const response = await fetch(url, {
             method: 'PATCH',
             headers: {
+                'authorization': readLocalStorage('token'),
                 'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(product),
