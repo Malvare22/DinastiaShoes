@@ -153,7 +153,7 @@ const OrderForm = ({data}) => {
                         <Row>{data.usuario.departamento}</Row>
                         <Row>{data.usuario.municipio}</Row>
                         <Row>{data.usuario.direccion}</Row>
-                        <Row>{data.usuario.referencias}:</Row>
+                        <Row>{data.usuario.referencias}</Row>
                     </div>
                 </div>
             </div>
