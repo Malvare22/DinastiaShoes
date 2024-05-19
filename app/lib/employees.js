@@ -31,7 +31,6 @@ export async function addEmployee(employee){
         let response = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(employee)
