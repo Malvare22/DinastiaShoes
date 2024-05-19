@@ -40,6 +40,7 @@ export default function Page() {
   const sendData = () => {
     const post = async () => {
         const ans = await addEmployee(information);
+        console.log(ans);
         if(ans.error){
             alert(ans.error);
         }

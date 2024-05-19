@@ -26,29 +26,32 @@ export async function getEmployees() {
 
 export async function addEmployee(employee){
     try{
-        employee.fecha_nacimiento = DateToPls(employee.fecha_nacimiento);
+        let EMPLOYEE = structuredClone(employee);
+        EMPLOYEE.fecha_nacimiento = DateToPls(employee.fecha_nacimiento);
         let url = url_backend + '/usuario/crearEmpleado';
-        console.log(readLocalStorage('token'))
         let response = await fetch(url, {
             method: 'PUT',
-            headers: {                
-                'authorization': readLocalStorage('token')
-            },
-            body: JSON.stringify(employee)
-        });
-        const x = await response.json();
-        console.log(employee);
-        //if(x.error) throw new Error('Token inválido o permisos insuficientes');
-
-        url = url_backend + '/empleado/crear';
-        response = await fetch(url, {
-            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json',     
                 'authorization': readLocalStorage('token')
             },
-            body: JSON.stringify(employee)
+            body: JSON.stringify(EMPLOYEE)
         });
+
+        console.log(EMPLOYEE)
+        // const x = await response.json();
+        // console.log(EMPLOYEE);
+        // //if(x.error) throw new Error('Token inválido o permisos insuficientes');
+
+        // url = url_backend + '/empleado/crear';
+        // response = await fetch(url, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'authorization': readLocalStorage('token')
+        //     },
+        //     body: JSON.stringify(employee)
+        // });
         return await response.json();
 
     }
