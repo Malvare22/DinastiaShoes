@@ -28,9 +28,10 @@ export async function addEmployee(employee){
     try{
         employee.fecha_nacimiento = DateToSlash(employee.fecha_nacimiento);
         let url = url_backend + '/usuario/crearEmpleado';
+        console.log(readLocalStorage('token'))
         let response = await fetch(url, {
             method: 'PUT',
-            headers: {
+            headers: {                
                 'authorization': readLocalStorage('token')
             },
             body: JSON.stringify(employee)
