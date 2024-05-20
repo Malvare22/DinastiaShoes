@@ -4,6 +4,7 @@ import { LabelInput } from "../text";
 import { Input, InputDate, InputEmail, InputGenre, InputPassword, InputRegisterPassword, InputText, SquareSelect } from "./inputs";
 import { formContext } from "../context";
 import { checkNumber, messageNumber } from "./verifications";
+import { readLocalStorage } from "../hooks/useLocalStorage";
 
 /**
  * Type = editingUser
@@ -71,9 +72,9 @@ export const FormStandar = (props) => {
         {(type=="register") && <InputRegisterPassword  nameInput1={"contrasenia"} nameInput2={"contrasenia_2"}></InputRegisterPassword>}
         
         {
-          type=="editingUser" && information.tipo != "C" && <>
+          type=="editingUser" && readLocalStorage('type') != "C" && <>
             <LabelInput>Rol</LabelInput>
-            <LabelInput>{information.rol != undefined? information.rol : 'Administrador'}</LabelInput>
+            <LabelInput>{readLocalStorage('type') == 'E' ? 'Empleado' : 'Administrador'}</LabelInput>
           </>
         }
 
