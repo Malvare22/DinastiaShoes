@@ -60,7 +60,7 @@ export default function Page({params}) {
   return(
     <formContext.Provider value={{information, setInformation, validate, setValidate}}>
         <div className="mx-12">
-            <PageTittle>AGREGAR EMPLEADO</PageTittle>
+            <PageTittle>EDITAR EMPLEADO</PageTittle>
             <div>
                 <FormContainer>
                     {viewConfirmation && <Modal button={btn} text={"¿Estás seguro de crear al empleado?"} setIsVisible={setViewConfirmation}></Modal>}

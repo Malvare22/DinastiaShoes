@@ -49,9 +49,7 @@ export const AddInventory = ({setVisible, type, update, setUpdate, data, imgs, p
 
     const [information, setInformation] = useState(type!=3 ? defaultData: data);
     const [validate, setValidate] = useState(type!=3 ? defaultValidate: dataValid);
-    console.log(validate)
     const [images, setImages] = useState((imgs) ? imgs : []);
-
     //Es necesario cambiar los datos que se ingresan si ya existe el producto 
     const [categories, setCategories] = useState([]);
 

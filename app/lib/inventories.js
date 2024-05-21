@@ -193,6 +193,7 @@ export async function updateProduct(product){
     try{
         let url = url_backend + '/productos/actualizar/' + product.codigo;
             
+        console.log(product)
         const response = await fetch(url, {
             method: 'PATCH',
             headers: {

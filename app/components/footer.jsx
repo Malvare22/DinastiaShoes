@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const Footer = () => {
     return(
-        <div className="md:flex bg-redWine">
+        <div className="md:flex bg-redWine mt-5">
             <div className="flex md:w-9/12 justify-center border-r-2">
                 <ImageUFPS></ImageUFPS>
                 <ImageSistemas></ImageSistemas>
