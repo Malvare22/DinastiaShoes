@@ -8,6 +8,7 @@ import { getMethods } from "../lib/methods";
 import { Card } from "../components/methods/card";
 import { createOrder } from "../lib/order";
 import { useRouter } from "next/navigation";
+import { ValidTypes } from "../lib/information";
 
 export default function Page(){
 
@@ -44,6 +45,8 @@ export default function Page(){
 
     useEffect(
         () => {
+            if(!ValidTypes(['C'])) return;
+
             getData();
         }, []
     );

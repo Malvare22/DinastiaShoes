@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getEmployees, removeEmployee } from "../lib/employees";
 import { ToLink } from "../components/buttons";
 import PageContainer from "../components/pageContainer";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
 
@@ -39,6 +40,9 @@ export default function Page() {
     }
     post();
   };
+
+  ValidTypes(['A']);
+
 
   const btnRemove = {
     make: ()=>makeRemove(),

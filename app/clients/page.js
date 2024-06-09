@@ -21,7 +21,7 @@ export default function Page() {
 
   useEffect(
     () => {
-      
+      ValidTypes(['A', 'E']);
       get();
     }, []
   )

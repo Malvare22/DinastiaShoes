@@ -4,6 +4,7 @@ import { CategoriesOption, ClientOption, EmployeesOption, InventoryOption, MenuO
 import PageContainer from "../components/pageContainer";
 import { getEmployee } from "../lib/employees";
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
   const [type, setType] = useState(readLocalStorage("type"));
@@ -21,6 +22,8 @@ export default function Page() {
 
   useEffect(
       () => {
+          if(!ValidTypes(['A', 'E'])) return;
+
           if(type == 'E') getData();
       },[]
   )

@@ -60,7 +60,9 @@ export async function addClient(client){
             body: JSON.stringify(client)
         });
 
-        await response.json();
+        let x = await response.json();
+
+        if(x.error) throw new Error(x.error);
 
         url = url_backend + '/cliente/crearCliente';
         response = await fetch(url, {
@@ -71,7 +73,11 @@ export async function addClient(client){
             body: JSON.stringify(client)
         });
 
-        return await response.json();
+        x = await response.json();
+
+        if(x.error) throw new Error(x.error);
+        
+        return x;
     }
     catch(error){
         alert(error);

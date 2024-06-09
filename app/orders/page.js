@@ -6,6 +6,7 @@ import PageContainer from "../components/pageContainer";
 import { useEffect, useState } from "react";
 import { getAllOrders } from "../lib/order";
 import { diccionario } from "./[id]/page";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
 
@@ -39,6 +40,8 @@ export default function Page() {
 
   useEffect(
     () => {
+      if(!ValidTypes(['A', 'E'])) return;
+
       getData();
     }, []
   )

@@ -9,6 +9,7 @@ import { getCart, removeAllCart } from "../lib/cart";
 import { useRouter } from "next/navigation";
 import { SessionContext } from "../components/template";
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
+import { ValidTypes } from "../lib/information";
 
 export default function Page(){
 
@@ -41,6 +42,7 @@ export default function Page(){
 
     useEffect(
         () => {
+            ValidTypes(['C']);
             if(!(readLocalStorage('token'))){
                 router.push('/login');
             }

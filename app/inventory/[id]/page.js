@@ -7,6 +7,7 @@ import { AddInventory } from "@/app/components/products/addProduct";
 import EditInventoryModal from "@/app/components/products/editInventory";
 import VariantCard from "@/app/components/products/variantCard";
 import { PageTittle } from "@/app/components/text";
+import { ValidTypes } from "@/app/lib/information";
 import { getProducts } from "@/app/lib/inventories";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ export default function Page({params}){
     const codigo = params.id;
 
     const getAllData = async () => {
+
         const x = await getProducts(codigo);
         if(x == null){
             router.push('/inventory');
@@ -31,6 +33,8 @@ export default function Page({params}){
 
     useEffect(
         () => {
+            if(!ValidTypes(['A', 'E'])) return;
+
             getAllData();
         }, []
     );

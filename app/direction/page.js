@@ -3,13 +3,14 @@
 import { ToLink } from "../components/buttons";
 import DirectionForm from "../components/forms/direction";
 import PageContainer from "../components/pageContainer";
+import { ValidTypes } from "../lib/information";
 
 /**
  * Corresponde a la pestaña de edición de información de los usuarios
  */
 export default function Page(){
 
-    
+    ValidTypes(['C']);    
 
     return(
         <div className="my-10">

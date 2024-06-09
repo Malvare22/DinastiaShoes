@@ -219,3 +219,13 @@ export async function sendChangePassword(information, token){
   }
 }
 
+export function ValidTypes(permit){
+  if (typeof window !== "undefined" && window.localStorage) {
+    const value = localStorage.getItem('type');
+    for(const x in permit){
+      if(x == value) return true;
+    }
+  }  
+  window.location.replace("/404");
+};
+

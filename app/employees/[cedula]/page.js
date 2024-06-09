@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { formContext } from "../../components/context";
-import { DateInputFormat, getEmployeeByCedula, registerUser, registerUserByAdmin, validateEditUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
+import { DateInputFormat, ValidTypes, getEmployeeByCedula, registerUser, registerUserByAdmin, validateEditUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
 import { PageTittle } from "@/app/components/text";
 import { FormContainer, FormStandar } from "@/app/components/forms/container";
 import Modal from "@/app/components/modal";
@@ -50,6 +50,9 @@ export default function Page({params}) {
     }
     if(validateInformation(validate)) post();
   }
+
+  ValidTypes(['A']);
+
 
   const btn = {
     "make" : sendData,

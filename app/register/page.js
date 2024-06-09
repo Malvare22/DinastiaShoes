@@ -52,7 +52,8 @@ export default function Register() {
    */
   const makeTheSend = () =>{
     const post = async () => {
-      const tmp = await addClient(information);
+      const aux = JSON.parse(JSON.stringify(information));
+      const tmp = await addClient(aux);
       if(tmp.error){
         alert(tmp.error);
       }

@@ -7,6 +7,7 @@ import PageContainer from "@/app/components/pageContainer";
 import { columnsOrderProducts } from "@/app/components/table/columns";
 import { Table } from "@/app/components/table/table";
 import { LabelInput, PageTittle } from "@/app/components/text";
+import { ValidTypes } from "@/app/lib/information";
 import { getOrderById, updateOrder } from "@/app/lib/order";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -66,6 +67,8 @@ export default function Page({params}){
 
     useEffect(
         () => {
+            if(!ValidTypes(['A', 'E'])) return;
+
             getData();
         }, []
     );

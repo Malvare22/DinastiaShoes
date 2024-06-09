@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { formContext } from "../../components/context";
-import { DateInputFormat, registerUser, registerUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
+import { DateInputFormat, ValidTypes, registerUser, registerUserByAdmin, validateInformation, validateRegisterUser, validateRegisterUserByAdmin } from "@/app/lib/information";
 import { PageTittle } from "@/app/components/text";
 import { FormContainer, FormStandar } from "@/app/components/forms/container";
 import Modal from "@/app/components/modal";
@@ -11,6 +11,9 @@ import { useRouter } from "next/navigation";
 import { addEmployee } from "@/app/lib/employees";
 
 export default function Page() {
+
+    ValidTypes(['A']);
+
 
   const [information, setInformation] = useState(
     {

@@ -9,6 +9,7 @@ import { getMethods, removeMethod } from "../lib/methods";
 import PageContainer from "../components/pageContainer";
 import { PageTittle } from "../components/text";
 import { ToLink } from "../components/buttons";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
 
@@ -24,6 +25,7 @@ export default function Page() {
 
   useEffect(
     () => {
+        if(!ValidTypes(['A'])) return;
           getData();
     }, []
   )

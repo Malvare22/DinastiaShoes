@@ -9,15 +9,19 @@ import { Button } from "../components/buttons";
 import { useEffect, useState } from "react";
 import { ModalInventories } from "../components/modal";
 import { AddInventory } from "../components/products/addProduct";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
 
   const [data, setData] = useState({});
   const [update, setUpdate] = useState(false);
+
+  
   
   const router = useRouter();
 
   const getData = async () => {
+    if(!ValidTypes(['A', 'E'])) return;
     setData(await getInventories());
   };
   

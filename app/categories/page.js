@@ -10,7 +10,7 @@ import { LabelInput } from "../components/text";
 import { Input, SquareSelect } from "../components/forms/inputs";
 import { checkText, messageText } from "../components/forms/verifications";
 import { Button } from "../components/buttons";
-import { validateInformation } from "../lib/information";
+import { ValidTypes, validateInformation } from "../lib/information";
 
 const validTemplate = {
   nombre: true,
@@ -37,7 +37,7 @@ export default function Page() {
 
   useEffect(
     () => {
-      
+      ValidTypes(['A', 'E']);
       get();
     }, []
   )

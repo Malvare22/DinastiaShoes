@@ -5,13 +5,15 @@ import PageContainer from "../components/pageContainer";
 import { PageTittle } from "../components/text";
 import { getOrdersForClient } from "../lib/order";
 import { diccionario } from "../orders/[id]/page";
+import { ValidTypes } from "../lib/information";
 
 export default function Page(){
 
     const [data, setData] = useState([]);
-
+    
     const getData = async () => {
         try{
+            
             const tmp = (await getOrdersForClient());
             const tmp_data = [];
             tmp.forEach(pedido => {
@@ -45,6 +47,7 @@ export default function Page(){
 
     useEffect(
         () => {
+            if(!ValidTypes(['C'])) return;
             getData();
         }, []
     )
