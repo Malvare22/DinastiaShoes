@@ -18,7 +18,7 @@ export default function Template({children}){
                 setSessionFlag(!sessionFlag);
                 router.push('/login');
                 alert("Se ha terminado tu tiempo de sesión, debes volver a iniciar");
-              }, 60*60000);
+              }, 10*60*60000);
           
               return () => clearTimeout(idTimeout);
         }
