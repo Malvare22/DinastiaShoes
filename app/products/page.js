@@ -5,6 +5,7 @@ import { filteredByColorAndTalla, getAllProducts, getAsideInformation, getProduc
 import { CardProduct } from "../components/products/cardProduct";
 import { PageTittle } from "../components/text";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function Page() {
 
@@ -120,11 +121,18 @@ const Aside = () => {
 
   const [data, setData] = useState({});
 
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState(-1);
 
-  const [talla, setTalla] = useState('');
+  const [talla, setTalla] = useState(-1);
 
-  const [categoria, setCategoria] = useState('');
+  const [categoria, setCategoria] = useState(-1);
+
+  const handleButton = () => {
+    setColor(-1);
+    setTalla(-1);
+    setCategoria(-1);
+    router.push("products?categoria=All");
+  }
 
   const router = useRouter();
 
@@ -143,8 +151,11 @@ const Aside = () => {
     }, []
   )
 
+  console.log(categoria, color, talla);
+
   return(
     <div className="h-full p-4 bg-grisAzulado mx-3">
+      {(color != -1 || talla != -1 || categoria != -1) && <div className="my-4"><button className="bg-blue rounded-lg font-semibold p-3" onClick={handleButton}>Restablecer filtros</button></div>}
       <GroupOptions header={"Categoría"} data={data} select={categoria} setSelect={setCategoria}/>
       <GroupOptions header={"Color"} data={data} select={color} setSelect={setColor}/>
       <GroupOptions header={"Talla"} data={data} select={talla} setSelect={setTalla}/>

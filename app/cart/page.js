@@ -42,6 +42,7 @@ export default function Page(){
 
     useEffect(
         () => {
+            
             ValidTypes(['C']);
             if(!(readLocalStorage('token'))){
                 router.push('/login');

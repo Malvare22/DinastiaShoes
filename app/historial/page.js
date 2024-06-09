@@ -30,7 +30,7 @@ export default function Page(){
                         const producto_talla = (((producto['producto'])['inventarios'])[0])['talla'];
                         const producto_color = (((producto['producto'])['inventarios'])[0])['color'];
                         const producto_precio = (((producto['producto'])['inventarios'])[0])['precio'];
-                        const producto_foto = ((((((producto['producto'])['inventarios'])[0])['fotos'])[0]))['url_foto'];
+                        const producto_foto = ((((((producto['producto'])['inventarios'])[0])['fotos'])[0])) != undefined ? ((((((producto['producto'])['inventarios'])[0])['fotos'])[0]))['url_foto'] : "https://media.istockphoto.com/id/1725461799/es/foto/renderizado-3d-de-zapatos-de-senderismo-o-de-trabajo.jpg?s=1024x1024&w=is&k=20&c=dCHlh6gJHg0VTt8MiTosDvriZhuYUfcCLlBSTQMYoLU=";
                         return {'cantidad': producto_cantidad,'nombre': producto_nombre, 'talla': producto_talla, 'color': producto_color, 'precio': producto_precio, 'foto': producto_foto}
 
                     }
