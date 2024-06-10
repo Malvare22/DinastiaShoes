@@ -225,7 +225,7 @@ export function ValidTypes(permit){
     for(const x in permit){
       if(permit[x] == value) return true;
     }
-    window.location.replace("/404");
+    window.location.replace("/error_404");
   }  
 };
 
