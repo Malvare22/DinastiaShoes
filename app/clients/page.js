@@ -8,6 +8,7 @@ import { getEmployees, removeEmployee } from "../lib/employees";
 import { ToLink } from "../components/buttons";
 import PageContainer from "../components/pageContainer";
 import { getClients } from "../lib/clients";
+import { ValidTypes } from "../lib/information";
 
 export default function Page() {
 
