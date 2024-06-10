@@ -4,7 +4,7 @@ import { FormContainer, FormStandar } from "../components/forms/container";
 import { InputText } from "../components/forms/inputs";
 import { LabelInput, PageTittle } from "../components/text";
 import Modal, { ModalChangePassword, ModalUnstandard } from "../components/modal";
-import { getProfile, infoBase, updatePassword, updateProfile, validateBase, validateChangeBase, validateInformation } from "../lib/information";
+import { ValidTypes, getProfile, infoBase, updatePassword, updateProfile, validateBase, validateChangeBase, validateInformation } from "../lib/information";
 import { Button } from "../components/buttons";
 import { formContext } from "../components/context";
 import DirectionForm from "../components/forms/direction";
@@ -35,6 +35,7 @@ export default function FormUser(){
     useEffect(
         () => {
             const get = async () => {
+                if(!ValidTypes(['C', 'E', 'A'])) return;
                 let data = await getProfile(id);
                 setBaseInfo(data);
                 setInformation(data);
