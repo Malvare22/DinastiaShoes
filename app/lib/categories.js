@@ -72,7 +72,7 @@ export async function addCategorie(categorie){
         });
         const x = await response.json();
 
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        if(x.error) throw new Error(x.error);
         
         return x;
 
@@ -96,7 +96,7 @@ export async function editCategorie(categorie){
         });
         const x = await response.json();
 
-        if(x.error) throw new Error('Token inválido o permisos insuficientes');
+        if(x.error) throw new Error(x.error);
         
         return x;
 
