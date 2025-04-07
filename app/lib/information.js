@@ -1,6 +1,6 @@
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
-export const url_backend = 'http://35.243.202.64:3000';
+export const url_backend = process.env.URL_BACKEND;
 
 export function DateToLines(date){a
   const ndate = date.split("/");
