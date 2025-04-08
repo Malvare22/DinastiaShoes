@@ -29,6 +29,7 @@ export default function Home() {
       <h1 className="text-black text-center font-sans text-3xl my-7 font-semibold">
         PRODUCTOS DESTACADOS
       </h1>
+    <h1>{process.env.NEXT_PUBLIC_URL_BACKEND}</h1>
       {/* <HomeCardsGroup></HomeCardsGroup> */}
     </>
   );
