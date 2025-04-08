@@ -3,6 +3,7 @@ import { url_backend } from './information';
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
 export async function getPrincipalCategories(){
+    console.log("Esta es la url:"+url_backend);
     try{
         const url = url_backend + '/categoria/listar';
         const response = await fetch(url, {
