@@ -10,6 +10,7 @@ export default function Home() {
   const images = [ "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"];
 
   // const [data, setData] = useState({});
+  console.log(url_backend)
 
 
   // useEffect(

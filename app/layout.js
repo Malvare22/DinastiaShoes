@@ -3,7 +3,6 @@ import './globals.css'
 import { Footer } from './components/footer'
 import Navbar from './components/navbar'
 import Template from './components/template'
-import { url_backend } from './lib/information'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +12,6 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
-  console.log(url_backend)
   return (
     <html lang="en"> 
       <body className={"inter.className bg-white"}>
