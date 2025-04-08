@@ -1,6 +1,6 @@
 import { readLocalStorage } from "../components/hooks/useLocalStorage";
 
-export const url_backend = process.env.NEXT_PUBLIC_URL_BACKEND;
+export const url_backend = 'http://'+process.env.NEXT_PUBLIC_URL_BACKEND;
 
 export function DateToLines(date){a
   const ndate = date.split("/");
