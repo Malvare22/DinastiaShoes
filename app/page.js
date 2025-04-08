@@ -4,6 +4,7 @@ import { Footer } from "./components/footer";
 import { HomeCardsGroup } from "./components/products/homeCard";
 import { ImageCarousel, IndexImageCarousel } from "./components/imageCarousel";
 import { getProductsDestacados } from "./lib/products";
+import { url_backend } from "./lib/information";
 
 export default function Home() {
   const images = [
