@@ -15,7 +15,7 @@ export default function Home() {
 
   // const [data, setData] = useState({});
   console.log(url_backend);
-  console.log(process.env.URL_BACKEND)
+  console.log(process.env.NEXT_PUBLIC_URL_BACKEND)
 
   // useEffect(
   //   () => {
