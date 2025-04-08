@@ -19,7 +19,6 @@ export async function getPrincipalCategories(){
         return data;
     }
     catch(error){
-        alert(error);
     }
 };
 

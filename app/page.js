@@ -21,9 +21,9 @@ export default function Home() {
   return (
       <>
         
-          <IndexImageCarousel></IndexImageCarousel>
+          {/* <IndexImageCarousel></IndexImageCarousel> */}
           <h1 className='text-black text-center font-sans text-3xl my-7 font-semibold'>PRODUCTOS DESTACADOS</h1>
-          <HomeCardsGroup></HomeCardsGroup>
+          {/* <HomeCardsGroup></HomeCardsGroup> */}
         
       </>
   )

@@ -125,7 +125,7 @@ const Categories = () => {
         const getCategories = async () =>{
             try{
                 const data = await getPrincipalCategories()
-                setCategories(data)
+                setCategories(data || [])
             }   
             catch(error){
                 console.log(error);                
